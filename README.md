@@ -1,4 +1,4 @@
-# INFO6150 - UX Engineering
+# INFO6250 - Web Dev Tools and Methods
 
 This repository is how you will receive and submit your assignments and projects.
 
