@@ -10,16 +10,20 @@ From this directory, at the command line:
 
 1.  Run `npm install`
   - Make sure you run this command while "in" the same directory as this file
+    - MAKE SURE YOU UNDERSTAND THIS.  If the `pwd` command doesn't end in `/setup-test/` you are not "in" the correct directory
   - You should see some text while it downloads a library or two
   - If you see a permission error (EACCES) you probably installed something as root/administrator, and now your normal user account can't override it. That's a bit messy to clean up, but it's doable and you want to clean that up NOW rather than later in the semester.
   - Lots of ways of addressing this exist, with varying levels of success and computer security.  Speak up on Slack if this is an issue for you.
-  - You only need to run this successfully once.  Once the dependencies are installed, you can run the program (see below) as much as needed without reinstalling.  Reinstalling is only necessary if the dependencies are changed.
-2.  Run `node list.js`
+  - You only need to run `npm install` successfully once for this assignment.  Once the dependencies are installed, you can run the program (see below) as much as needed without reinstalling.  Reinstalling is only necessary if the dependencies are changed.
+2.  Run `node list.js` (also "in" this directory)
   - You should see some names printed to the console
 3. You are going to make changes, so you should first create a "feature branch" to create those changes in
   - run `git checkout -b setup-info6250`
   - This branch name, "setup-info6250", is specific to this assignment.  Each assignment will be done in its own branch with a unique name.
-4. Edit list.js and add your name, NEU ID, Slack handle (with an `@`), and github username to the list (Make sure you match the upper/lower case!)
+4. Edit list.js and add your name, NEU ID, email, Slack handle (with an `@`), and github username to the list
+  - Make sure you match the upper/lower case for these fields, some (like github username) are case-sensitive
+  - The Slack handle is your "Display Name" in Slack and will start with an `@` - you can type `@` in Slack and start typing the rest of your name and you should see it
+  - We (Instructor and TAs) will use this information to connect your accounts and to contact you in case of problems, so it is important that your information be accurate
 5. Run `node list.js` again now that you've saved your changes
   - You should see your name added to the list that outputs
   - Everything should run smoothly
@@ -35,7 +39,8 @@ From this directory, at the command line:
   - If you have git troubles, I recommend consulting the list of common solutions at https://ohshitgit.com
 8. Commit the file: `git commit -m "Adds MYNAME"` (Example: `git commit -m"Adds Lex"`
   - This commit message reflects your changes.  If you make other changes and have to commit those, and also when you commit other assignments, the commit messages should reflect THOSE changes, they should NOT say "Adds MYNAME".
-  - Repeat: Future assignments should not have commit messages that say "Adds MYNAME", that is specific to this assignment
+  - Repeat: This assignment should have a commit message that has your name, not the literal text "MYNAME"
+  - Repeat: Future assignments should not have commit messages that say "Adds MYNAME" (the literal text OR your name), that is specific to this assignment
 9. Send your changes to github: `git push origin setup-info6250` 
 10. Go to the github page for this repository and create a Pull Request(PR), with 'main' on the left dropdown and your setup-info6250 branch on the right dropdown.
   - Do not merge, you must create a Pull Request.  Your repositories should be set so that you cannot merge to main without a Pull Request, but they are created without that requirement so there is a period of time where you can merge, but you shouldn't do it.  Learn how to create the PR, because that's how all assignments for the class will be turned in, and if you do it wrong, your grade could suffer.
