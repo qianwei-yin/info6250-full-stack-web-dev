@@ -1,0 +1,10 @@
+# please don't edit this file
+# instead create a .gitignore file
+# at the root of the repository
+# Each .gitignore file applies to that directory and subdirectories
+
+# we always want to keep node_modules out of our repo
+# the files depend on your system
+# it is created when we run `npm install`
+node_modules
+
