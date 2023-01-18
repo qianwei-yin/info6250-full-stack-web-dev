@@ -1,19 +1,20 @@
 const path = require('path');
 
 const people = `
-Name           |  NEUID   | Email                     | Slack handle           | github username
+Qianwei Yin    |002747541 | yin.qian@northeastern.edu | @qianwei yin           | qianwei-yin
 Brett Ritter   | ???      | b.ritter@northeastern.edu | @Brett Ritter (He/Him) | swiftone
 
-`.split('\n') // convert to array of lines
-.filter( line => !!line.replace(/\s/g,'' )); // Remove empty lines
+`
+	.split('\n') // convert to array of lines
+	.filter((line) => !!line.replace(/\s/g, '')); // Remove empty lines
 
 if (require.main === module) {
-  // Run if we are being run directly
+	// Run if we are being run directly
 
-  // List the people
-  for ( person of people ) {
-    console.log(person);
-  }
+	// List the people
+	for (person of people) {
+		console.log(person);
+	}
 }
 // If not being run directly, return the text
 module.exports = people;
