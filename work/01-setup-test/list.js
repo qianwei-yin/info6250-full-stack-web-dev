@@ -1,9 +1,9 @@
 const path = require('path');
 
 const people = `
-Qianwei Yin    |002747541 | yin.qian@northeastern.edu | @qianwei yin           | qianwei-yin
+Name           |  NEUID   | Email                     | Slack handle           | github username
 Brett Ritter   | ???      | b.ritter@northeastern.edu | @Brett Ritter (He/Him) | swiftone
-
+Qianwei Yin    |002747541 | yin.qian@northeastern.edu | @qianwei yin           | qianwei-yin
 `
 	.split('\n') // convert to array of lines
 	.filter((line) => !!line.replace(/\s/g, '')); // Remove empty lines
