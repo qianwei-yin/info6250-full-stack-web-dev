@@ -1,0 +1,31 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background-color: #a5b4fc;
+	padding: 3rem 5rem;
+}
+
+.logo {
+	margin-right: 1rem;
+}
+
+main {
+	background-color: #eef2ff;
+}
+
+footer {
+	background-color: #a5b4fc;
+	padding: 1rem 2rem;
+}
+
+a {
+	color: inherit;
+}

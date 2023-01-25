@@ -1,0 +1,9 @@
+.fav-animals {
+	border: 2px solid #4f46e5;
+	padding: 2rem;
+	list-style-type: '\1F431';
+}
+
+.fav-animals--single {
+	line-height: 2;
+}
