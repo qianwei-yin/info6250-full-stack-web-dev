@@ -1,0 +1,80 @@
+*, *::before, *::after { 
+  box-sizing: border-box;
+}
+
+html, body { 
+  height: 100%;
+  margin: 0;
+
+  font-family: sans-serif;
+}
+
+#chat-app { 
+  display: grid;
+  grid-template-areas: 
+    "users messages"
+    "outgoing outgoing"
+  ;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: 1fr auto;
+
+  height: 100%;
+}
+
+.users { 
+  grid-area: users;
+
+  padding: 0;
+  margin: 0;
+
+  overflow-y: auto;
+
+  list-style-type: none;
+}
+
+.messages { 
+  grid-area: messages;
+
+  padding: 0;
+  margin: 0;
+
+  overflow-y: auto;
+
+  list-style-type: none;
+}
+
+.avatar { 
+  height: 2rem;
+}
+
+.username { 
+  margin: auto 1rem;
+}
+
+.message { 
+  display: flex;
+
+  margin-bottom: 1rem;
+}
+
+.sender-info { 
+  display: flex;
+
+  width: 10rem;
+}
+
+.message-text { 
+
+  width: 100%;
+  margin: 0;
+  margin-top: auto;
+}
+
+
+.outgoing { 
+  grid-area: outgoing;
+
+  margin: 2rem;
+}
+
+
