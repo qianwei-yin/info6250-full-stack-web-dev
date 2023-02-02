@@ -1,0 +1,11 @@
+.privacy {
+	border: 2px solid #4f46e5;
+	padding: 2rem;
+}
+.privacy .privacy__para {
+	line-height: 1.6;
+}
+
+.privacy .privacy__para::first-letter {
+	font-size: 150%;
+}
