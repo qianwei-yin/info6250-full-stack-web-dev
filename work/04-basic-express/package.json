@@ -1,0 +1,15 @@
+{
+  "name": "meowchat",
+  "version": "1.0.0",
+  "description": "This is a chat app called MeowChat.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Qianwei",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
