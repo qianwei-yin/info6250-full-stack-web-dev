@@ -9,7 +9,7 @@ exports.checkSID = (req, res) => {
 
 	// If modify the cookie but not delete it, the sid will still exist, so need to double check if sid.uuid also exist
 	if (!sid || !sid.uuid) {
-		res.status(401).send(loginPage());
+		res.send(loginPage());
 	} else {
 		const { username } = sessions[sid.uuid];
 		const stored = findWordByUsername(username);
