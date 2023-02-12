@@ -1,12 +1,9 @@
-const loginPage = () => `<!DOCTYPE html>
+const loginPage = () => `
+<!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-		<link rel="icon" href="../images/favicon.svg" type="image/svg+xml" />
-		<link rel="stylesheet" href="../css/styles.css" />
+		<link rel="icon" href="./images/favicon.svg" type="image/svg+xml" />
+		<link rel="stylesheet" href="./css/styles.css" />
 
 		<title>Word World | Login</title>
 	</head>
@@ -22,7 +19,7 @@ const loginPage = () => `<!DOCTYPE html>
 					<label for="username" class="form-label">user name</label>
 					<input type="text" class="form-input" name="username" />
 				</div>
-				<button type="submit" class="btn btn--block">log in</button>
+				<button type="submit" class="btn btn--submit">log in</button>
 			</form>
 		</main>
 	</body>

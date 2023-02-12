@@ -1,12 +1,9 @@
-const homePage = (username, word) => `<!DOCTYPE html>
+const homePage = (username, word) => `
+<!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-		<link rel="icon" href="../images/favicon.svg" type="image/svg+xml" />
-		<link rel="stylesheet" href="../css/styles.css" />
+		<link rel="icon" href="./images/favicon.svg" type="image/svg+xml" />
+		<link rel="stylesheet" href="./css/styles.css" />
 
 		<title>Word World | Home</title>
 	</head>
@@ -21,7 +18,7 @@ const homePage = (username, word) => `<!DOCTYPE html>
 					<span class="user__img">${username.slice(0, 1)}</span>
 					<span class="user__name">${username}</span>
 					<form action="/logout" method="post">
-						<button class="btn btn--inline">log out</button>
+						<button class="btn btn--logout">log out</button>
 					</form>
 				</div>
 			</header>
@@ -40,7 +37,7 @@ const homePage = (username, word) => `<!DOCTYPE html>
 						<label for="word" class="form-label">your new word</label>
 						<input type="text" class="form-input" name="word" />
 					</div>
-					<button type="submit" class="btn btn--block">submit</button>
+					<button type="submit" class="btn btn--submit">submit</button>
 				</form>
 			</main>
 		</div>

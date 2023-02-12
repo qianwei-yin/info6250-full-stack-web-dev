@@ -13,6 +13,7 @@
 	--color-grey-4: #334155;
 	--color-grey-5: #0f172a;
 
+	/* I compare the shadow on small and large screen, I think there is no need to use rem/em in this case */
 	--box-shadow: 0 2px 10px 7px rgba(0, 0, 0, 0.1);
 }
 
@@ -27,8 +28,8 @@
 html {
 	font-size: 100%;
 }
-/* When width of screen below 991px, make the rem to 10px */
-@media screen and (max-width: 991px) {
+/* When width of screen below 992px, make the rem to 10px */
+@media screen and (max-width: 62em) {
 	html {
 		font-size: 62.5%;
 	}
@@ -57,6 +58,7 @@ h3 {
 .btn {
 	border: none;
 	font-family: 'Chubbo', sans-serif;
+	/* For border-radius, using px is okay */
 	border-radius: 7px;
 	text-transform: uppercase;
 	font-weight: 500;
@@ -109,7 +111,7 @@ h3 {
 }
 .logo__text span {
 	display: inline-block;
-	margin-right: 5px;
+	margin-right: 0.5rem;
 	font-size: 2.6rem;
 }
 
@@ -136,16 +138,17 @@ h3 {
 	font-weight: 500;
 
 	padding-left: 1rem;
-	padding-bottom: 10px;
+	padding-bottom: 0.5rem;
 }
 .form-input {
 	border: none;
+	/* For border-radius, using px is okay */
 	border-radius: 10px;
 	background-color: var(--color-grey-1);
 
 	font-size: 1.4rem;
 	line-height: 2;
-	padding: 5px 1rem;
+	padding: 0.3rem 1rem;
 	font-family: inherit;
 }
 .form-input:focus {
@@ -153,12 +156,12 @@ h3 {
 	box-shadow: var(--box-shadow);
 }
 
-.btn--block {
+.btn--submit {
 	display: block;
 	width: 100%;
 
 	font-size: 1.6rem;
-	padding: 5px;
+	padding: 0.5rem;
 	letter-spacing: 2px;
 
 	background-color: var(--color-primary-3);
@@ -208,15 +211,15 @@ h3 {
 	font-weight: 700;
 }
 
-.btn--inline {
+.btn--logout {
 	display: inline-block;
 
 	font-size: 1rem;
-	padding: 10px 20px;
+	padding: 1rem 1.5rem;
 	letter-spacing: 2px;
 	background-color: transparent;
 }
-.btn--inline:hover {
+.btn--logout:hover {
 	text-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -276,5 +279,5 @@ h3 {
 }
 
 .unauthz-img {
-	width: 35rem;
+	width: 50%;
 }
