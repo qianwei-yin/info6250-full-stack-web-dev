@@ -1,7 +1,7 @@
 const { v4: uuidv4 } = require('uuid');
-
-const loginPage = require('./public/html/login');
-const homePage = require('./public/html/home');
+const loginPage = require('./pages/login');
+const homePage = require('./pages/home');
+const unauthzPage = require('./pages/unauthz');
 const { sessions, words } = require('./data');
 
 exports.checkSID = (req, res) => {
@@ -21,8 +21,9 @@ exports.checkSID = (req, res) => {
 exports.login = (req, res) => {
 	const username = req.body.username;
 
+	// If username is not valid
 	if (!username || username === 'dog' || !isAlphaNumeric(username)) {
-		return res.redirect('/unauthz');
+		return res.status(401).send(unauthzPage());
 	}
 
 	const uuid = uuidv4();
@@ -43,6 +44,7 @@ exports.login = (req, res) => {
 };
 
 exports.logout = (req, res) => {
+	// first get cookie
 	const { uuid } = req.cookies.sid;
 
 	// delete cookie in server
@@ -54,13 +56,10 @@ exports.logout = (req, res) => {
 	res.redirect('/');
 };
 
-exports.getUnauthzPage = (req, res) => {
-	res.status(401).sendFile('./public/html/unauthz.html', { root: __dirname });
-};
-
-exports.changeWord = (req, res, next) => {
+exports.changeWord = (req, res) => {
+	// First check is cookie is valid
 	const { sid } = req.cookies;
-	if (!sid || !sid.uuid) res.redirect('/');
+	if (!sid || !sid.uuid) return res.redirect('/');
 
 	const { username } = sessions[sid.uuid];
 	const stored = findWordByUsername(username);
@@ -80,7 +79,7 @@ exports.changeWord = (req, res, next) => {
 	res.redirect('/');
 };
 
-// helper function
+// helper functions
 const findWordByUsername = (username) => {
 	const stored = words.find((el) => el.username === username);
 	return stored;
