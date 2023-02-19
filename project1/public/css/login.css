@@ -1,0 +1,49 @@
+/* 
+<section class="section-center">
+    <form action="#" method="post" class="login__form">
+        <h1 class="login__title">log in</h1>
+        <p class="alert show-alert">Your word is invalid!</p>
+        <!-- <p class="alert">Your word is invalid!</p> -->
+        <input type="text" class="login__input" placeholder="User Name" />
+        <button class="login__btn btn--outline" type="submit">log in</button>
+    </form>
+</section>
+*/
+.section-center {
+	display: flex;
+	align-items: center;
+}
+
+.login__form {
+	display: flex;
+	flex-direction: column;
+
+	width: 40%;
+	margin: 0 auto;
+	padding: 2rem;
+
+	border: 3px solid var(--color-stone-1);
+	border-radius: 1rem;
+}
+.login__title {
+	text-align: center;
+	text-transform: uppercase;
+	margin-bottom: 1rem;
+	font-size: 2rem;
+}
+.login__input {
+	margin: 3rem 0 1rem;
+	padding: 1rem 2rem;
+	font-size: 1.2rem;
+	font-family: inherit;
+	border-radius: 0.8rem;
+}
+.login__btn {
+	text-transform: uppercase;
+	font-size: 1.7rem;
+	padding: 0.5rem 1rem;
+	background-color: var(--color-stone-1);
+	color: var(--color-stone-5);
+
+	border-radius: 0.8rem;
+}

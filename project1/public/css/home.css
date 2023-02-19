@@ -1,0 +1,120 @@
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	padding: 1rem 2rem;
+	margin-bottom: 2rem;
+}
+
+.new-game__btn,
+.logout__btn {
+	font-size: 2rem;
+}
+
+.message {
+	padding: 1rem;
+	text-align: center;
+	font-size: 4rem;
+	word-spacing: 0.5rem;
+	letter-spacing: 3px;
+	margin: 1rem auto;
+}
+.last-guessed__word {
+	font-size: 5rem;
+	text-transform: uppercase;
+}
+
+.last-guessed__count {
+	font-size: 5rem;
+}
+
+.guess-area {
+	display: grid;
+	grid-template-columns: 10fr 12fr 10fr;
+	grid-template-rows: 45vh auto;
+	justify-items: center;
+
+	margin-top: 2rem;
+}
+
+.full-list__title,
+.guessed-list__title {
+	font-weight: 700;
+	font-size: 1.5rem;
+	margin-bottom: 1rem;
+	text-align: center;
+}
+.full-list__words {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+
+	letter-spacing: 2px;
+	font-size: 1.1rem;
+	height: 90%;
+	border: 1px solid var(--color-stone-1);
+	padding: 1rem;
+	line-height: 1.5;
+	text-align: center;
+	overflow-y: scroll;
+}
+
+/* 
+<form action="#" method="post" class="guess__form">
+    <input type="text" placeholder="Have a guess from possible words on the left" />
+    <button class="guess__btn btn--outline" type="submit">guess</button>
+</form>
+*/
+.guess__form {
+	align-self: center;
+
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+
+	width: 90%;
+}
+.guess__input {
+	padding: 1rem;
+	font-family: inherit;
+	font-size: 1.2rem;
+	border-radius: 0.5rem;
+}
+.guess__input:focus {
+	outline: none;
+}
+.guess__input::placeholder {
+}
+
+.guess__btn {
+	color: var(--color-stone-5);
+	border-radius: 0.5rem;
+	font-size: 1.5rem;
+	padding: 0.5rem 1rem;
+}
+
+.guessed-list__content {
+	border: 1px solid var(--color-stone-1);
+	padding: 1rem;
+	letter-spacing: 2px;
+	height: 90%;
+	min-height: 90%;
+}
+.guessed-list__content__title {
+	display: flex;
+	column-gap: 2rem;
+	/* justify-content: space-between; */
+	margin-bottom: 0.5rem;
+	font-size: 1.2rem;
+}
+.guessed-list__content__words {
+	font-size: 1.1rem;
+	padding: 1rem;
+	line-height: 1.5;
+	height: 90%;
+	text-align: center;
+	overflow-y: scroll;
+}
+.guessed-list__content__words--row {
+	display: flex;
+	/* column-gap: 1rem; */
+	justify-content: space-between;
+}
