@@ -1,3 +1,10 @@
+.section-center.success {
+	background-color: var(--color-success);
+}
+.success + .footer {
+	background-color: var(--color-success);
+}
+
 .navbar {
 	display: flex;
 	justify-content: space-between;
@@ -13,10 +20,10 @@
 .message {
 	padding: 1rem;
 	text-align: center;
-	font-size: 4rem;
+	font-size: 3.2rem;
 	word-spacing: 0.5rem;
 	letter-spacing: 3px;
-	margin: 1rem auto;
+	margin: 1rem auto 0;
 }
 .last-guessed__word {
 	font-size: 5rem;
@@ -29,11 +36,22 @@
 
 .guess-area {
 	display: grid;
-	grid-template-columns: 10fr 12fr 10fr;
-	grid-template-rows: 45vh auto;
+	grid-template-columns: repeat(14, 1fr);
+	grid-template-rows: 55vh auto;
+	column-gap: 0.5rem;
 	justify-items: center;
+	justify-content: space-between;
 
-	margin-top: 2rem;
+	margin-top: 1.5rem;
+}
+.full-list {
+	grid-column: 1 / span 5;
+}
+.guess__form {
+	grid-column: 6 / span 4;
+}
+.guessed-list {
+	grid-column: 10 / span 4;
 }
 
 .full-list__title,
@@ -45,10 +63,11 @@
 }
 .full-list__words {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: repeat(6, 1fr);
+	column-gap: 0.5rem;
 
 	letter-spacing: 2px;
-	font-size: 1.1rem;
+	font-size: 1rem;
 	height: 90%;
 	border: 1px solid var(--color-stone-1);
 	padding: 1rem;
@@ -56,13 +75,10 @@
 	text-align: center;
 	overflow-y: scroll;
 }
+.full-list__words p:nth-child(even) {
+	color: var(--color-stone-3);
+}
 
-/* 
-<form action="#" method="post" class="guess__form">
-    <input type="text" placeholder="Have a guess from possible words on the left" />
-    <button class="guess__btn btn--outline" type="submit">guess</button>
-</form>
-*/
 .guess__form {
 	align-self: center;
 
@@ -76,12 +92,14 @@
 	padding: 1rem;
 	font-family: inherit;
 	font-size: 1.2rem;
+	border: none;
 	border-radius: 0.5rem;
+}
+.guess__input::placeholder {
+	font-size: 1rem;
 }
 .guess__input:focus {
 	outline: none;
-}
-.guess__input::placeholder {
 }
 
 .guess__btn {
@@ -96,7 +114,6 @@
 	padding: 1rem;
 	letter-spacing: 2px;
 	height: 90%;
-	min-height: 90%;
 }
 .guessed-list__content__title {
 	display: flex;
@@ -106,15 +123,20 @@
 	font-size: 1.2rem;
 }
 .guessed-list__content__words {
-	font-size: 1.1rem;
+	border-top: 1px solid var(--color-stone-1);
+	font-size: 1rem;
 	padding: 1rem;
 	line-height: 1.5;
 	height: 90%;
 	text-align: center;
 	overflow-y: scroll;
 }
-.guessed-list__content__words--row {
+.guessed-list__content__words--row,
+.guessed-list__content__words--row--invalid {
 	display: flex;
 	/* column-gap: 1rem; */
 	justify-content: space-between;
+}
+.guessed-list__content__words--row--invalid {
+	color: var(--color-warning);
 }

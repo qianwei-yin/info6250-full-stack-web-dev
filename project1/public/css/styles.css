@@ -24,8 +24,8 @@
 html {
 	font-size: 100%;
 }
-/* When width of screen below 992px, make the rem to 10px */
-@media screen and (max-width: 62em) {
+/* When width of screen below 1488px, make the rem to 10px */
+@media screen and (max-width: 93em) {
 	html {
 		font-size: 62.5%;
 	}
@@ -38,10 +38,9 @@ body {
 
 .section-center {
 	background-color: var(--color-stone-5);
-	padding: 0 10vw;
-	height: calc(100vh - var(--footer-height));
-	min-height: calc(100vh - var(--footer-height));
-	max-height: 100vh;
+	padding: 0 10vw var(--footer-height);
+	height: 100vh;
+	min-height: 100%;
 }
 
 button {
@@ -101,6 +100,7 @@ button {
 	text-align: center;
 	height: var(--footer-height);
 	letter-spacing: 2px;
+	margin-top: calc(-1 * var(--footer-height));
 }
 .footer--company {
 	text-transform: uppercase;
