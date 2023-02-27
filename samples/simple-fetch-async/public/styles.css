@@ -1,0 +1,82 @@
+*, *::before, *::after { 
+  box-sizing: border-box;
+}
+
+:root { 
+  --banner-bg-color: burlywood;
+  --bg-color: papayawhip;
+  --inactive-bg-color: skyblue;
+  --active-bg-color: dodgerblue;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+
+  background-color: var(--bg-color);
+
+  font-family: sans-serif;
+}
+
+#root { 
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+
+  height: 100%;
+}
+
+.header { 
+  background-color: var(--banner-bg-color);
+}
+
+.header__title { 
+  text-align: center;
+}
+
+.cards { 
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+
+  margin: 0;
+  padding: 1rem;
+
+  list-style: none;
+}
+
+.card { 
+  grid-column: span 4;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 0 1rem;
+  border: 1px solid black;
+  border-radius: 16px;
+
+  background-color: var(--inactive-bg-color);
+
+  font: inherit;
+}
+
+.card:hover { 
+  background-color: var(--active-bg-color);
+}
+
+
+
+.card__name { 
+  text-align: center;
+}
+
+.card__load { 
+  margin: 0 auto;
+}
+
+.footer { 
+  background-color: var(--banner-bg-color);
+}
+
+.footer__privacy { 
+  text-align: center;
+}
