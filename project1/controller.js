@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const compare = require('./utils/compare.js');
 const checkValidGuess = require('./utils/checkValidGuess.js');
 const newGame = require('./utils/newGame.js');
+const { isAlphaNumeric } = require('./utils/checkChars.js');
 
 const { sidUsername, usernameGame } = require('./store.js');
 const loginPage = require('./pages/loginPage.js');
@@ -86,7 +87,7 @@ exports.newGame = (req, res) => {
 };
 
 exports.guess = (req, res) => {
-	const { guessWord } = req.body;
+	const guessWord = req.body.guessWord.toLowerCase();
 	const { sid } = req.cookies;
 	const username = sidUsername[sid.uuid];
 	const gameData = usernameGame[username];
@@ -96,14 +97,14 @@ exports.guess = (req, res) => {
 
 	if (type === 'valid') {
 		const sameNum = compare(referenceWord, guessWord);
-		validGuessedWords.push([guessWord.toLowerCase(), sameNum]);
+		validGuessedWords.push([guessWord, sameNum]);
 		alertParams.showAlert = false;
 		return res.redirect('/');
 	}
 
 	if (type === 'impossible') {
 		// add to invalid array
-		invalidGuessedWords.push(guessWord.toLowerCase());
+		invalidGuessedWords.push(guessWord);
 	}
 	// alert
 	alertParams.showAlert = true;
@@ -111,8 +112,6 @@ exports.guess = (req, res) => {
 	alertParams.alertMessage = msg;
 	return res.redirect('/');
 };
-
-const isAlphaNumeric = (str) => /^[0-9A-Z]+$/i.test(str);
 
 const clearCookie = (res, uuid) => {
 	// delete cookie in server

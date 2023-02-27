@@ -1,5 +1,6 @@
 'use strict';
 
+const { isAlpha } = require('./checkChars.js');
 const allWords = require('../words.js');
 const { usernameGame } = require('../store.js');
 
@@ -8,6 +9,12 @@ const checkValidGuess = (username, guessWord) => {
 		return {
 			type: 'no input',
 			msg: `Invalid guess! Please input a word from the possible ones.`,
+		};
+
+	if (!isAlpha(guessWord))
+		return {
+			type: 'invalid',
+			msg: `Invalid guess! A guess can only consist of letters.`,
 		};
 
 	const { validGuessedWords } = usernameGame[username];

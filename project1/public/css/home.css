@@ -76,7 +76,7 @@
 	overflow-y: scroll;
 }
 .full-list__words p:nth-child(even) {
-	color: var(--color-stone-3);
+	color: var(--color-stone-2);
 }
 
 .guess__form {
