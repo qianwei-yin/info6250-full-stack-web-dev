@@ -1,0 +1,108 @@
+@import url('https://api.fontshare.com/v2/css?f[]=array@700,400,600&display=swap');
+
+:root {
+	--color-stone-1: #f5f5f4;
+	--color-stone-2: #d6d3d1;
+	--color-stone-3: #78716c;
+	--color-stone-4: #44403c;
+	--color-stone-5: #1c1917;
+
+	--color-success: #65a30d;
+	--color-warning: #f87171;
+
+	--footer-height: 2rem;
+}
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 100%;
+}
+/* When width of screen below 1488px, make the rem to 10px */
+@media screen and (max-width: 93em) {
+	html {
+		font-size: 62.5%;
+	}
+}
+
+body {
+	font-family: 'Array', sans-serif;
+	color: var(--color-stone-1);
+}
+
+.section-center {
+	background-color: var(--color-stone-5);
+	padding: 0 10vw var(--footer-height);
+	height: 100vh;
+	min-height: 100%;
+}
+
+button {
+	font-family: inherit;
+	color: inherit;
+	border: none;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.btn--no-outline {
+	background-color: transparent;
+	transition: all 0.1s ease-in-out;
+}
+.btn--no-outline:hover {
+	transform: translateY(-2px);
+	text-shadow: 3px 3px 10px rgba(255, 255, 255, 0.6);
+}
+.btn--no-outline:active {
+	transform: none;
+}
+
+.btn--outline {
+	transition: all 0.1s ease-in-out;
+}
+.btn--outline:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 3px 10px 3px rgba(255, 255, 255, 0.1);
+}
+.btn--outline:active {
+	transform: none;
+}
+
+.alert {
+	display: none;
+
+	text-align: center;
+	background-color: var(--color-stone-2);
+	font-size: 1.6rem;
+	border-radius: 1rem;
+	padding: 1rem 1rem;
+}
+.show-alert {
+	display: block;
+}
+.alert--warning {
+	color: var(--color-warning);
+}
+.alert--success {
+	color: var(--color-success);
+}
+
+.footer {
+	background-color: var(--color-stone-5);
+	color: var(--color-stone-1);
+	width: 100%;
+	text-align: center;
+	height: var(--footer-height);
+	letter-spacing: 2px;
+	margin-top: calc(-1 * var(--footer-height));
+}
+.footer--company {
+	text-transform: uppercase;
+	color: var(--color-stone-3);
+}

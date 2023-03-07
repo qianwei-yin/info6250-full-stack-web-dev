@@ -1,0 +1,15 @@
+{
+	"name": "guess-my-word",
+	"version": "1.0.0",
+	"main": "server.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "qianwei",
+	"license": "ISC",
+	"dependencies": {
+		"cookie-parser": "^1.4.6",
+		"express": "^4.18.2",
+		"uuid": "^9.0.0"
+	}
+}
