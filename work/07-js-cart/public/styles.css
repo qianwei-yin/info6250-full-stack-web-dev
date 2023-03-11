@@ -1,0 +1,200 @@
+@import url('https://api.fontshare.com/v2/css?f[]=zodiak@700,400&f[]=comico@400&display=swap');
+
+:root {
+	--color-primary-1: #fffbeb;
+	--color-primary-2: #fde68a;
+	--color-primary-3: #fbbf24;
+	--color-primary-4: #d97706;
+	--color-primary-5: #92400e;
+}
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 100%;
+}
+@media screen and (max-width: 60em) {
+	html {
+		font-size: 68.75%;
+	}
+}
+
+body {
+	background-color: var(--color-primary-1);
+	color: var(--color-primary-3);
+	font-family: 'Zodiak', serif;
+
+	padding: 0 15vw;
+	display: flex;
+	flex-direction: column;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-family: 'Comico', cursive;
+	color: var(--color-primary-5);
+}
+
+button {
+	border: none;
+	background-color: var(--color-primary-5);
+	color: var(--color-primary-2);
+	font-family: 'Comico', cursive;
+	border-radius: 10px;
+	cursor: pointer;
+
+	transition: all 0.2s ease-in-out;
+}
+button:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 2px 10px 2px rgba(0, 0, 0, 0.1);
+}
+button:active {
+	transform: none;
+}
+
+.not-show {
+	display: none;
+}
+
+/*           HEADER            */
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	padding: 1rem;
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+.logo__img {
+	height: 2.5rem;
+	width: 2.5rem;
+}
+.logo__text {
+	font-size: 2rem;
+}
+
+.toggle-cart {
+	font-size: 1.2rem;
+	padding: 0.4rem 1rem;
+}
+
+/*           PRODUCTS            */
+.products {
+	display: grid;
+	grid-template-columns: repeat(3, 20%);
+	justify-content: center;
+	column-gap: 3rem;
+
+	padding: 1rem 2rem;
+}
+
+.product__info {
+	border: 1px solid var(--color-primary-5);
+	border-radius: 10px;
+	padding: 0.5rem;
+}
+.info__img {
+	border-radius: 10px;
+	width: 100%;
+}
+.info__text {
+	display: flex;
+	justify-content: space-between;
+}
+
+.add-to-cart {
+	width: 100%;
+	margin-top: 0.5rem;
+	padding: 0.3rem 0.6rem;
+	font-size: 1rem;
+}
+
+/*           CART            */
+.cart {
+	padding: 2rem;
+}
+
+.empty-cart {
+	text-align: center;
+	font-size: 2.5rem;
+}
+
+.cart__row {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 2fr;
+	justify-items: center;
+	align-items: center;
+}
+
+.cart__title {
+	padding: 0.5rem 0;
+	border-bottom: 1px solid var(--color-primary-4);
+	color: var(--color-primary-4);
+	font-weight: 700;
+}
+
+.cart__product {
+	padding: 0.5rem 0;
+}
+.row__img {
+	width: 3rem;
+}
+
+.quantity {
+	display: flex;
+	gap: 1rem;
+	align-items: center;
+}
+.row__quantity {
+	font-size: 1.3rem;
+}
+.toggle-quantity {
+	background-color: transparent;
+	color: var(--color-primary-5);
+	font-size: 1.7rem;
+}
+.toggle-quantity:hover {
+	transform: none;
+	box-shadow: none;
+}
+
+/*           CHECKOUT            */
+.checkout {
+	align-self: end;
+	border: 1px solid var(--color-primary-5);
+	border-radius: 5px;
+	padding: 1rem;
+	width: 25%;
+}
+
+.checkout__text {
+	color: var(--color-primary-4);
+	display: flex;
+	justify-content: space-between;
+}
+
+.btn-checkout {
+	width: 100%;
+	font-size: 1.2rem;
+	padding: 0.3rem 0.6rem;
+	margin-top: 1rem;
+}
+.btn-checkout:disabled:hover {
+	transform: none;
+	box-shadow: none;
+}
