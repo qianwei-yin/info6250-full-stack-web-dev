@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<link rel="icon" href="./assets/favicon.svg" />
+		<link rel="stylesheet" href="./styles.css" />
+		<script defer src="./script.js"></script>
+
+		<title>Document</title>
+	</head>
+	<body>
+		<section class="login-section">
+			<form class="form login-form">
+				<div class="logo">
+					<img src="./assets/favicon.svg" alt="word world logo" class="logo__img" />
+					<h3 class="logo__text"><span>word</span> world</h3>
+				</div>
+				<h3 class="login-text">login</h3>
+				<p class="warning not-show" id="login-warning">
+					Lorem ipsum dolor sit, amet consectetur adipisicing elit. Excepturi, perspiciatis.
+				</p>
+				<div class="form-row">
+					<label for="username" class="form-label">user name</label>
+					<input type="text" class="form-input input--username" name="username" />
+				</div>
+				<button class="btn btn--submit btn--login">log in</button>
+			</form>
+		</section>
+
+		<section class="home-section">
+			<header class="header"></header>
+
+			<p class="warning not-show" id="home-warning">msg</p>
+
+			<main class="home"></main>
+		</section>
+	</body>
+</html>
