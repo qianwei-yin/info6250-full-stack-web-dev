@@ -1,0 +1,63 @@
+/* 
+<section class="login-view">
+    <form class="login-form">
+        <h1 class="login-text">Log In</h1>
+        <p class="warning">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+		<input placeholder="Enter username to login" type="text" class="input--username" name="username" />
+        <button class="login-btn">Log In</button>
+    </form>
+</section>
+*/
+
+.login-view {
+	height: 92vh;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.login-form {
+	padding: 1rem 2rem;
+	background-color: var(--color-grey-1);
+	border-radius: 1rem;
+}
+
+.login-text {
+	font-size: 2rem;
+	text-align: center;
+	margin-bottom: 1rem;
+}
+
+.warning {
+	background-color: var(--color-warning);
+	font-size: 0.9rem;
+	padding: 0.3rem 0.5rem;
+	border-radius: 0.6rem;
+}
+
+.input--username {
+	display: block;
+	width: 100%;
+	padding: 0.7rem 1rem;
+	font-size: 1.2rem;
+	border: 1px solid var(--color-primary-3);
+	border-radius: 0.4rem;
+	margin: 1rem 0;
+}
+.input--username::placeholder {
+	font-family: 'Recia', serif;
+}
+
+.login-btn {
+	width: 100%;
+	font-family: inherit;
+	font-weight: 700;
+	font-size: 1.3rem;
+	color: var(--color-grey-1);
+	padding: 0.5rem 1rem;
+	border: none;
+	background-color: var(--color-primary-3);
+	border-radius: 10px;
+	cursor: pointer;
+}

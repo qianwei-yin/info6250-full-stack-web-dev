@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<script defer src="./script.js"></script>
+		<link rel="stylesheet" href="./styles.css" />
+		<link rel="stylesheet" href="./login.css" />
+		<link rel="stylesheet" href="./chat.css" />
+
+		<title>MeowChat</title>
+	</head>
+	<body>
+		<!-- login view -->
+		<section class="login-view">
+			<form class="login-form">
+				<h1 class="login-text">Log In</h1>
+				<p class="warning">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+				<input placeholder="Enter username to login" type="text" class="input--username" name="username" />
+				<button class="login-btn">Log In</button>
+			</form>
+		</section>
+
+		<!-- chat view -->
+		<section class="chat-view not-show">
+			<div class="users">
+				<h3>Active Users</h3>
+				<ul class="user-list">
+					<li>
+						<div class="user">
+							<div class="avatar user__avatar">A</div>
+							<span class="username">anna</span>
+						</div>
+					</li>
+					<li>
+						<div class="user">
+							<div class="avatar user__avatar">B</div>
+							<span class="username">bobby</span>
+						</div>
+					</li>
+				</ul>
+			</div>
+
+			<div class="messages">
+				<h3>Public Chat Room</h3>
+				<ol class="message-list">
+					<div class="message">
+						<div class="message__sender">
+							<div class="avatar sender__avatar">A</div>
+							<span class="sender__username">${message.sender}</span>
+						</div>
+						<p class="message__text">${message.text}</p>
+					</div>
+					<div class="message">
+						<div class="message__sender">
+							<div class="avatar sender__avatar">B</div>
+							<span class="sender__username">${message.sender}</span>
+						</div>
+						<p class="message__text">${message.text}</p>
+					</div>
+				</ol>
+			</div>
+
+			<div class="logout">
+				<button class="logout-btn">Log Out</button>
+			</div>
+
+			<form class="send-form">
+				<input
+					placeholder="Enter message to send"
+					type="text"
+					class="send-form__input--text"
+					name="text"
+					required
+				/>
+				<button class="send-form__btn" type="submit">Send</button>
+			</form>
+		</section>
+
+		<footer class="footer">copyright &copy; 2023 MeowChat. All rights reserved.</footer>
+	</body>
+</html>
