@@ -1,4 +1,4 @@
-const users = { anna: true, bobby: true };
+const users = {};
 
 function isValid(username) {
 	if (!username) return false;

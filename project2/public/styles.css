@@ -59,6 +59,13 @@ h5 {
 	margin-bottom: 0.5rem;
 }
 
+.chat-view .warning {
+	position: absolute;
+	top: 1rem;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
 .footer {
 	text-align: center;
 }

@@ -1,4 +1,4 @@
-import { fetchSession, fetchLogin, fetchLogout, fetchAddMessage } from './services';
+import { fetchSession, fetchLogin, fetchLogout, fetchAddMessage, fetchUsers, fetchMessages } from './services';
 import state, {
 	waitOnLogin,
 	login,
@@ -25,7 +25,12 @@ export function addAbilityToLogin(appEl) {
 				waitOnUsers();
 				waitOnMessages();
 				render({ state, appEl });
-				// fetchChat
+				return Promise.all([fetchUsers(), fetchMessages()]);
+			})
+			.then((data) => {
+				setUsers(data[0]);
+				setMessages(data[1]);
+				render({ state, appEl });
 			})
 			.catch((err) => {
 				logout();
@@ -42,7 +47,6 @@ export function addAbilityToLogout(appEl) {
 		logout();
 		render({ state, appEl });
 		fetchLogout().catch((err) => {
-			console.log(err);
 			setError(err?.error || 'ERROR');
 			render({ state, appEl });
 		});

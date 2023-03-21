@@ -28,7 +28,7 @@ var SERVER = {
 var CLIENT = {
   NETWORK_ERROR: 'network-error'
 };
-var MESSAGES = (_MESSAGES = {}, _defineProperty(_MESSAGES, CLIENT.NETWORK_ERROR, 'Trouble connecting to the network, please try again later.'), _defineProperty(_MESSAGES, SERVER.AUTH_MISSING, 'Your session is invalid or has expired, logging you out...'), _defineProperty(_MESSAGES, SERVER.INVALID_USERNAME, 'Please enter a valid (letters and/or numbers) username.'), _defineProperty(_MESSAGES, SERVER.FORBIDDEN_USERNAME, 'Sorry, DOGs are forbidden, please use another username.'), _defineProperty(_MESSAGES, SERVER.INVALID_MESSAGE, 'Cannot send empty messages!'), _defineProperty(_MESSAGES, "default", 'Something went wrong, please try again later.'), _MESSAGES);
+var MESSAGES = (_MESSAGES = {}, _defineProperty(_MESSAGES, CLIENT.NETWORK_ERROR, 'Trouble connecting to the network, please try again later.'), _defineProperty(_MESSAGES, SERVER.AUTH_MISSING, 'Your session is invalid or has expired, logging you out...'), _defineProperty(_MESSAGES, SERVER.INVALID_USERNAME, 'Please enter a valid (within 20 letters and/or numbers) username.'), _defineProperty(_MESSAGES, SERVER.FORBIDDEN_USERNAME, 'Sorry, DOGs are forbidden, please use another username.'), _defineProperty(_MESSAGES, SERVER.INVALID_MESSAGE, 'Cannot send empty messages!'), _defineProperty(_MESSAGES, "default", 'Something went wrong, please try again later.'), _MESSAGES);
 
 /***/ }),
 
@@ -68,7 +68,14 @@ function addAbilityToLogin(appEl) {
         state: _state__WEBPACK_IMPORTED_MODULE_1__["default"],
         appEl: appEl
       });
-      // fetchChat
+      return Promise.all([(0,_services__WEBPACK_IMPORTED_MODULE_0__.fetchUsers)(), (0,_services__WEBPACK_IMPORTED_MODULE_0__.fetchMessages)()]);
+    }).then(function (data) {
+      (0,_state__WEBPACK_IMPORTED_MODULE_1__.setUsers)(data[0]);
+      (0,_state__WEBPACK_IMPORTED_MODULE_1__.setMessages)(data[1]);
+      (0,_render__WEBPACK_IMPORTED_MODULE_2__.render)({
+        state: _state__WEBPACK_IMPORTED_MODULE_1__["default"],
+        appEl: appEl
+      });
     })["catch"](function (err) {
       (0,_state__WEBPACK_IMPORTED_MODULE_1__.logout)();
       (0,_state__WEBPACK_IMPORTED_MODULE_1__.setError)((err === null || err === void 0 ? void 0 : err.error) || 'ERROR');
@@ -88,7 +95,6 @@ function addAbilityToLogout(appEl) {
       appEl: appEl
     });
     (0,_services__WEBPACK_IMPORTED_MODULE_0__.fetchLogout)()["catch"](function (err) {
-      console.log(err);
       (0,_state__WEBPACK_IMPORTED_MODULE_1__.setError)((err === null || err === void 0 ? void 0 : err.error) || 'ERROR');
       (0,_render__WEBPACK_IMPORTED_MODULE_2__.render)({
         state: _state__WEBPACK_IMPORTED_MODULE_1__["default"],
@@ -505,7 +511,9 @@ function checkSession() {
     state: _state__WEBPACK_IMPORTED_MODULE_2__["default"],
     appEl: appEl
   });
-  (0,_services__WEBPACK_IMPORTED_MODULE_0__.fetchSession)().then(function () {
+  (0,_services__WEBPACK_IMPORTED_MODULE_0__.fetchSession)()
+  // when starts, commonly won't execute, because it will throw a auth-missing error
+  .then(function () {
     (0,_state__WEBPACK_IMPORTED_MODULE_2__.login)();
     (0,_state__WEBPACK_IMPORTED_MODULE_2__.waitOnUsers)();
     (0,_state__WEBPACK_IMPORTED_MODULE_2__.waitOnMessages)();
@@ -513,17 +521,11 @@ function checkSession() {
       state: _state__WEBPACK_IMPORTED_MODULE_2__["default"],
       appEl: appEl
     });
-    return (0,_services__WEBPACK_IMPORTED_MODULE_0__.fetchUsers)();
-  }).then(function (users) {
-    (0,_state__WEBPACK_IMPORTED_MODULE_2__.setUsers)(users);
-    (0,_render__WEBPACK_IMPORTED_MODULE_3__.renderUsers)({
-      state: _state__WEBPACK_IMPORTED_MODULE_2__["default"],
-      appEl: appEl
-    });
-    return (0,_services__WEBPACK_IMPORTED_MODULE_0__.fetchMessages)();
-  }).then(function (messages) {
-    (0,_state__WEBPACK_IMPORTED_MODULE_2__.setMessages)(messages);
-    (0,_render__WEBPACK_IMPORTED_MODULE_3__.renderMessages)({
+    return Promise.all([(0,_services__WEBPACK_IMPORTED_MODULE_0__.fetchUsers)(), (0,_services__WEBPACK_IMPORTED_MODULE_0__.fetchMessages)()]);
+  }).then(function (data) {
+    (0,_state__WEBPACK_IMPORTED_MODULE_2__.setUsers)(data[0]);
+    (0,_state__WEBPACK_IMPORTED_MODULE_2__.setMessages)(data[1]);
+    (0,_render__WEBPACK_IMPORTED_MODULE_3__.render)({
       state: _state__WEBPACK_IMPORTED_MODULE_2__["default"],
       appEl: appEl
     });
@@ -541,8 +543,9 @@ function checkSession() {
         appEl: appEl
       });
     }
+  }).then(function () {
+    setInterval(refreshUsersAndMessages, 5000);
   });
-  setInterval(refreshUsersAndMessages, 5000);
 }
 function refreshUsersAndMessages() {
   if (!_state__WEBPACK_IMPORTED_MODULE_2__["default"].isLoggedIn) return;
@@ -554,6 +557,8 @@ function refreshUsersAndMessages() {
     });
     return (0,_services__WEBPACK_IMPORTED_MODULE_0__.fetchMessages)();
   }).then(function (messages) {
+    // This line makes sure that if there is no new message, it will not render.
+    if (messages.length === _state__WEBPACK_IMPORTED_MODULE_2__["default"].messages.length) return;
     (0,_state__WEBPACK_IMPORTED_MODULE_2__.setMessages)(messages);
     (0,_render__WEBPACK_IMPORTED_MODULE_3__.renderMessages)({
       state: _state__WEBPACK_IMPORTED_MODULE_2__["default"],

@@ -26,21 +26,18 @@ function checkSession() {
 	waitOnLogin();
 	render({ state, appEl });
 	fetchSession()
+		// when starts, commonly won't execute, because it will throw a auth-missing error
 		.then(() => {
 			login();
 			waitOnUsers();
 			waitOnMessages();
 			render({ state, appEl });
-			return fetchUsers();
+			return Promise.all([fetchUsers(), fetchMessages()]);
 		})
-		.then((users) => {
-			setUsers(users);
-			renderUsers({ state, appEl });
-			return fetchMessages();
-		})
-		.then((messages) => {
-			setMessages(messages);
-			renderMessages({ state, appEl });
+		.then((data) => {
+			setUsers(data[0]);
+			setMessages(data[1]);
+			render({ state, appEl });
 		})
 		.catch((err) => {
 			if (err?.error === SERVER.AUTH_MISSING) {
@@ -50,13 +47,15 @@ function checkSession() {
 				setError(err?.error || 'ERROR');
 				render({ state, appEl });
 			}
+		})
+		.then(() => {
+			setInterval(refreshUsersAndMessages, 5000);
 		});
-
-	setInterval(refreshUsersAndMessages, 5000);
 }
 
 function refreshUsersAndMessages() {
 	if (!state.isLoggedIn) return;
+
 	fetchUsers()
 		.then((users) => {
 			setUsers(users);
@@ -64,6 +63,8 @@ function refreshUsersAndMessages() {
 			return fetchMessages();
 		})
 		.then((messages) => {
+			// This line makes sure that if there is no new message, it will not render.
+			if (messages.length === state.messages.length) return;
 			setMessages(messages);
 			renderMessages({ state, appEl });
 		})
