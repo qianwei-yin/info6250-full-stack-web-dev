@@ -20,4 +20,5 @@ module.exports = {
 	addSession,
 	getUserBySession,
 	deleteSession,
+	sessions,
 };

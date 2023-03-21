@@ -1,9 +1,10 @@
-const users = {};
+const users = { anna: true, bobby: true };
 
 function isValid(username) {
+	if (!username) return false;
 	const name = username.trim();
-	if (!name || name.length > 20) return false;
-	return name.match(/^[A-Za-z0-9_]+$/);
+	if (name.length > 20) return false;
+	return /^[A-Za-z0-9_]+$/.test(name);
 }
 
 function getUsers() {
@@ -27,4 +28,5 @@ module.exports = {
 	getUsers,
 	addUser,
 	deleteUser,
+	users,
 };

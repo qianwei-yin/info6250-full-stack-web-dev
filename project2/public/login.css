@@ -18,6 +18,7 @@
 }
 
 .login-form {
+	width: 30vw;
 	padding: 1rem 2rem;
 	background-color: var(--color-grey-1);
 	border-radius: 1rem;
@@ -27,13 +28,6 @@
 	font-size: 2rem;
 	text-align: center;
 	margin-bottom: 1rem;
-}
-
-.warning {
-	background-color: var(--color-warning);
-	font-size: 0.9rem;
-	padding: 0.3rem 0.5rem;
-	border-radius: 0.6rem;
 }
 
 .input--username {
@@ -60,4 +54,8 @@
 	background-color: var(--color-primary-3);
 	border-radius: 10px;
 	cursor: pointer;
+}
+.login-btn:disabled {
+	cursor: default;
+	background-color: var(--color-primary-4);
 }

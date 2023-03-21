@@ -35,6 +35,7 @@ exports.addSession = (req, res) => {
 	}
 
 	const sid = sessions.addSession(username);
+	users.addUser(username);
 	res.cookie('sid', sid);
 	res.end();
 };

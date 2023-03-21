@@ -1,6 +1,79 @@
-const test =
-	'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio laboriosam iusto a consequatur eligendi? In officia, animi qui tenetur magnam ea. Eaque voluptatem rem voluptates deserunt. Voluptatibus enim nulla repellat repudiandae minus distinctio facilis neque accusantium, sint quod? Quisquam dicta aut est ea unde ducimus distinctio impedit recusandae voluptatibus nulla.aaaaaaaaaaaabbbbbbbbbbbccccc';
+import { fetchSession, fetchLogin, fetchLogout, fetchUsers, fetchMessages } from './services';
+import { CLIENT, SERVER } from './constants';
+import state, {
+	waitOnLogin,
+	login,
+	logout,
+	waitOnUsers,
+	setUsers,
+	waitOnMessages,
+	setMessages,
+	setError,
+} from './state';
+import { render, renderMessages, renderUsers } from './render';
+import { addAbilityToLogin, addAbilityToLogout, addAbilityToSend } from './listeners';
 
-const h1El = document.querySelector('.test');
+export const appEl = document.querySelector('#app');
 
-h1El.innerText = test;
+addAbilityToLogin(appEl);
+addAbilityToLogout(appEl);
+addAbilityToSend(appEl);
+
+// Run when starting...
+checkSession();
+
+function checkSession() {
+	waitOnLogin();
+	render({ state, appEl });
+	fetchSession()
+		.then(() => {
+			login();
+			waitOnUsers();
+			waitOnMessages();
+			render({ state, appEl });
+			return fetchUsers();
+		})
+		.then((users) => {
+			setUsers(users);
+			renderUsers({ state, appEl });
+			return fetchMessages();
+		})
+		.then((messages) => {
+			setMessages(messages);
+			renderMessages({ state, appEl });
+		})
+		.catch((err) => {
+			if (err?.error === SERVER.AUTH_MISSING) {
+				logout();
+				render({ state, appEl });
+			} else {
+				setError(err?.error || 'ERROR');
+				render({ state, appEl });
+			}
+		});
+
+	setInterval(refreshUsersAndMessages, 5000);
+}
+
+function refreshUsersAndMessages() {
+	if (!state.isLoggedIn) return;
+	fetchUsers()
+		.then((users) => {
+			setUsers(users);
+			renderUsers({ state, appEl });
+			return fetchMessages();
+		})
+		.then((messages) => {
+			setMessages(messages);
+			renderMessages({ state, appEl });
+		})
+		.catch((err) => {
+			if (err?.error === SERVER.AUTH_MISSING) {
+				logout();
+				render({ state, appEl });
+			} else {
+				setError(err?.error || 'ERROR');
+				render({ state, appEl });
+			}
+		});
+}
