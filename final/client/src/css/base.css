@@ -1,0 +1,61 @@
+:root {
+	--font-text: 'Erode', sans-serif;
+	--font-heading: 'Sharpie', sans-serif;
+
+	--weight-text-1: 300;
+	--weight-text-2: 400;
+	--weight-text-3: 500;
+	--weight-text-4: 600;
+	--weight-text-5: 700;
+
+	--weight-heading-1: 300;
+	--weight-heading-2: 400;
+	--weight-heading-3: 700;
+	--weight-heading-4: 800;
+}
+.light-theme {
+	--clr-bg-1: #f5f5f5;
+	--clr-bg-2: #d4d4d4;
+
+	--clr-text-neutral-1: #404040;
+	--clr-text-neutral-2: #171717;
+	--clr-text-indigo-1: #4338ca;
+	--clr-text-indigo-2: #312e81;
+	--clr-text-amber-1: #fbbf24;
+	--clr-text-amber-2: #f59e0b;
+}
+.dark-theme {
+	--clr-bg-1: #404040;
+	--clr-bg-2: #171717;
+
+	--clr-text-neutral-1: #f5f5f5;
+	--clr-text-neutral-2: #d4d4d4;
+	--clr-text-indigo-1: #e0e7ff;
+	--clr-text-indigo-2: #a5b4fc;
+	--clr-text-amber-1: #fde68a;
+	--clr-text-amber-2: #fcd34d;
+}
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	font-family: var(--font-heading);
+}
+
+body {
+	background-color: var(--clr-bg-1);
+	color: var(--clr-text-amber-1);
+	font-family: var(--font-text);
+	transition: background 0.2s linear;
+}
