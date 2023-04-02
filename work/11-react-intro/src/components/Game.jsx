@@ -9,31 +9,33 @@ const Game = ({ state: { alertParams, username }, setters: { setLoggedIn, setAle
 
 	function handleSubmit(e) {
 		e.preventDefault();
+		const candidate = guessWordInput;
+		setGuessWordInput('');
 
-		if (guessWordInput.length !== 5) {
+		if (candidate.length !== 5) {
 			setAlertParams({
 				showAlert: true,
 				alertType: 'warning',
-				alertMsg: `"${guessWordInput}" is not valid. Candidate word should be a 5-letter word.`,
+				alertMsg: `"${candidate}" is not valid. Candidate word should be a 5-letter word.`,
 			});
 			return;
 		}
 
-		if (!isAlpha(guessWordInput)) {
+		if (!isAlpha(candidate)) {
 			setAlertParams({
 				showAlert: true,
 				alertType: 'warning',
-				alertMsg: `"${guessWordInput}" is not valid. Candidate word should only contain letters.`,
+				alertMsg: `"${candidate}" is not valid. Candidate word should only contain letters.`,
 			});
 			return;
 		}
 
-		const sameNum = compare(guessWordInput);
+		const sameNum = compare(candidate);
 		if (sameNum !== 5) {
 			setAlertParams({
 				showAlert: true,
 				alertType: 'warning',
-				alertMsg: `"${guessWordInput}" had ${sameNum} letters in common. Come on!`,
+				alertMsg: `"${candidate}" had ${sameNum} letters in common. Come on!`,
 			});
 			return;
 		}
@@ -41,7 +43,7 @@ const Game = ({ state: { alertParams, username }, setters: { setLoggedIn, setAle
 		setAlertParams({
 			showAlert: true,
 			alertType: 'success',
-			alertMsg: `"${guessWordInput}" is the secret word!`,
+			alertMsg: `"${candidate}" is the secret word!`,
 		});
 	}
 
