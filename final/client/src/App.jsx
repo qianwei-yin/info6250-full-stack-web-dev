@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import './css/index.css';
 
-import { FormRowInput, FormRowSelect, FormRowCalendar } from './components';
+import { ThemeToggler, TransactionItem } from './components';
 
 function App() {
 	const [theme, setTheme] = useState('light-theme');
@@ -10,24 +10,13 @@ function App() {
 		document.body.className = theme;
 	}, [theme]);
 
+	const transaction = { amount: 100, category: 'clothes', time: new Date(), type: 'expense' };
+
 	return (
-		<form>
-			<FormRowInput
-				props={{
-					label: 'Username',
-					name: 'username',
-					type: 'text',
-				}}
-			/>
-			<FormRowSelect
-				props={{
-					label: 'Hello',
-					name: 'helloWord',
-					options: ['hello', 'world', 'python', 'nihao'],
-				}}
-			/>
-			<FormRowCalendar props={{ label: 'Add Date', name: 'addDate' }} />
-		</form>
+		<>
+			<ThemeToggler setTheme={setTheme} />
+			<TransactionItem transaction={transaction} />
+		</>
 	);
 }
 

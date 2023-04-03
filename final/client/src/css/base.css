@@ -23,6 +23,8 @@
 	--clr-text-indigo-2: #312e81;
 	--clr-text-amber-1: #fbbf24;
 	--clr-text-amber-2: #f59e0b;
+	--clr-text-red: #ef4444;
+	--clr-text-green: #65a30d;
 }
 .dark-theme {
 	--clr-bg-1: #404040;
@@ -34,6 +36,8 @@
 	--clr-text-indigo-2: #a5b4fc;
 	--clr-text-amber-1: #fde68a;
 	--clr-text-amber-2: #fcd34d;
+	--clr-text-red: #f87171;
+	--clr-text-green: #84cc16;
 }
 
 *,
