@@ -1,10 +1,37 @@
 import Logo from './Logo';
+import { ERROR_MESSAGES } from '../errorConstant';
+import { fetchLogout } from '../services';
 
 const Navbar = ({ states, setStates }) => {
 	const { username } = states;
 
 	function handleLogout() {
-		console.log('trying to logout');
+		fetchLogout()
+			.then(() => {
+				setStates((oldStates) => {
+					return {
+						...oldStates,
+						loggedIn: false,
+						username: '',
+						storedWord: '',
+						warningParams: {
+							showWarning: false,
+							warningMsg: '',
+						},
+					};
+				});
+			})
+			.catch((err) => {
+				setStates((oldStates) => {
+					return {
+						...oldStates,
+						warningParams: {
+							showWarning: true,
+							warningMsg: ERROR_MESSAGES[err.error] || ERROR_MESSAGES.default,
+						},
+					};
+				});
+			});
 	}
 
 	return (

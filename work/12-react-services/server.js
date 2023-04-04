@@ -10,25 +10,35 @@ app.use(cookieParser());
 app.use(express.static('./build')); // this folder will appear after running "npm run build"
 app.use(express.json()); // Parses requests with json content bodies
 
-// Sessions
-// Check for existing session (used on page load)
-app.get('/api/session', (req, res) => {
+app.route('/api/v1/session').get(checkSession, getSession).post(addSession).delete(deleteSession);
+app.route('/api/v1/word').get(checkSession, getWord).post(checkSession, updateWord);
+
+///////////////// Sessions //////////////////////
+function checkSession(req, res, next) {
 	const sid = req.cookies.sid;
-	const username = sid ? sessions.getSessionUser(sid) : '';
+	const username = sid ? sessions.getUserBySession(sid) : '';
+
 	if (!sid || !username) {
 		res.status(401).json({ error: 'auth-missing' });
 		return;
 	}
-	res.json({ username });
-});
 
-// Create a new session (login)
-app.post('/api/session', (req, res) => {
+	res.locals.username = username;
+	next();
+}
+
+// Check for existing session
+function getSession(req, res) {
+	const { username } = res.locals;
+	res.json({ username });
+}
+
+// Login
+function addSession(req, res) {
 	const { username } = req.body;
 
 	if (!users.isValidUsername(username)) {
-		console.log(username);
-		res.status(400).json({ error: 'required-username' });
+		res.status(400).json({ error: 'invalid-username' });
 		return;
 	}
 
@@ -41,56 +51,36 @@ app.post('/api/session', (req, res) => {
 
 	res.cookie('sid', sid);
 	res.json({ username });
-});
+}
 
-app.delete('/api/session', (req, res) => {
+// Logout
+function deleteSession(req, res) {
 	const sid = req.cookies.sid;
-	const username = sid ? sessions.getSessionUser(sid) : '';
+	const username = sid ? sessions.getUserBySession(sid) : '';
 
 	if (sid) {
 		res.clearCookie('sid');
 	}
-
 	if (username) {
-		// Delete the session, but not the user data
 		sessions.deleteSession(sid);
 	}
 
-	// We don't report any error if sid or session didn't exist
-	// Because that means we already have what we want
-	res.json({ wasLoggedIn: !!username }); // Provides some extra info that can be safely ignored
-});
+	// If there is a username, then !!username === true, otherwise, false
+	res.json({ wasLoggedIn: !!username });
+}
 
-// Stored Word
-
-app.get('/api/word', (req, res) => {
-	// Session checks for these are very repetitive - a good place to abstract out
-	// I've left the repetitive sections here for ease of learning
-	const sid = req.cookies.sid;
-	const username = sid ? sessions.getSessionUser(sid) : '';
-
-	if (!sid || !username) {
-		res.status(401).json({ error: 'auth-missing' });
-		return;
-	}
-
-	const storedWord = users.wordFor[username] || '';
-
+////////////////////// Stored Word //////////////////////
+function getWord(req, res) {
+	const { username } = res.locals;
+	const storedWord = users.userWord[username] || '';
 	res.json({ username, storedWord });
-});
+}
 
-app.post('/api/word', (req, res) => {
-	// Session checks for these are very repetitive - a good place to abstract out
-	// I've left the repetitive sections here for ease of learning
-	const sid = req.cookies.sid;
-	const username = sid ? sessions.getSessionUser(sid) : '';
-	if (!sid || !username) {
-		res.status(401).json({ error: 'auth-missing' });
-		return;
-	}
-
+function updateWord(req, res) {
+	const { username } = res.locals;
 	const { word } = req.body;
 
+	// word can be an empty string, which equals "delete the word"
 	if (!word && word !== '') {
 		res.status(400).json({ error: 'required-word' });
 		return;
@@ -101,9 +91,8 @@ app.post('/api/word', (req, res) => {
 		return;
 	}
 
-	users.wordFor[username] = word;
-
+	users.userWord[username] = word;
 	res.json({ username, storedWord: word });
-});
+}
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));
