@@ -1,18 +1,16 @@
-import { FiSun, FiMoon } from 'react-icons/fi';
+import { useAppContext } from '../context/context';
+import { ReactComponent as IconSun } from '../icons/sun-solid.svg';
+import { ReactComponent as IconMoon } from '../icons/moon-solid.svg';
 
-const ThemeToggler = ({ setTheme }) => {
-	function toggleTheme() {
-		setTheme((theme) => {
-			return theme === 'light-theme' ? 'dark-theme' : 'light-theme';
-		});
-	}
+const ThemeToggler = () => {
+	const { toggleTheme } = useAppContext();
 
 	return (
 		<div className="theme-toggler">
 			<input type="checkbox" className="theme__checkbox" id="checkbox" onChange={toggleTheme} />
-			<label for="checkbox" className="theme__label">
-				<FiMoon className="theme__label--moon" />
-				<FiSun className="theme__label--sun" />
+			<label htmlFor="checkbox" className="theme__label">
+				<IconMoon className="icon theme__label--moon" />
+				<IconSun className="icon theme__label--sun" />
 				<span className="theme__label--ball"></span>
 			</label>
 		</div>

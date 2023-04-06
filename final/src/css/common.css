@@ -1,7 +1,7 @@
-/* -----------Logo + Name---------------- */
+/* -----------Logo + Brand---------------- */
 .logo {
 	display: flex;
-	align-items: end;
+	align-items: flex-end;
 }
 .logo__img {
 	height: 4rem;
@@ -33,7 +33,9 @@
 
 .theme__label--moon,
 .theme__label--sun {
-	color: var(--clr-text-amber-2);
+	width: 1rem;
+	height: 1rem;
+	fill: var(--clr-text-amber-2);
 }
 
 .theme__label--ball {
@@ -112,35 +114,19 @@ form {
 	font-weight: var(--weight-text-4);
 	margin-left: 0.4rem;
 }
-.form-row__input {
-	width: 100%;
-	border: none;
-	border-radius: 0.5rem;
-	padding: 0.3rem 0.6rem;
-	font-family: inherit;
-	font-size: 1.2rem;
-	font-weight: var(--weight-text-3);
-	box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.02);
-}
+
 .form-row__input:focus {
 	outline: none;
 	box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.08);
-}
-
-.form-row__select {
-	width: 100%;
-	border: none;
-	border-radius: 0.5rem;
-	padding: 0.3rem 0.6rem;
-	font-family: inherit;
-	font-size: 1.2rem;
-	font-weight: var(--weight-text-3);
-	box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.02);
 }
 .form-row__select:first-child {
 	color: #888;
 }
 .form-row__select:focus {
+	outline: none;
+	box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.08);
+}
+.form-row__calendar:focus {
 	outline: none;
 	box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.08);
 }

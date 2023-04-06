@@ -1,0 +1,67 @@
+/* 
+<header className="navbar">
+    <Logo />
+
+    <div className="page-navigation">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/add">Add</a>
+        <a href="/settings">Settings</a>
+    </div>
+
+    <div className="user-info">
+        <div className="user-info__img">{username.slice(0, 1)}</div>
+        <span className="user-info__username">{username}</span>
+    </div>
+
+    <button className="btn--without-border">Log Out</button>
+</header>
+*/
+.navbar {
+	display: flex;
+	align-items: last baseline;
+	gap: 2rem;
+	padding: 0.7rem 1rem;
+}
+
+.page-navigation {
+	margin-right: auto;
+	display: flex;
+	gap: 1.3rem;
+}
+.page-navigation__link:link,
+.page-navigation__link:visited {
+	text-decoration: none;
+	color: var(--clr-text-amber-2);
+	font-size: 1.6rem;
+	font-weight: var(--weight-heading-4);
+	transition: all 0.2s ease-in-out;
+}
+.page-navigation__link:hover,
+.page-navigation__link:active {
+	transform: translateY(-3px);
+	text-shadow: 3px 3px 10px var(--clr-bg-2);
+}
+
+.user-info {
+	display: flex;
+	gap: 0.3rem;
+}
+.user-info__img {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	text-transform: uppercase;
+	background-color: var(--clr-bg-2);
+	width: 2.5rem;
+	height: 2.5rem;
+	padding: 0 0 0.1rem;
+	border-radius: 50%;
+	font-size: 2rem;
+	font-weight: var(--weight-text-5);
+	transform: translateY(-1rem);
+}
+.user-info__username {
+	text-transform: capitalize;
+	font-size: 1.1rem;
+	font-weight: var(--weight-text-4);
+}

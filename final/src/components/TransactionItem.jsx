@@ -1,4 +1,3 @@
-import moment from 'moment';
 import categories from '../scripts/categories';
 
 const TransactionItem = ({ transaction }) => {
@@ -10,7 +9,15 @@ const TransactionItem = ({ transaction }) => {
 				{categories[category] ? categories[category] : categories['default']}
 			</div>
 			<span className="transaction-item__category">{category}</span>
-			<span className="transaction-item__date">{moment(time).format('ddd, ll')}</span>
+			{/*  // Friday, Dec 27 */}
+			<span className="transaction-item__date">
+				{Intl.DateTimeFormat(navigator.language, {
+					weekday: 'short',
+					month: 'short',
+					day: 'numeric',
+					year: 'numeric',
+				}).format(time)}
+			</span>
 			<span className={`transaction-item__amount ${type}`}>${amount.toFixed(2)}</span>
 		</div>
 	);
