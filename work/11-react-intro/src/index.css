@@ -1,0 +1,158 @@
+:root {
+	--color-stone-1: #f5f5f4;
+	--color-stone-2: #d6d3d1;
+	--color-stone-3: #78716c;
+	--color-stone-4: #44403c;
+	--color-stone-5: #1c1917;
+
+	--color-success: #65a30d;
+	--color-warning: #f87171;
+}
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 100%;
+}
+/* When width of screen below 1120px, make the rem to 12px */
+@media screen and (max-width: 70em) {
+	html {
+		font-size: 75%;
+	}
+}
+
+body {
+	font-family: 'Array', sans-serif;
+	color: var(--color-stone-5);
+	background-color: var(--color-stone-1);
+}
+
+button {
+	font-family: inherit;
+	color: inherit;
+	border: none;
+	background-color: transparent;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+/* ------------Logo------------- */
+.logo {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	margin: 1rem 0;
+}
+.logo__img {
+	width: 4rem;
+	height: 4rem;
+}
+
+form {
+	border: 1px solid var(--color-stone-3);
+	padding: 1rem;
+	border-radius: 1rem;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	width: 50vw;
+	margin: 30vh auto;
+}
+.input {
+	margin: 1rem 0;
+	width: 100%;
+	padding: 0.5rem 1rem;
+	border: 1px solid var(--color-stone-3);
+	border-radius: 0.5rem;
+	font-size: 1.3rem;
+	line-height: 1.5;
+	font-family: inherit;
+}
+
+/* ------------Login Form------------- */
+.btn--outline {
+	background-color: var(--color-stone-5);
+	color: var(--color-stone-1);
+	width: 100%;
+	font-size: 1.5rem;
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+}
+
+/* ------------Alert------------- */
+.alert {
+	display: none;
+}
+.show-alert {
+	display: block;
+
+	width: 100%;
+	font-size: 1.2rem;
+	text-align: center;
+	border-radius: 1rem;
+	padding: 0.5rem 1rem;
+}
+.alert--warning {
+	background-color: var(--color-warning);
+}
+.alert--success {
+	background-color: var(--color-success);
+}
+
+/* ------------Nav bar------------- */
+.game-navbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 1rem 5rem;
+}
+
+/* ------------User Info------------- */
+.user-info {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+.user-info__avatar {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background-color: var(--color-stone-4);
+	color: var(--color-stone-1);
+	height: 3rem;
+	width: 3rem;
+	font-size: 2.5rem;
+	padding: 0 0 0.1rem 0.2rem;
+
+	text-transform: uppercase;
+	border-radius: 50%;
+}
+.user-info__name {
+	font-size: 2.2rem;
+	text-transform: capitalize;
+}
+
+.btn {
+	margin-left: 1rem;
+	font-size: 2.5rem;
+}
+
+/* ------------Guess Form------------- */
+.guess__form {
+	width: 70vw;
+	padding: 3rem 2rem;
+}
+.guess__input {
+	margin: 1rem 0 2rem;
+	font-size: 1.8rem;
+}
