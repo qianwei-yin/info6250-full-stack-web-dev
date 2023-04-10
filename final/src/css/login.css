@@ -1,0 +1,39 @@
+.login-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	padding: 1rem 0;
+}
+
+/* 
+<form className="login-form" onSubmit={handleSubmit}>
+    <h1 className="login-form__text">Login</h1>
+
+    {prompt.showPrompt && <Prompt type={prompt.promptType} msg={prompt.promptMsg} />}
+
+    <FormRowInput
+        props={{
+            name: 'username',
+            label: 'username',
+            type: 'text',
+            handleInput: handleUsernameInput,
+            value: usernameInput,
+        }}
+    />
+
+    <button className="btn--with-border" type="submit">
+        {loadingLogin ? <Loading /> : 'Log In'}
+    </button>
+
+    <button className="btn--with-border">{loadingLogin ? <Loading /> : 'Log In As Test User'}</button>
+</form>
+*/
+.login-form {
+	margin: 5rem auto;
+	border-radius: 1rem;
+	box-shadow: 9px 9px 25px var(--clr-text-neutral-1), -9px -9px 25px var(--clr-bg-1);
+}
+.login-form__text {
+	margin-left: 0.3rem;
+	margin-bottom: 0.4rem;
+}

@@ -1,15 +1,17 @@
 /* -----------Logo + Brand---------------- */
 .logo {
 	display: flex;
-	align-items: flex-end;
+	align-items: last baseline;
 }
 .logo__img {
-	height: 4rem;
-	margin-right: -0.7rem;
+	fill: var(--clr-text-amber-1);
+	height: 3rem;
+	margin-right: -0.3rem;
 }
 .logo__text {
 	font-family: var(--font-heading);
-	font-size: 2rem;
+	font-weight: var(--weight-heading-3);
+	font-size: 1.7rem;
 }
 
 /* -----------Theme Toggler---------------- */
@@ -35,7 +37,7 @@
 .theme__label--sun {
 	width: 1rem;
 	height: 1rem;
-	fill: var(--clr-text-amber-2);
+	fill: var(--clr-text-amber-1);
 }
 
 .theme__label--ball {
@@ -68,14 +70,16 @@ button:active {
 }
 
 .btn--with-border {
+	display: flex;
+	justify-content: center;
 	font-family: var(--font-heading);
-	font-weight: var(--weight-heading-4);
+	font-weight: var(--weight-heading-3);
 	background-color: var(--clr-text-amber-1);
 	color: var(--clr-bg-1);
 	width: 100%;
-	margin: 1rem 0;
-	padding: 0.5rem 0 0.3rem;
-	font-size: 1.8rem;
+	margin: 0.5rem 0;
+	padding: 0.3rem 0 0.1rem;
+	font-size: 1.6rem;
 	border-radius: 2rem;
 }
 .btn--with-border:hover {
@@ -100,7 +104,6 @@ form {
 	display: flex;
 	flex-direction: column;
 	padding: 1.5rem;
-	width: 50vw;
 }
 
 .form-row {
@@ -131,92 +134,91 @@ form {
 	box-shadow: 0 2px 5px 2px rgba(0, 0, 0, 0.08);
 }
 
+.form-row__input.long {
+}
+
 /* -----------Loading---------------- */
 .loading {
-	width: 200px;
-	height: 60px;
+	--loading-size: 2rem;
+	--loading-speed: 1.2s;
 	position: relative;
-	z-index: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: var(--loading-size);
+	height: var(--loading-size);
 }
 
 .loading__circle {
-	width: 20px;
-	height: 20px;
-	position: absolute;
+	position: relative;
+	display: flex;
+	align-items: center;
+	height: 100%;
+	width: 25%;
+	transform-origin: center top;
+}
+
+.loading__circle::after {
+	content: '';
+	display: block;
+	width: 100%;
+	height: 25%;
 	border-radius: 50%;
-	background-color: var(--clr-text-amber-2);
-	left: 15%;
-	transform-origin: 50%;
-	animation: circle-animation 0.5s alternate infinite ease;
+	background-color: var(--clr-bg-1);
 }
 
-@keyframes circle-animation {
+.loading__circle:first-child {
+	animation: swing var(--loading-speed) linear infinite;
+}
+
+.loading__circle:last-child {
+	animation: swing2 var(--loading-speed) linear infinite;
+}
+
+@keyframes swing {
 	0% {
-		top: 60px;
-		height: 5px;
-		border-radius: 50px 50px 25px 25px;
-		transform: scaleX(1.7);
+		transform: rotate(0deg);
+		animation-timing-function: ease-out;
 	}
 
-	40% {
-		height: 20px;
-		border-radius: 50%;
-		transform: scaleX(1);
+	25% {
+		transform: rotate(70deg);
+		animation-timing-function: ease-in;
 	}
 
-	100% {
-		top: 0%;
+	50% {
+		transform: rotate(0deg);
+		animation-timing-function: linear;
 	}
 }
 
-.loading__circle:nth-child(2) {
-	left: 45%;
-	animation-delay: 0.2s;
-}
-
-.loading__circle:nth-child(3) {
-	left: auto;
-	right: 15%;
-	animation-delay: 0.3s;
-}
-
-.loading__shadow {
-	width: 20px;
-	height: 4px;
-	border-radius: 50%;
-	background-color: var(--clr-text-amber-1);
-	position: absolute;
-	top: 62px;
-	transform-origin: 50%;
-	z-index: -1;
-	left: 15%;
-	filter: blur(1px);
-	animation: shadow-animation 0.5s alternate infinite ease;
-}
-
-@keyframes shadow-animation {
+@keyframes swing2 {
 	0% {
-		transform: scaleX(1.5);
+		transform: rotate(0deg);
+		animation-timing-function: linear;
 	}
 
-	40% {
-		transform: scaleX(1);
-		opacity: 0.7;
+	50% {
+		transform: rotate(0deg);
+		animation-timing-function: ease-out;
 	}
 
-	100% {
-		transform: scaleX(0.2);
-		opacity: 0.4;
+	75% {
+		transform: rotate(-70deg);
+		animation-timing-function: ease-in;
 	}
 }
 
-.loading__shadow:nth-child(4) {
-	left: 45%;
-	animation-delay: 0.2s;
+/* -----------Prompt---------------- */
+.prompt {
+	margin: 0.5rem 0;
+	color: var(--clr-bg-1);
+	padding: 0.3rem 0.6rem;
+	border-radius: 0.6rem;
 }
-
-.loading__shadow:nth-child(5) {
-	left: auto;
-	right: 15%;
-	animation-delay: 0.3s;
+.prompt.warning {
+	background-color: var(--clr-text-red);
+}
+.prompt.success {
+	background-color: var(--clr-text-green);
 }

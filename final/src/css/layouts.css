@@ -1,21 +1,3 @@
-/* 
-<header className="navbar">
-    <Logo />
-
-    <div className="page-navigation">
-        <a href="/dashboard">Dashboard</a>
-        <a href="/add">Add</a>
-        <a href="/settings">Settings</a>
-    </div>
-
-    <div className="user-info">
-        <div className="user-info__img">{username.slice(0, 1)}</div>
-        <span className="user-info__username">{username}</span>
-    </div>
-
-    <button className="btn--without-border">Log Out</button>
-</header>
-*/
 .navbar {
 	display: flex;
 	align-items: last baseline;
@@ -26,18 +8,18 @@
 .page-navigation {
 	margin-right: auto;
 	display: flex;
-	gap: 1.3rem;
+	gap: 1.2rem;
 }
-.page-navigation__link:link,
-.page-navigation__link:visited {
-	text-decoration: none;
+.page-navigation__btn {
 	color: var(--clr-text-amber-2);
-	font-size: 1.6rem;
+	font-family: inherit;
+	font-size: 1.7rem;
 	font-weight: var(--weight-heading-4);
+	cursor: pointer;
 	transition: all 0.2s ease-in-out;
 }
-.page-navigation__link:hover,
-.page-navigation__link:active {
+.page-navigation__btn:hover,
+.page-navigation__btn:active {
 	transform: translateY(-3px);
 	text-shadow: 3px 3px 10px var(--clr-bg-2);
 }

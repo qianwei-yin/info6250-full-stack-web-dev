@@ -1,12 +1,10 @@
 const Loading = () => {
 	return (
-		<div class="loading">
-			<div class="loading__circle"></div>
-			<div class="loading__circle"></div>
-			<div class="loading__circle"></div>
-			<div class="loading__shadow"></div>
-			<div class="loading__shadow"></div>
-			<div class="loading__shadow"></div>
+		<div className="loading">
+			<div className="loading__circle"></div>
+			<div className="loading__circle"></div>
+			<div className="loading__circle"></div>
+			<div className="loading__circle"></div>
 		</div>
 	);
 };

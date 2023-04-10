@@ -1,0 +1,101 @@
+.transactions-section {
+	margin: 0 1rem 1rem;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+
+.transaction-items {
+	height: 72vh;
+	padding: 1rem;
+	border-radius: 1rem;
+	background: var(--clr-bg-1);
+	box-shadow: 0.3rem 0.3rem 1rem var(--clr-text-neutral-1), -0.3rem -0.3rem 1rem var(--clr-bg-2);
+
+	display: flex;
+	flex-direction: column;
+}
+
+.transactions-actions {
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+	padding: 0 1rem 0.5rem;
+}
+.transactions-actions button {
+	font-family: var(--font-text);
+	border-radius: 0.7rem;
+}
+.transactions-actions .form-row__select {
+	text-align: center;
+	text-transform: capitalize;
+	background-color: var(--clr-text-amber-1);
+	color: var(--clr-bg-1);
+	font-size: 1.6rem;
+	font-weight: var(--weight-heading-3);
+	padding: 0.3rem 0 0.1rem 0.5rem;
+	box-shadow: none;
+}
+
+.transactions {
+	overflow-y: scroll;
+}
+
+.edit-area {
+	overflow-y: scroll;
+	height: 72vh;
+	padding: 0 1.5rem 0 2rem;
+}
+
+/* -----------Transaction Item--------------- */
+.transaction-item {
+	background-color: var(--clr-bg-2);
+	color: var(--clr-text-amber-2);
+	padding: 0.5rem 1.5rem 0.5rem 1rem;
+	margin: 0.5rem;
+	border-radius: 1rem;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	cursor: pointer;
+
+	transition: all 0.2s ease-in-out;
+}
+.transaction-item:hover {
+	transform: scale(1.05);
+}
+
+.transaction-item__icon svg {
+	color: var(--clr-text-indigo-2);
+	width: 1.5rem;
+	height: 1.5rem;
+	margin: 0.2rem 0.6rem 0 0;
+}
+
+.transaction-item .category-and-date {
+	display: flex;
+	flex-direction: column;
+	margin-right: auto;
+}
+
+.transaction-item__category {
+	font-size: 1.2rem;
+	font-family: var(--font-heading);
+	text-transform: uppercase;
+	font-weight: var(--weight-heading-3);
+}
+.transaction-item__date {
+	font-size: 1.1rem;
+	margin-right: auto;
+}
+.transaction-item__amount {
+	font-size: 1.6rem;
+	font-weight: var(--weight-text-3);
+}
+.transaction-item__amount.income {
+	color: var(--clr-text-green);
+}
+.transaction-item__amount.expenses {
+	color: var(--clr-text-red);
+}

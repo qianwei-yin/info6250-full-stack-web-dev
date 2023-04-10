@@ -7,6 +7,7 @@ const {
 	checkTransactionParams,
 	createTransaction,
 	getTransactions,
+	getBill,
 	updateTransaction,
 	deleteTransaction,
 } = require('./controllers/transactions-controller.js');
@@ -27,15 +28,16 @@ app.use(express.json());
 
 app.route('/api/v1/sessions').get(checkSession, getSession).post(createSession).delete(deleteSession);
 app.route('/api/v1/categories').get(checkSession, getCategories).patch(checkSession, updateCategories);
+app.route('/api/v1/transactions/bill').get(checkSession, getBill);
 app.route('/api/v1/transactions')
 	.get(checkSession, getTransactions)
-	.post(checkSession, checkTransactionParams, createTransaction)
+	.post(checkSession, checkTransactionParams, createTransaction);
+app.route('/api/v1/transactions/:transactionId')
 	.patch(checkSession, checkTransactionParams, updateTransaction)
 	.delete(checkSession, deleteTransaction);
-app.route('/api/v1/accounts')
-	.get(checkSession, getAccounts)
+app.route('/api/v1/accounts').get(checkSession, getAccounts).post(checkSession, checkAccountParams, createAccount);
+app.route('/api/v1/accounts/:accountId')
 	.patch(checkSession, checkAccountParams, updateAccount)
-	.post(checkSession, checkAccountParams, createAccount)
 	.delete(checkSession, checkAccountParams, deleteAccount);
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));

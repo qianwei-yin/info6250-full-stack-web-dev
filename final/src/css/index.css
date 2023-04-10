@@ -1,6 +1,7 @@
 @import './base.css';
+@import './picker.css';
 @import './dashboard.css';
-@import './expenses.css';
+@import './add-page.css';
 @import './common.css';
 @import './layouts.css';
 @import './login.css';

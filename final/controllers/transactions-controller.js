@@ -44,13 +44,29 @@ function createTransaction(req, res) {
 
 function getTransactions(req, res) {
 	const { username } = res.locals;
-	const transactions = userData.getTransactions(username);
+	const { startDate, endDate, sortMethod } = req.query;
+
+	const transactions = userData.getTransactions({ username, startDate, endDate, sortMethod });
 	res.json({ transactions });
+}
+
+function getBill(req, res) {
+	const { username } = res.locals;
+	const { startDate, endDate } = req.query;
+
+	if (!userData.checkBillDate(startDate) || !userData.checkBillDate(endDate)) {
+		res.status(400).json({ error: 'invalid-bill-date' });
+		return;
+	}
+
+	const bill = userData.getBill({ username, startTime: startDate + 'T00:00', endTime: endDate + 'T23:59' });
+	res.json({ bill });
 }
 
 function updateTransaction(req, res) {
 	const { username } = res.locals;
-	const { id, amount, category, time, type, description, accountType, account } = req.body;
+	const { transactionId: id } = req.params;
+	const { amount, category, time, type, description, accountType, account } = req.body;
 
 	if (!userData.checkExistTransactionId({ username, id })) {
 		res.status(404).json({ error: 'not-found-transaction' });
@@ -73,7 +89,7 @@ function updateTransaction(req, res) {
 
 function deleteTransaction(req, res) {
 	const { username } = res.locals;
-	const { id } = req.body;
+	const { transactionId: id } = req.params;
 
 	if (!userData.checkExistTransactionId({ username, id })) {
 		res.status(404).json({ error: 'not-found-transaction' });
@@ -88,6 +104,7 @@ module.exports = {
 	checkTransactionParams,
 	createTransaction,
 	getTransactions,
+	getBill,
 	updateTransaction,
 	deleteTransaction,
 };

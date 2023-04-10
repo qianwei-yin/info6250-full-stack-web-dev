@@ -1,23 +1,41 @@
+import { useAppContext } from '../context/appContext';
+import { useUserContext } from '../context/userContext';
+import { useTransactionContext } from '../context/transactionContext';
+import { fetchLogout } from '../services/sessionServices';
 import Logo from './Logo';
 import ThemeToggler from './ThemeToggler';
 
 const Navbar = () => {
-	const username = 'bobby';
+	const { setPage, catchErrorDuringUserAction, setLoggedIn, closePrompt, resetAppState } = useAppContext();
+	const { username, setUsername, resetUserState } = useUserContext();
+	const { resetTransactionState } = useTransactionContext();
+
+	function handleLogout() {
+		closePrompt();
+
+		fetchLogout()
+			.then(() => {
+				resetAppState();
+				resetUserState();
+				resetTransactionState();
+			})
+			.catch(catchErrorDuringUserAction);
+	}
 
 	return (
 		<header className="navbar">
 			<Logo />
 
 			<div className="page-navigation">
-				<a className="page-navigation__link" href="/dashboard">
+				<button onClick={() => setPage('dashboard')} className="page-navigation__btn">
 					Dashboard
-				</a>
-				<a className="page-navigation__link" href="/add">
+				</button>
+				<button onClick={() => setPage('add')} className="page-navigation__btn">
 					Add
-				</a>
-				<a className="page-navigation__link" href="/settings">
+				</button>
+				<button onClick={() => setPage('settings')} className="page-navigation__btn">
 					Settings
-				</a>
+				</button>
 			</div>
 
 			<ThemeToggler />
@@ -27,7 +45,9 @@ const Navbar = () => {
 				<span className="user-info__username">{username}</span>
 			</div>
 
-			<button className="btn--without-border">Log Out</button>
+			<button className="btn--without-border" onClick={handleLogout}>
+				Log Out
+			</button>
 		</header>
 	);
 };

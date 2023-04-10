@@ -25,8 +25,8 @@
 	--clr-text-indigo-2: #312e81;
 	--clr-text-amber-1: #fbbf24;
 	--clr-text-amber-2: #f59e0b;
-	--clr-text-red: #ef4444;
-	--clr-text-green: #65a30d;
+	--clr-text-red: #f87171;
+	--clr-text-green: #84cc16;
 }
 .dark {
 	--clr-bg-1: #404040;
@@ -41,7 +41,7 @@
 	--clr-text-amber-1: #fde68a;
 	--clr-text-amber-2: #fcd34d;
 	--clr-text-red: #f87171;
-	--clr-text-green: #84cc16;
+	--clr-text-green: #65a30d;
 }
 
 *,
@@ -73,13 +73,15 @@ body {
 }
 
 input,
-select {
+select,
+textarea {
 	width: 100%;
 	border: none;
-	border-radius: 0.5rem;
+	border-radius: 0.7rem;
 	padding: 0.3rem 0.6rem;
 	font-family: inherit;
-	font-size: 1.2rem;
+	font-size: 1.3rem;
+	line-height: 1.5;
 	font-weight: var(--weight-text-3);
 	background-color: var(--clr-bg-2);
 	color: var(--clr-text-neutral-1);

@@ -1,0 +1,4 @@
+export const SET_USERNAME = 'SET_USERNAME';
+export const RESET_USER_STATE = 'RESET_USER_STATE';
+export const SET_CATEGORIES = 'SET_CATEGORIES';
+export const SET_ACCOUNTS = 'SET_ACCOUNTS';

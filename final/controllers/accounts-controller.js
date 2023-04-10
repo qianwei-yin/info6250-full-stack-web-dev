@@ -36,7 +36,8 @@ function createAccount(req, res) {
 
 function updateAccount(req, res) {
 	const { username, accountStatus } = res.locals;
-	const { id, accountType, account } = req.body;
+	const { accountId: id } = req.params;
+	const { accountType, account } = req.body;
 
 	if (accountStatus === 'account-not-exists') {
 		res.status(404).json({ error: 'not-found-account' });
@@ -49,7 +50,8 @@ function updateAccount(req, res) {
 
 function deleteAccount(req, res) {
 	const { username } = res.locals;
-	const { id, accountType } = req.body;
+	const { accountId: id } = req.params;
+	const { accountType } = req.body;
 
 	const newAccounts = userData.deleteAccount({ username, id, accountType });
 	res.json({ accounts: newAccounts });
