@@ -80,8 +80,7 @@ function updateWord(req, res) {
 	const { username } = res.locals;
 	const { word } = req.body;
 
-	// word can be an empty string, which equals "delete the word"
-	if (!word && word !== '') {
+	if (!word) {
 		res.status(400).json({ error: 'required-word' });
 		return;
 	}

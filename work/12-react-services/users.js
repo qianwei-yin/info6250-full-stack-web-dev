@@ -1,6 +1,4 @@
-const userWord = {
-	abc: 'hello',
-};
+const userWord = {};
 
 function isValidUsername(username) {
 	if (!username) return false;
@@ -9,6 +7,7 @@ function isValidUsername(username) {
 
 // word can be an empty string
 function isValidWord(word) {
+	if (word.trim() === '') return false;
 	return word.trim().match(/^[A-Za-z]*$/);
 }
 

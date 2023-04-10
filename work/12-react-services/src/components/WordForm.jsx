@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { fetchUpdateWord } from '../services';
 import Loading from './Loading';
+import Warning from './Warning';
 import { ERROR_MESSAGES } from '../errorConstant';
 
 const WordForm = ({ states, setStates }) => {
 	const [isUpdateWordLoading, setIsUpdateWordLoading] = useState(false);
 	const [wordInput, setWordInput] = useState('');
-	const { storedWord } = states;
+	const { storedWord, warningParams } = states;
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -54,6 +55,8 @@ const WordForm = ({ states, setStates }) => {
 			<h3 className="change-text">
 				{isUpdateWordLoading ? <Loading /> : `Wanna ${storedWord ? 'Change' : 'Add'}?`}
 			</h3>
+
+			<Warning warningParams={warningParams} />
 
 			<div className="form-row">
 				<label htmlFor="word" className="form-label">

@@ -39,7 +39,6 @@ const Login = ({ states: { warningParams }, setStates }) => {
 				});
 			})
 			.catch((err) => {
-				console.log(err);
 				setStates((oldStates) => {
 					return {
 						...oldStates,

@@ -1,4 +1,4 @@
-const WordMessage = ({ states, setStates }) => {
+const WordMessage = ({ states }) => {
 	const { username, storedWord } = states;
 
 	return (

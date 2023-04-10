@@ -10,7 +10,7 @@ export const ERRORS = {
 export const ERROR_MESSAGES = {
 	[ERRORS.INVALID_USERNAME]: 'Your username should only contain letters and numbers.',
 	[ERRORS.AUTH_INSUFFICIENT]: 'Sorry, DOGs are forbidden!',
-	[ERRORS.REQUIRED_WORD]: 'Please provide your new word, refresh the page and submit again.',
+	[ERRORS.REQUIRED_WORD]: 'Please provide your new word.',
 	[ERRORS.INVALID_WORD]: 'Your new word should only contain letters.',
 	[ERRORS.NETWORK_ERROR]: 'It seems that we lost connection with your network, please check you connection.',
 	default: 'Something went wrong, please try again later.',

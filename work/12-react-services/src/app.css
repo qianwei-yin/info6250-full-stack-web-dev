@@ -29,7 +29,7 @@ html {
 /* When width of screen below 992px, make the rem to 10px */
 @media screen and (max-width: 62em) {
 	html {
-		font-size: 62.5%;
+		font-size: 75%;
 	}
 }
 

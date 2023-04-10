@@ -48,6 +48,7 @@ function App() {
 				});
 			})
 			.catch((err) => {
+				// here auth-missing is not an error
 				if (err.error === ERRORS.AUTH_MISSING) return;
 				setStates((oldStates) => {
 					return {
