@@ -1,0 +1,327 @@
+:root {
+	--color-primary-1: #dbeafe;
+	--color-primary-2: #93c5fd;
+	--color-primary-3: #3b82f6;
+	--color-primary-4: #1d4ed8;
+	--color-primary-5: #1e3a8a;
+
+	--color-grey-1: #f1f5f9;
+	--color-grey-2: #cbd5e1;
+	--color-grey-3: #64748b;
+	--color-grey-4: #334155;
+	--color-grey-5: #0f172a;
+
+	/* I compare the shadow on small and large screen, I think there is no need to use rem/em in this case */
+	--box-shadow: 0 2px 10px 7px rgba(0, 0, 0, 0.1);
+}
+
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 100%;
+}
+/* When width of screen below 992px, make the rem to 10px */
+@media screen and (max-width: 62em) {
+	html {
+		font-size: 75%;
+	}
+}
+
+body {
+	font-family: 'Supreme', sans-serif;
+	background-color: var(--color-primary-1);
+	color: var(--color-grey-4);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	font-family: 'Chubbo', sans-serif;
+	font-weight: 700;
+}
+
+h3 {
+	text-transform: capitalize;
+	font-size: 2rem;
+}
+
+.btn {
+	border: none;
+	font-family: 'Chubbo', sans-serif;
+	/* For border-radius, using px is okay */
+	border-radius: 7px;
+	text-transform: uppercase;
+	font-weight: 500;
+	cursor: pointer;
+
+	transition: all 0.3s ease-in-out;
+}
+.btn:hover {
+	transform: translateY(-2px);
+}
+.btn:active {
+	transform: none;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	border-radius: 10px;
+	box-shadow: var(--box-shadow);
+	padding: 1rem 2.5rem 2.5rem;
+}
+
+/* -------------Login Page--------------- */
+.login-section {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	width: 70vw;
+	height: 60vh;
+	margin: 5rem auto;
+}
+
+.logo {
+	display: flex;
+	align-items: center;
+}
+.logo__img {
+	width: 3rem;
+	height: 3rem;
+	margin-right: 0.6rem;
+}
+.logo__text {
+	text-transform: uppercase;
+	font-size: 1.8rem;
+	color: var(--color-grey-5);
+	letter-spacing: -3px;
+}
+.logo__text span {
+	display: inline-block;
+	margin-right: 0.5rem;
+	font-size: 2.6rem;
+}
+
+.login-form {
+	background-color: var(--color-primary-2);
+	width: 50%;
+}
+
+.login-text {
+	margin-top: 1.6rem;
+	position: relative;
+}
+
+.form-row {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+
+	margin: 2rem auto;
+}
+.form-label {
+	font-family: inherit;
+	text-transform: capitalize;
+	font-size: 1.4rem;
+	font-weight: 500;
+
+	padding-left: 1rem;
+	padding-bottom: 0.5rem;
+}
+.form-input {
+	border: none;
+	/* For border-radius, using px is okay */
+	border-radius: 10px;
+	background-color: var(--color-grey-1);
+
+	font-size: 1.4rem;
+	line-height: 2;
+	padding: 0.3rem 1rem;
+	font-family: inherit;
+}
+.form-input:focus {
+	outline: none;
+	box-shadow: var(--box-shadow);
+}
+
+.btn--submit {
+	display: block;
+	width: 100%;
+
+	font-size: 1.6rem;
+	padding: 0.5rem;
+	letter-spacing: 2px;
+
+	background-color: var(--color-primary-3);
+}
+
+.warning {
+	background-color: #fca5a5;
+	width: 100%;
+	text-align: center;
+	padding: 0.3rem 0.6rem;
+	border-radius: 10px;
+	margin-top: 0.5rem;
+}
+
+/* -------------Home Page--------------- */
+.home-section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	width: 70%;
+	margin: 0 auto;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+
+	width: 100%;
+	padding: 1rem;
+}
+.header .logo {
+	margin-right: auto;
+}
+
+.user {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+.user__img {
+	display: inline-block;
+
+	width: 3rem;
+	height: 3rem;
+	border-radius: 50%;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 2.2rem;
+	border: 1px solid #000;
+	background-color: var(--color-grey-4);
+	color: var(--color-primary-1);
+}
+.user__name {
+	font-size: 1.2rem;
+	font-weight: 700;
+}
+
+.btn--logout {
+	display: inline-block;
+
+	font-size: 1rem;
+	padding: 1rem 1.5rem;
+	letter-spacing: 2px;
+	background-color: transparent;
+}
+.btn--logout:hover {
+	text-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+
+.home {
+	margin-top: 2rem;
+	width: 70%;
+}
+
+.content {
+	text-align: center;
+}
+.content__text {
+	font-size: 2.4rem;
+	margin-top: 2rem;
+	margin-bottom: 2rem;
+}
+.content__name {
+	font-family: 'Telma', cursive;
+	font-weight: 700;
+	font-size: 3rem;
+}
+
+.content__word {
+	font-weight: 700;
+	font-size: 4rem;
+	display: block;
+	margin-bottom: 2rem;
+}
+
+.change-form {
+	width: 50vw;
+	margin-top: 4rem;
+}
+
+.change-text {
+	position: relative;
+	margin-top: 1.5rem;
+}
+
+/* -------------Hide a section--------------- */
+.not-show {
+	display: none;
+}
+
+/* -------------Loading--------------- */
+.loading {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100px;
+	gap: 6px;
+	height: 100px;
+}
+
+.loading span {
+	width: 4px;
+	height: 50px;
+	background: #4c86f9;
+	animation: scale 0.9s ease-in-out infinite;
+}
+
+.loading span:nth-child(2) {
+	background: #49a84c;
+	animation-delay: -0.8s;
+}
+
+.loading span:nth-child(3) {
+	background: #f6bb02;
+	animation-delay: -0.7s;
+}
+
+.loading span:nth-child(4) {
+	background: #f6bb02;
+	animation-delay: -0.6s;
+}
+
+.loading span:nth-child(5) {
+	background: #2196f3;
+	animation-delay: -0.5s;
+}
+
+@keyframes scale {
+	0%,
+	40%,
+	100% {
+		transform: scaleY(0.05);
+	}
+
+	20% {
+		transform: scaleY(1);
+	}
+}
