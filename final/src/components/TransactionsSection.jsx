@@ -21,7 +21,7 @@ const TransactionsSection = () => {
 		setSortMethod,
 	} = useTransactionContext();
 
-	const [chosenTransaction, setChosenTransaction] = useState('');
+	const [chosenTransactionId, setChosenTransactionId] = useState('');
 
 	useEffect(() => {
 		fetchTransactions({ startDate, endDate, sortMethod })
@@ -35,7 +35,7 @@ const TransactionsSection = () => {
 		<div className="transactions-section">
 			<div className="transaction-items">
 				<div className="transactions-actions">
-					<button className="btn--with-border" onClick={() => setChosenTransaction('')}>
+					<button className="btn--with-border" onClick={() => setChosenTransactionId('')}>
 						Add
 					</button>
 					<select
@@ -57,13 +57,17 @@ const TransactionsSection = () => {
 				<div className="transactions">
 					{transactions.map((el) => {
 						return (
-							<TransactionItem key={el.id} transaction={el} setChosenTransaction={setChosenTransaction} />
+							<TransactionItem
+								key={el.id}
+								transaction={el}
+								setChosenTransaction={setChosenTransactionId}
+							/>
 						);
 					})}
 				</div>
 			</div>
 
-			<EditForm chosenTransaction={chosenTransaction} setChosenTransaction={setChosenTransaction} />
+			<EditForm chosenTransactionId={chosenTransactionId} setChosenTransactionId={setChosenTransactionId} />
 		</div>
 	);
 };

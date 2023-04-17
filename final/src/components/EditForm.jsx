@@ -15,25 +15,24 @@ const initialInputState = {
 	account: '',
 };
 
-const EditForm = ({ chosenTransaction }) => {
+const EditForm = ({ chosenTransactionId }) => {
 	const { transactions } = useTransactionContext();
 	const { categories, accounts } = useUserContext();
-
 	const [inputs, setInputs] = useState({ ...initialInputState, time: dayjs().format('YYYY-MM-DD[T]HH:mm') });
 
 	useEffect(() => {
-		console.log(chosenTransaction);
-		if (chosenTransaction === '') {
+		console.log(chosenTransactionId);
+		if (chosenTransactionId === '') {
 			setInputs({
 				...initialInputState,
 				time: dayjs().format('YYYY-MM-DD[T]HH:mm'),
 			});
 		}
-		if (chosenTransaction !== '') {
-			const edittingTransaction = transactions.find((el) => el.id === chosenTransaction);
+		if (chosenTransactionId !== '') {
+			const edittingTransaction = transactions.find((el) => el.id === chosenTransactionId);
 			setInputs({ ...edittingTransaction });
 		}
-	}, [chosenTransaction]);
+	}, [chosenTransactionId]);
 
 	function handleInput(e) {
 		const { name, value } = e.target;
@@ -41,6 +40,10 @@ const EditForm = ({ chosenTransaction }) => {
 		setInputs((oldInputs) => {
 			return { ...oldInputs, [name]: value };
 		});
+	}
+
+	function handleCancel() {
+		setInputs({ ...initialInputState });
 	}
 
 	return (
@@ -89,13 +92,27 @@ const EditForm = ({ chosenTransaction }) => {
 			<FormRowInput
 				props={{
 					name: 'description',
-					label: 'description',
+					label: 'description (optional)',
 					type: 'text',
 					value: inputs.description,
 					handleInput,
 					longText: true,
 				}}
 			/>
+
+			{chosenTransactionId === '' ? (
+				<div className="edit-area__actions">
+					<button className="btn--with-border edit-area__actions__cancel" onClick={handleCancel}>
+						Cancel
+					</button>
+					<button className="btn--with-border edit-area__actions__submit">Submit</button>
+				</div>
+			) : (
+				<div className="edit-area__actions">
+					<button className="btn--with-border edit-area__actions__delete">Delete</button>
+					<button className="btn--with-border edit-area__actions__update">Update</button>
+				</div>
+			)}
 		</div>
 	);
 };

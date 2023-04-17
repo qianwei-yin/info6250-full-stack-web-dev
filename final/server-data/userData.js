@@ -19,7 +19,7 @@ const initialCategories = {
 };
 
 const userData = {
-	abc: {
+	conway: {
 		categories: JSON.parse(JSON.stringify(initialCategories)), // deep copy
 		accounts: {
 			cash: [{ id: uuid(), name: 'cash' }],

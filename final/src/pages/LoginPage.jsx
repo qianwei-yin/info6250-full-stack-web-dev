@@ -25,8 +25,13 @@ const LoginPage = () => {
 		setUsernameInput(e.target.value);
 	}
 
+	function handleTestUserLogin() {
+		setUsernameInput('conway');
+		handleSubmit(null);
+	}
+
 	function handleSubmit(e) {
-		e.preventDefault();
+		if (e) e.preventDefault();
 
 		setLoadingLogin(true);
 		closePrompt();
@@ -77,7 +82,9 @@ const LoginPage = () => {
 					{loadingLogin ? <Loading /> : 'Log In'}
 				</button>
 
-				<button className="btn--with-border">{loadingLogin ? <Loading /> : 'Log In As Test User'}</button>
+				<button className="btn--with-border" onClick={handleTestUserLogin}>
+					{loadingLogin ? <Loading /> : 'Log In As Test User'}
+				</button>
 			</form>
 		</>
 	);

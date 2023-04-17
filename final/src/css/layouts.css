@@ -3,6 +3,8 @@
 	align-items: last baseline;
 	gap: 2rem;
 	padding: 0.7rem 1rem;
+
+	box-shadow: 0 3px 10px 1px rgba(0, 0, 0, 0.1);
 }
 
 .page-navigation {

@@ -9,7 +9,7 @@
 	padding: 1rem;
 	border-radius: 1rem;
 	background: var(--clr-bg-1);
-	box-shadow: 0.3rem 0.3rem 1rem var(--clr-text-neutral-1), -0.3rem -0.3rem 1rem var(--clr-bg-2);
+	box-shadow: 0.3rem 0.3rem 1rem var(--clr-bg-2), -0.3rem -0.3rem 1rem var(--clr-bg-2);
 
 	display: flex;
 	flex-direction: column;
@@ -98,4 +98,22 @@
 }
 .transaction-item__amount.expenses {
 	color: var(--clr-text-red);
+}
+
+/* -----------Edit area actions--------------- */
+.edit-area__actions {
+	display: flex;
+	gap: 0.3rem;
+}
+.edit-area__actions__cancel {
+	background-color: var(--clr-text-red);
+}
+.edit-area__actions__submit {
+	background-color: var(--clr-text-green);
+}
+.edit-area__actions__delete {
+	background-color: var(--clr-text-red);
+}
+.edit-area__actions__update {
+	background-color: var(--clr-text-green);
 }

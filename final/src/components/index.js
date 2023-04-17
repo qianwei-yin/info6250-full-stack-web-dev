@@ -9,6 +9,10 @@ import Logo from './Logo';
 import Navbar from './Navbar';
 import OptionPicker from './OptionPicker';
 import Prompt from './Prompt';
+import SettingsAccounts from './SettingsAccounts';
+import SettingsAddCard from './SettingsAddCard';
+import SettingsCategories from './SettingsCategories';
+import SettingsOthers from './SettingsOthers';
 import ThemeToggler from './ThemeToggler';
 import TimePicker from './TimePicker';
 import TransactionItem from './TransactionItem';
@@ -26,6 +30,10 @@ export {
 	Navbar,
 	OptionPicker,
 	Prompt,
+	SettingsAccounts,
+	SettingsAddCard,
+	SettingsCategories,
+	SettingsOthers,
 	ThemeToggler,
 	TimePicker,
 	TransactionItem,
