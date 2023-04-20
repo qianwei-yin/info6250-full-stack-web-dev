@@ -16,6 +16,7 @@
 .light {
 	--clr-bg-1: #f5f5f5;
 	--clr-bg-2: #d4d4d4;
+	--clr-bg-3: #78716c;
 	--clr-bg-amber: #fffbeb;
 	--clr-bg-indigo: #e0e7ff;
 
@@ -29,8 +30,9 @@
 	--clr-text-green: #84cc16;
 }
 .dark {
-	--clr-bg-1: #404040;
-	--clr-bg-2: #171717;
+	--clr-bg-1: #525252;
+	--clr-bg-2: #262626;
+	--clr-bg-3: #000000;
 	--clr-bg-amber: #451a03;
 	--clr-bg-indigo: #312e81;
 
@@ -66,10 +68,14 @@ h6 {
 }
 
 body {
+	--big-box-shadow: 0.3rem 0.3rem 1rem var(--clr-bg-2), -0.3rem -0.3rem 1rem var(--clr-bg-2);
+
 	background-color: var(--clr-bg-1);
 	color: var(--clr-text-amber-1);
 	font-family: var(--font-text);
 	transition: background 0.2s linear;
+
+	overflow-x: hidden;
 }
 
 .icon {

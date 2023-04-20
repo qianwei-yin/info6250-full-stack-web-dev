@@ -1,9 +1,9 @@
 import resolveFetchPromise from './resolveFetchPromise';
 
 // GET request cannot pass body! So the parameters should be included in the url
-function fetchTransactions({ startDate, endDate, sortMethod }) {
+function fetchTransactions({ startDate, endDate, sortMethod, page }) {
 	return resolveFetchPromise(
-		fetch(`/api/v1/transactions?startDate=${startDate}&endDate=${endDate}&sortMethod=${sortMethod}`)
+		fetch(`/api/v1/transactions?startDate=${startDate}&endDate=${endDate}&sortMethod=${sortMethod}&page=${page}`)
 	);
 }
 
@@ -15,7 +15,9 @@ function fetchCreateTransaction({ amount, category, time, type, description, acc
 	return resolveFetchPromise(
 		fetch('/api/v1/transactions', {
 			method: 'POST',
-			'content-type': 'application/json',
+			headers: new Headers({
+				'content-type': 'application/json',
+			}),
 			body: JSON.stringify({ amount, category, time, type, description, accountType, account }),
 		})
 	);
@@ -25,7 +27,9 @@ function fetchUpdateTransaction({ id, amount, category, time, type, description,
 	return resolveFetchPromise(
 		fetch(`/api/v1/transactions/${id}`, {
 			method: 'PATCH',
-			'content-type': 'application/json',
+			headers: new Headers({
+				'content-type': 'application/json',
+			}),
 			body: JSON.stringify({ amount, category, time, type, description, accountType, account }),
 		})
 	);

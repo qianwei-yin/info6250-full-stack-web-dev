@@ -1,11 +1,14 @@
 import dayjs from 'dayjs';
-import categories from '../scripts/categories';
+import categories from '../scripts/constants/categories';
 
-const TransactionItem = ({ transaction, setChosenTransaction }) => {
+const TransactionItem = ({ transaction, chosenTransactionId, setChosenTransaction }) => {
 	const { id, amount, category, time, type, description, accountType, account } = transaction;
 
 	return (
-		<div className="transaction-item" onClick={() => setChosenTransaction(id)}>
+		<div
+			className={`transaction-item ${chosenTransactionId === id ? 'chosen' : ''}`}
+			onClick={() => setChosenTransaction(id)}
+		>
 			<div className="transaction-item__icon">
 				{categories[category] ? categories[category] : categories['default']}
 			</div>

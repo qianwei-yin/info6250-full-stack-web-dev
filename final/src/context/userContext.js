@@ -1,6 +1,12 @@
 import React, { useContext, useReducer } from 'react';
 import reducer from '../reducers/userReducer';
-import { SET_USERNAME, RESET_USER_STATE, SET_CATEGORIES, SET_ACCOUNTS } from '../scripts/userActions';
+import {
+	SET_USERNAME,
+	RESET_USER_STATE,
+	SET_CATEGORIES,
+	SET_ACCOUNTS,
+	SET_DEFAULT_ACCOUNT,
+} from '../scripts/actions/userActions';
 
 const initialState = {
 	username: '',
@@ -11,6 +17,7 @@ const initialState = {
 		'credit cards': [],
 		others: [],
 	},
+	defaultAccount: { accountType: 'cash', account: 'cash' },
 };
 
 const UserContext = React.createContext();
@@ -34,6 +41,10 @@ export const UserProvider = ({ children }) => {
 		dispatch({ type: SET_ACCOUNTS, payload: accounts });
 	}
 
+	function setDefaultAccount({ accountType, account }) {
+		dispatch({ type: SET_DEFAULT_ACCOUNT, payload: { accountType, account } });
+	}
+
 	return (
 		<UserContext.Provider
 			value={{
@@ -42,6 +53,7 @@ export const UserProvider = ({ children }) => {
 				resetUserState,
 				setCategories,
 				setAccounts,
+				setDefaultAccount,
 			}}
 		>
 			{children}

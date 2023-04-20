@@ -6,7 +6,9 @@ import {
 	LOADING_LOGIN,
 	SET_LOGGED_IN,
 	RESET_APP_STATE,
-} from '../scripts/appActions';
+	OPEN_MODAL,
+	CLOSE_MODAL,
+} from '../scripts/actions/appActions';
 
 const reducer = (state, action) => {
 	switch (action.type) {
@@ -41,6 +43,10 @@ const reducer = (state, action) => {
 			};
 		case RESET_APP_STATE:
 			return { ...action.payload, theme: state.theme };
+		case OPEN_MODAL:
+			return { ...state, showModal: true };
+		case CLOSE_MODAL:
+			return { ...state, showModal: false };
 		default:
 			throw new Error(`No matching "${action.type}" - action type.`);
 	}

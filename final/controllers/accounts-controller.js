@@ -9,7 +9,8 @@ function getAccounts(req, res) {
 
 function checkAccountParams(req, res, next) {
 	const { username } = res.locals;
-	const { accountType, account } = req.body;
+	const { accountType } = req.body;
+	const account = req.body.account?.toLowerCase();
 
 	const accountStatus = userData.checkAccountTypeAndName({ username, accountType, account });
 	if (accountStatus === 'invalid-account-type') {
@@ -21,22 +22,36 @@ function checkAccountParams(req, res, next) {
 	next();
 }
 
-function createAccount(req, res) {
+function updateAccount(req, res) {
 	const { username, accountStatus } = res.locals;
-	const { accountType, account } = req.body;
+	const { accountType, action } = req.body;
+	const account = req.body.account?.toLowerCase();
 
-	if (accountStatus === 'account-exists') {
-		res.status(404).json({ error: 'already-exist-account' });
+	if (account === 'uncategorized') {
+		res.status(400).json({ error: 'not-allowed-account' });
+		return;
+	}
+	if (accountStatus === 'account-not-exists' && action === 'delete') {
+		res.status(404).json({ error: 'not-found-account' });
+		return;
+	}
+	if (accountStatus === 'account-exists' && action === 'add') {
+		res.status(400).json({ error: 'duplicate-account' });
 		return;
 	}
 
-	const newAccounts = userData.addAccount({ username, accountType, account });
-	res.status(201).json({ accounts: newAccounts });
+	const newAccounts = userData.updateAccount({ username, accountType, account, action });
+	res.json({ accounts: newAccounts });
 }
 
-function updateAccount(req, res) {
+function getDefaultAccount(req, res) {
+	const { username } = res.locals;
+	const defaultAccount = userData.getDefaultAccount(username);
+	res.json({ defaultAccount });
+}
+
+function updateDefaultAccount(req, res) {
 	const { username, accountStatus } = res.locals;
-	const { accountId: id } = req.params;
 	const { accountType, account } = req.body;
 
 	if (accountStatus === 'account-not-exists') {
@@ -44,17 +59,8 @@ function updateAccount(req, res) {
 		return;
 	}
 
-	const newAccounts = userData.updateAccount({ username, id, accountType, account });
-	res.json({ accounts: newAccounts });
+	const newDefaultAccount = userData.updateDefaultAccount({ username, accountType, account });
+	res.json({ defaultAccount: newDefaultAccount });
 }
 
-function deleteAccount(req, res) {
-	const { username } = res.locals;
-	const { accountId: id } = req.params;
-	const { accountType } = req.body;
-
-	const newAccounts = userData.deleteAccount({ username, id, accountType });
-	res.json({ accounts: newAccounts });
-}
-
-module.exports = { getAccounts, checkAccountParams, createAccount, deleteAccount, updateAccount };
+module.exports = { getAccounts, checkAccountParams, updateAccount, getDefaultAccount, updateDefaultAccount };

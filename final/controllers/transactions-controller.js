@@ -5,7 +5,7 @@ function checkTransactionParams(req, res, next) {
 	const { username } = res.locals;
 	const { amount, category, time, type, description, accountType, account } = req.body;
 
-	if (!amount || amount <= 0) {
+	if (!amount || Number(amount) <= 0) {
 		res.status(400).json({ error: 'required-amount' });
 		return;
 	}
@@ -28,9 +28,9 @@ function checkTransactionParams(req, res, next) {
 function createTransaction(req, res) {
 	const { username } = res.locals;
 	const { amount, category, time, type, description, accountType, account } = req.body;
-	const newTransactions = userData.addTransaction({
+	const newTransaction = userData.addTransaction({
 		username,
-		amount,
+		amount: Number(amount),
 		category,
 		time,
 		type,
@@ -39,15 +39,23 @@ function createTransaction(req, res) {
 		account,
 	});
 
-	res.status(201).json({ transactions: newTransactions });
+	// returns the new created transaction
+	res.status(201).json({ transaction: newTransaction });
 }
 
 function getTransactions(req, res) {
 	const { username } = res.locals;
-	const { startDate, endDate, sortMethod } = req.query;
+	const { startDate, endDate, sortMethod, page } = req.query;
 
-	const transactions = userData.getTransactions({ username, startDate, endDate, sortMethod });
-	res.json({ transactions });
+	const { paginatedSortedFilteredTransactions, transactionsCount } = userData.getTransactions({
+		username,
+		startDate,
+		endDate,
+		sortMethod,
+		page,
+	});
+
+	res.json({ transactions: paginatedSortedFilteredTransactions, totals: transactionsCount });
 }
 
 function getBill(req, res) {
@@ -73,10 +81,10 @@ function updateTransaction(req, res) {
 		return;
 	}
 
-	const newTransactions = userData.updateTransaction({
+	const updatedTransaction = userData.updateTransaction({
 		username,
 		id,
-		amount,
+		amount: Number(amount),
 		category,
 		time,
 		type,
@@ -84,7 +92,8 @@ function updateTransaction(req, res) {
 		accountType,
 		account,
 	});
-	res.json({ transactions: newTransactions });
+	// returns the new updated transaction
+	res.json({ transactions: updatedTransaction });
 }
 
 function deleteTransaction(req, res) {

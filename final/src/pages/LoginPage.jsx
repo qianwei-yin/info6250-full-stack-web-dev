@@ -3,21 +3,13 @@ import { useAppContext } from '../context/appContext';
 import { useUserContext } from '../context/userContext';
 import { fetchLogin } from '../services/sessionServices';
 import { fetchCategories } from '../services/categoryServices';
-import { fetchAccounts } from '../services/accountServices';
-import { FormRowInput, ThemeToggler, Loading, Prompt, Logo } from '../components';
+import { fetchAccounts, fetchDefaultAccount } from '../services/accountServices';
+import { FormRowInput, ThemeToggler, Loading, Logo } from '../components';
 
 const LoginPage = () => {
-	const {
-		prompt,
-		catchErrorDuringUserAction,
-		setLoggedIn,
-		setLoadingLogin,
-		openPrompt,
-		closePrompt,
-		loggedIn,
-		loadingLogin,
-	} = useAppContext();
-	const { setUsername, setCategories, setAccounts } = useUserContext();
+	const { catchErrorDuringUserAction, setLoggedIn, setLoadingLogin, closePrompt, loggedIn, loadingLogin } =
+		useAppContext();
+	const { setUsername, setCategories, setAccounts, setDefaultAccount } = useUserContext();
 
 	const [usernameInput, setUsernameInput] = useState('');
 
@@ -25,20 +17,18 @@ const LoginPage = () => {
 		setUsernameInput(e.target.value);
 	}
 
-	function handleTestUserLogin() {
-		setUsernameInput('conway');
-		handleSubmit(null);
+	// need to separate login function out, because the login function will be used in other places.
+	function handleSubmit(e) {
+		e.preventDefault();
+		login(usernameInput);
 	}
 
-	function handleSubmit(e) {
-		if (e) e.preventDefault();
-
+	function login(username) {
 		setLoadingLogin(true);
-		closePrompt();
 
-		fetchLogin(usernameInput)
+		fetchLogin(username)
 			.then((data) => {
-				setLoggedIn(true);
+				closePrompt();
 				setUsername(data.username);
 
 				return fetchCategories();
@@ -50,6 +40,12 @@ const LoginPage = () => {
 			})
 			.then((data) => {
 				setAccounts(data.accounts);
+
+				return fetchDefaultAccount();
+			})
+			.then((data) => {
+				setDefaultAccount(data.defaultAccount);
+				setLoggedIn(true);
 			})
 			.catch(catchErrorDuringUserAction)
 			.finally(() => {
@@ -66,8 +62,6 @@ const LoginPage = () => {
 			<form className="login-form" onSubmit={handleSubmit}>
 				<h1 className="login-form__text">Login</h1>
 
-				{prompt.showPrompt && <Prompt type={prompt.promptType} msg={prompt.promptMsg} />}
-
 				<FormRowInput
 					props={{
 						name: 'username',
@@ -82,7 +76,7 @@ const LoginPage = () => {
 					{loadingLogin ? <Loading /> : 'Log In'}
 				</button>
 
-				<button className="btn--with-border" onClick={handleTestUserLogin}>
+				<button className="btn--with-border" onClick={() => login('conway')} type="button">
 					{loadingLogin ? <Loading /> : 'Log In As Test User'}
 				</button>
 			</form>

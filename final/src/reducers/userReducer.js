@@ -1,4 +1,10 @@
-import { SET_USERNAME, RESET_USER_STATE, SET_CATEGORIES, SET_ACCOUNTS } from '../scripts/userActions';
+import {
+	SET_USERNAME,
+	RESET_USER_STATE,
+	SET_CATEGORIES,
+	SET_ACCOUNTS,
+	SET_DEFAULT_ACCOUNT,
+} from '../scripts/actions/userActions';
 
 const reducer = (state, action) => {
 	switch (action.type) {
@@ -10,6 +16,9 @@ const reducer = (state, action) => {
 			return { ...state, categories: action.payload };
 		case SET_ACCOUNTS:
 			return { ...state, accounts: action.payload };
+		case SET_DEFAULT_ACCOUNT:
+			const { accountType, account } = action.payload;
+			return { ...state, defaultAccount: { accountType, account } };
 		default:
 			throw new Error(`No matching "${action.type}" - action type.`);
 	}

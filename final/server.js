@@ -14,9 +14,9 @@ const {
 const {
 	checkAccountParams,
 	getAccounts,
-	createAccount,
-	deleteAccount,
 	updateAccount,
+	getDefaultAccount,
+	updateDefaultAccount,
 } = require('./controllers/accounts-controller.js');
 
 const app = express();
@@ -35,9 +35,9 @@ app.route('/api/v1/transactions')
 app.route('/api/v1/transactions/:transactionId')
 	.patch(checkSession, checkTransactionParams, updateTransaction)
 	.delete(checkSession, deleteTransaction);
-app.route('/api/v1/accounts').get(checkSession, getAccounts).post(checkSession, checkAccountParams, createAccount);
-app.route('/api/v1/accounts/:accountId')
-	.patch(checkSession, checkAccountParams, updateAccount)
-	.delete(checkSession, checkAccountParams, deleteAccount);
+app.route('/api/v1/accounts').get(checkSession, getAccounts).patch(checkSession, checkAccountParams, updateAccount);
+app.route('/api/v1/accounts/default')
+	.get(checkSession, getDefaultAccount)
+	.patch(checkSession, checkAccountParams, updateDefaultAccount);
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));

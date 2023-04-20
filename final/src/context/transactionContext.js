@@ -10,7 +10,11 @@ import {
 	RESET_TRANSACTION_STATE,
 	SET_PICKED_TIME_DATE,
 	SET_SORT_METHOD,
-} from '../scripts/transactionActions';
+	SET_PAGE,
+	SET_TOTALS,
+} from '../scripts/actions/transactionActions';
+import { fetchTransactions } from '../services/transactionServices';
+import { useAppContext } from './appContext';
 
 const initialState = {
 	bill: { income: {}, expenses: {} },
@@ -21,12 +25,15 @@ const initialState = {
 	pickedTimeStartDate: dayjs().set('date', 1).format('YYYY-MM-DD'),
 	pickedTimeEndDate: dayjs().endOf('month').format('YYYY-MM-DD'),
 	sortMethod: 'newer',
+	page: 1,
+	totals: 0,
 };
 
 const TransactionContext = React.createContext();
 
 export const TransactionProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
+	const { catchErrorDuringUserAction } = useAppContext();
 
 	function resetTransactionState() {
 		dispatch({ type: RESET_TRANSACTION_STATE, payload: initialState });
@@ -38,6 +45,25 @@ export const TransactionProvider = ({ children }) => {
 
 	function setTransactions(transactions) {
 		dispatch({ type: SET_TRANSACTIONS, payload: transactions });
+	}
+
+	function setPage(page) {
+		dispatch({ type: SET_PAGE, payload: page });
+	}
+
+	function setTotals(totals) {
+		dispatch({ type: SET_TOTALS, payload: totals });
+	}
+
+	function refreshTransactions() {
+		const { pickedTimeStartDate: startDate, pickedTimeEndDate: endDate, sortMethod, page } = state;
+
+		fetchTransactions({ startDate, endDate, sortMethod, page })
+			.then((data) => {
+				setTotals(data.totals);
+				setTransactions(data.transactions);
+			})
+			.catch(catchErrorDuringUserAction);
 	}
 
 	function setPickedTimeOption(option) {
@@ -65,6 +91,9 @@ export const TransactionProvider = ({ children }) => {
 				setPickedTimeOption,
 				setPickedTimeIndex,
 				setSortMethod,
+				refreshTransactions,
+				setPage,
+				setTotals,
 			}}
 		>
 			{children}

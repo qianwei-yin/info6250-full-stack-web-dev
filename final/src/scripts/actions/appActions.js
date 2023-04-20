@@ -5,3 +5,5 @@ export const CLOSE_PROMPT = 'CLOSE_PROMPT';
 export const LOADING_LOGIN = 'LOADING_LOGIN';
 export const SET_LOGGED_IN = 'SET_LOGGED_IN';
 export const RESET_APP_STATE = 'RESET_APP_STATE';
+export const OPEN_MODAL = 'OPEN_MODAL';
+export const CLOSE_MODAL = 'CLOSE_MODAL';

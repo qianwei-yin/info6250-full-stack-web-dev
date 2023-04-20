@@ -8,7 +8,9 @@ import {
 	RESET_TRANSACTION_STATE,
 	SET_PICKED_TIME_DATE,
 	SET_SORT_METHOD,
-} from '../scripts/transactionActions';
+	SET_PAGE,
+	SET_TOTALS,
+} from '../scripts/actions/transactionActions';
 
 const reducer = (state, action) => {
 	if (action.type === SET_BILL) {
@@ -69,6 +71,10 @@ const reducer = (state, action) => {
 		return { ...action.payload };
 	} else if (action.type === SET_SORT_METHOD) {
 		return { ...state, sortMethod: action.payload };
+	} else if (action.type === SET_PAGE) {
+		return { ...state, page: action.payload };
+	} else if (action.type === SET_TOTALS) {
+		return { ...state, totals: action.payload };
 	} else {
 		throw new Error(`No matching "${action.type}" - action type.`);
 	}

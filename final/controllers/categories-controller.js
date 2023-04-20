@@ -9,8 +9,13 @@ function getCategories(req, res) {
 
 function updateCategories(req, res) {
 	const { username } = res.locals;
-	const { type, categoryName, action } = req.body;
+	const { type, action } = req.body;
+	const categoryName = req.body.categoryName?.toLowerCase();
 
+	if (categoryName === 'uncategorized') {
+		res.status(400).json({ error: 'not-allowed-category-name' });
+		return;
+	}
 	if (type !== 'income' && type !== 'expenses') {
 		res.status(400).json({ error: 'invalid-category-type' });
 		return;
@@ -20,9 +25,11 @@ function updateCategories(req, res) {
 		return;
 	}
 	if (!userData.checkCategoryName(categoryName)) {
+		// accepts letters, numbers, spaces and underline
 		res.status(400).json({ error: 'invalid-category-name' });
 		return;
 	}
+
 	const duplicateOrNoSuch = userData.checkDuplicateOrNoSuchCategoryName({ username, type, action, categoryName });
 	if (duplicateOrNoSuch === 'duplicate-category-name') {
 		res.status(400).json({ error: duplicateOrNoSuch });

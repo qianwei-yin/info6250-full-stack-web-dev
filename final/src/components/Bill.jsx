@@ -16,8 +16,6 @@ const Bill = () => {
 
 	useEffect(() => {
 		if (loggedIn) {
-			console.log(startDate, endDate);
-
 			fetchBill({ startDate, endDate })
 				.then((data) => {
 					setBill(data.bill);

@@ -9,7 +9,7 @@
 	padding: 1rem;
 	border-radius: 1rem;
 	background: var(--clr-bg-1);
-	box-shadow: 0.3rem 0.3rem 1rem var(--clr-bg-2), -0.3rem -0.3rem 1rem var(--clr-bg-2);
+	box-shadow: var(--big-box-shadow);
 
 	display: flex;
 	flex-direction: column;
@@ -37,13 +37,102 @@
 }
 
 .transactions {
+	height: 65vh;
 	overflow-y: scroll;
+	margin-bottom: auto;
+}
+
+/* -----------pagination--------------- */
+.transactions-pagination {
+	align-self: center;
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin-top: 0.5rem;
+}
+
+.pagination__page {
+	font-size: 2rem;
+	font-weight: var(--weight-text-5);
+}
+
+.transactions-pagination .icon {
+	fill: var(--clr-text-amber-1);
+	width: 2rem;
+	height: 2rem;
+	padding-top: 0.4rem;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+}
+.transactions-pagination .icon:hover {
+	transform: scale(1.2);
+	fill: var(--clr-text-amber-2);
+}
+
+.transactions-pagination .icon.inactive {
+	fill: var(--clr-bg-2);
+	cursor: default;
+}
+.transactions-pagination .icon.inactive:hover {
+	transform: none;
+}
+
+/* -----------Edit area--------------- */
+.edit-area__title {
+	text-align: center;
+	height: 3rem;
+	color: var(--clr-text-indigo-2);
+	font-size: 2rem;
+	font-weight: var(--weight-heading-3);
+	font-family: var(--font-text);
 }
 
 .edit-area {
 	overflow-y: scroll;
-	height: 72vh;
-	padding: 0 1.5rem 0 2rem;
+	/* 72vh is the height of left side, 6rem is the approximate height of "edit-area__title" and "edit-area__actions" */
+	height: calc(72vh - 6rem);
+	padding: 0 2rem;
+}
+
+/* 
+<p className="go-to-settings">
+					Want another account? Go to <button>Settings</button>!
+				</p>
+*/
+.go-to-settings {
+	font-size: 1.1rem;
+	font-weight: var(--weight-text-3);
+	color: var(--clr-text-indigo-2);
+	margin: -0.6rem 0 1.2rem 0.3rem;
+}
+.go-to-settings button {
+	font-size: 1.3rem;
+	color: var(--clr-text-amber-2);
+	font-family: inherit;
+	font-weight: inherit;
+	border-bottom: 1px solid currentColor;
+}
+.go-to-settings button:hover {
+	transform: none;
+}
+
+/* -----------Edit area actions--------------- */
+.edit-area__actions {
+	padding: 0.3rem 2rem 0;
+	display: flex;
+	gap: 0.3rem;
+}
+.edit-area__actions__cancel {
+	background-color: var(--clr-text-red);
+}
+.edit-area__actions__submit {
+	background-color: var(--clr-text-green);
+}
+.edit-area__actions__delete {
+	background-color: var(--clr-text-red);
+}
+.edit-area__actions__update {
+	background-color: var(--clr-text-green);
 }
 
 /* -----------Transaction Item--------------- */
@@ -64,6 +153,9 @@
 }
 .transaction-item:hover {
 	transform: scale(1.05);
+}
+.transaction-item.chosen {
+	background: var(--clr-bg-3);
 }
 
 .transaction-item__icon svg {
@@ -98,22 +190,4 @@
 }
 .transaction-item__amount.expenses {
 	color: var(--clr-text-red);
-}
-
-/* -----------Edit area actions--------------- */
-.edit-area__actions {
-	display: flex;
-	gap: 0.3rem;
-}
-.edit-area__actions__cancel {
-	background-color: var(--clr-text-red);
-}
-.edit-area__actions__submit {
-	background-color: var(--clr-text-green);
-}
-.edit-area__actions__delete {
-	background-color: var(--clr-text-red);
-}
-.edit-area__actions__update {
-	background-color: var(--clr-text-green);
 }

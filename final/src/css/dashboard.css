@@ -1,4 +1,7 @@
 .dashboard-page {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .no-transactions {
@@ -13,6 +16,7 @@
 }
 
 .bill__details {
+	margin-top: 3rem;
 	font-size: 1.5rem;
 	font-family: 'Mali', cursive;
 	width: 40vw;

@@ -14,9 +14,11 @@ const SettingsPage = () => {
 			<div className="sidebar">
 				{settingsSection.map((el) => {
 					return (
-						<button key={el} className="sidebar__btn" onClick={() => setSettingsSectionName(el)}>
-							{el}
-						</button>
+						<div className={`sidebar__item ${settingsSectionName === el ? 'active' : ''}`} key={el}>
+							<button key={el} className="sidebar__btn" onClick={() => setSettingsSectionName(el)}>
+								{el}
+							</button>
+						</div>
 					);
 				})}
 			</div>

@@ -3,17 +3,17 @@ import './css/index.css';
 import { useAppContext } from './context/appContext';
 import { useUserContext } from './context/userContext';
 import { useTransactionContext } from './context/transactionContext';
-import pageLinks from './scripts/pageLinks';
+import pageLinks from './scripts/constants/pageLinks';
 import LoginPage from './pages/LoginPage';
-import { Navbar } from './components';
+import { Navbar, Prompt } from './components';
 import { fetchSession } from './services/sessionServices';
 import { fetchCategories } from './services/categoryServices';
-import { fetchAccounts } from './services/accountServices';
-import { ERRORS, ERROR_MESSAGES } from './scripts/errorConstants';
+import { fetchAccounts, fetchDefaultAccount } from './services/accountServices';
+import { ERRORS, ERROR_MESSAGES } from './scripts/constants/errorConstants';
 
 function App() {
-	const { theme, page, loggedIn, setLoggedIn, openPrompt, resetAppState } = useAppContext();
-	const { setUsername, resetUserState, setCategories, setAccounts } = useUserContext();
+	const { prompt, theme, page, loggedIn, setLoggedIn, openPrompt, resetAppState } = useAppContext();
+	const { setUsername, resetUserState, setCategories, setAccounts, setDefaultAccount } = useUserContext();
 	const { resetTransactionState } = useTransactionContext();
 
 	useEffect(() => {
@@ -24,7 +24,6 @@ function App() {
 	useEffect(() => {
 		fetchSession()
 			.then((data) => {
-				setLoggedIn(true);
 				setUsername(data.username);
 
 				return fetchCategories();
@@ -36,6 +35,12 @@ function App() {
 			})
 			.then((data) => {
 				setAccounts(data.accounts);
+
+				return fetchDefaultAccount();
+			})
+			.then((data) => {
+				setDefaultAccount(data.defaultAccount);
+				setLoggedIn(true);
 			})
 			.catch((err) => {
 				if (err.error === ERRORS.AUTH_MISSING) {
@@ -51,11 +56,18 @@ function App() {
 			});
 	}, []);
 
-	if (!loggedIn) return <LoginPage />;
 	return (
 		<>
-			<Navbar />
-			{pageLinks[page]}
+			{prompt.showPrompt && <Prompt type={prompt.promptType} msg={prompt.promptMsg} />}
+
+			{loggedIn ? (
+				<>
+					<Navbar />
+					{pageLinks[page]}
+				</>
+			) : (
+				<LoginPage />
+			)}
 		</>
 	);
 }

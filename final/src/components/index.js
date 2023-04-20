@@ -6,6 +6,7 @@ import FormRowInput from './FormRowInput';
 import FormRowSelect from './FormRowSelect';
 import Loading from './Loading';
 import Logo from './Logo';
+import Modal from './Modal';
 import Navbar from './Navbar';
 import OptionPicker from './OptionPicker';
 import Prompt from './Prompt';
@@ -27,6 +28,7 @@ export {
 	FormRowSelect,
 	Loading,
 	Logo,
+	Modal,
 	Navbar,
 	OptionPicker,
 	Prompt,

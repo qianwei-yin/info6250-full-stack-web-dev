@@ -8,7 +8,9 @@ function fetchUpdateCategories({ type, categoryName, action }) {
 	return resolveFetchPromise(
 		fetch('/api/v1/categories', {
 			method: 'PATCH',
-			'content-type': 'application/json',
+			headers: new Headers({
+				'content-type': 'application/json',
+			}),
 			body: JSON.stringify({ type, categoryName, action }),
 		})
 	);
