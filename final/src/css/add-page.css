@@ -1,5 +1,6 @@
 .transactions-section {
-	margin: 0 1rem 1rem;
+	width: 75%;
+	margin: 1rem auto;
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 }
@@ -40,6 +41,10 @@
 	height: 65vh;
 	overflow-y: scroll;
 	margin-bottom: auto;
+
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: repeat(5, 1fr);
 }
 
 /* -----------pagination--------------- */

@@ -1,6 +1,5 @@
 .settings-page {
-	width: 75vw;
-	max-width: 90vw;
+	width: 70vw;
 	margin: 0 auto;
 	display: grid;
 	grid-template-columns: 2.5fr 7.5fr;
@@ -81,7 +80,7 @@
 
 .settings__single-type {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: repeat(3, 1fr);
 	grid-column-gap: 2rem;
 	grid-row-gap: 1rem;
 }

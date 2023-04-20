@@ -1,3 +1,101 @@
+@media screen and (max-width: 1700px) {
+	.transactions-section {
+		width: 80%;
+		grid-template-columns: 6fr 4fr;
+	}
+}
+
+@media screen and (max-width: 1600px) {
+	html {
+		font-size: 93.75%;
+	}
+
+	.login-form {
+		width: 35%;
+	}
+
+	.settings-page {
+		grid-template-columns: 2fr 8fr;
+	}
+}
+
+@media screen and (max-width: 1400px) {
+	.navbar {
+		padding: 0.7rem 15vw 0.1rem 15vw;
+	}
+
+	.bill__details {
+		width: 40vw;
+	}
+
+	.transactions-section {
+		width: 85%;
+	}
+
+	.settings-page {
+		grid-template-columns: 2.5fr 7.5fr;
+	}
+
+	.settings__single-type {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.modal {
+		width: 40vw;
+	}
+}
+
+@media screen and (max-width: 1200px) {
+	html {
+		font-size: 87.5%;
+	}
+
+	.login-form {
+		width: 40%;
+	}
+
+	.navbar {
+		padding: 0.7rem 10vw 0.1rem 10vw;
+	}
+
+	.transactions-section {
+		width: 90%;
+	}
+
+	.transaction-item__icon svg {
+		width: 1.2rem;
+		height: 1.3rem;
+	}
+	.transaction-item__category {
+		font-size: 1.1rem;
+	}
+	.transaction-item__date {
+		font-size: 1rem;
+	}
+	.transaction-item__amount {
+		font-size: 1.4rem;
+	}
+}
+
+@media screen and (max-width: 1000px) {
+	html {
+		font-size: 81.25%;
+	}
+
+	.navbar {
+		padding: 0.7rem 8vw 0.1rem 8vw;
+	}
+
+	.transactions-section {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.transactions {
+		grid-template-columns: 1fr;
+		grid-template-rows: repeat(10, 1fr);
+	}
+}
+
 @media screen and (max-width: 850px) {
 	html {
 		font-size: 75%;

@@ -290,11 +290,10 @@ form {
 /* -----------Modal---------------- */
 .modal {
 	position: fixed;
-	top: 50%;
+	top: 30%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-	width: 55vw;
-	height: 45vh;
+	width: 30vw;
 	background-color: var(--clr-bg-1);
 	border-radius: 1rem;
 	padding: 2rem 2rem 3rem;
@@ -327,7 +326,7 @@ form {
 .modal__message {
 	font-size: 1.5rem;
 	margin-top: 1rem;
-	margin-bottom: auto;
+	margin-bottom: 3rem;
 	color: var(--clr-text-neutral-2);
 	font-weight: var(--weight-text-3);
 }

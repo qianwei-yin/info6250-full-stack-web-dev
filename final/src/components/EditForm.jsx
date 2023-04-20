@@ -106,7 +106,7 @@ const EditForm = ({ chosenTransactionId, setChosenTransactionId }) => {
 	}
 
 	return (
-		<div>
+		<div className="edit-box">
 			{showModal ? (
 				<Modal
 					props={{

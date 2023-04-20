@@ -1,8 +1,9 @@
 .navbar {
 	display: flex;
 	align-items: last baseline;
+	justify-content: center;
 	gap: 2rem;
-	padding: 0.7rem 1rem 0.1rem 1rem;
+	padding: 0.7rem 20vw 0.1rem 20vw;
 
 	box-shadow: 0 3px 10px 1px rgba(0, 0, 0, 0.1);
 }

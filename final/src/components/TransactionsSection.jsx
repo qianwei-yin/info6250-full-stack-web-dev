@@ -77,32 +77,37 @@ const TransactionsSection = () => {
 				</div>
 
 				{transactions.length > 0 ? (
-					<div className="transactions">
+					<>
 						<p>There are {totals} transactions.</p>
-						{transactions.map((el) => {
-							return (
-								<TransactionItem
-									key={el.id}
-									transaction={el}
-									chosenTransactionId={chosenTransactionId}
-									setChosenTransaction={setChosenTransactionId}
-								/>
-							);
-						})}
-					</div>
-				) : (
-					<div className="transactions no-transactions">There is no transaction at this time.</div>
-				)}
+						<div className="transactions">
+							{transactions.map((el) => {
+								return (
+									<TransactionItem
+										key={el.id}
+										transaction={el}
+										chosenTransactionId={chosenTransactionId}
+										setChosenTransaction={setChosenTransactionId}
+									/>
+								);
+							})}
+						</div>
 
-				<div className="transactions-pagination">
-					<span className="pagination__left">
-						<Left className={`icon ${page === 1 ? 'inactive' : ''}`} onClick={handleDecreasePage} />
-					</span>
-					<span className="pagination__page">{page}</span>
-					<span className="pagination__right">
-						<Right className={`icon ${checkPage() ? 'inactive' : ''}`} onClick={handleIncreasePage} />
-					</span>
-				</div>
+						<div className="transactions-pagination">
+							<span className="pagination__left">
+								<Left className={`icon ${page === 1 ? 'inactive' : ''}`} onClick={handleDecreasePage} />
+							</span>
+							<span className="pagination__page">{page}</span>
+							<span className="pagination__right">
+								<Right
+									className={`icon ${checkPage() ? 'inactive' : ''}`}
+									onClick={handleIncreasePage}
+								/>
+							</span>
+						</div>
+					</>
+				) : (
+					<p className="no-transactions">There is no transaction at this time.</p>
+				)}
 			</div>
 
 			<EditForm chosenTransactionId={chosenTransactionId} setChosenTransactionId={setChosenTransactionId} />
