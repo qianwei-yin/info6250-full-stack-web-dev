@@ -4,6 +4,8 @@ import { useAppContext } from '../context/appContext';
 import { Modal } from '../components';
 import { useState } from 'react';
 import { fetchUpdateDefaultAccount, fetchUpdateAccounts, fetchDefaultAccount } from '../services/accountServices';
+import { ERRORS, ERROR_MESSAGES } from '../scripts/constants/errorConstants';
+import { RESULTS, RESULT_MESSAGES } from '../scripts/constants/resultConstants';
 
 const SettingsAccounts = () => {
 	const { accounts, setAccounts, defaultAccount, setDefaultAccount } = useUserContext();
@@ -13,7 +15,7 @@ const SettingsAccounts = () => {
 	function handleClickDelete(e) {
 		const { accountType, account } = e.target.dataset;
 		if (account === 'uncategorized') {
-			openPrompt({ promptType: 'warning', promptMsg: 'Actions on "uncategorized" are forbidden.' });
+			openPrompt({ promptType: 'warning', promptMsg: [ERROR_MESSAGES[ERRORS.NOT_ALLOWED_ACCOUNT]] });
 			return;
 		}
 		setClickedItem({ accountType, account });
@@ -25,7 +27,7 @@ const SettingsAccounts = () => {
 		if (defaultAccount.accountType === accountType && defaultAccount.account === account) {
 			openPrompt({
 				promptType: 'success',
-				promptMsg: `${accountType} - ${account} is already the default account!`,
+				promptMsg: `"${accountType} - ${account}"` + RESULT_MESSAGES[RESULTS.ALREADY_DEFAULT_ACCOUNT],
 			});
 			return;
 		}
@@ -35,7 +37,7 @@ const SettingsAccounts = () => {
 				setDefaultAccount(data.defaultAccount);
 				openPrompt({
 					promptType: 'success',
-					promptMsg: `${accountType} - ${account} has been set to default account successfully!`,
+					promptMsg: `"${accountType} - ${account}"` + RESULT_MESSAGES[RESULTS.SET_DEFAULT_ACCOUNT_SUCCESS],
 				});
 			})
 			.catch(catchErrorDuringUserAction);
@@ -47,11 +49,21 @@ const SettingsAccounts = () => {
 			.then((data) => {
 				setAccounts(data.accounts);
 
-				// if the deleted one is default account, then change default account to uncategorized
+				// get default account, and if the deleted one is default account, then change default account to uncategorized
 				return fetchDefaultAccount();
 			})
 			.then((data) => {
-				setDefaultAccount(data.defaultAccount);
+				let tempMsg = '';
+				if (JSON.stringify(data.defaultAccount) !== JSON.stringify(defaultAccount)) {
+					setDefaultAccount(data.defaultAccount);
+					tempMsg =
+						` 😆 "${data.defaultAccount.accountType} - ${data.defaultAccount.account}"` +
+						RESULT_MESSAGES[RESULTS.SET_DEFAULT_ACCOUNT_AUTOMATICALLY];
+				}
+				openPrompt({
+					promptType: 'success',
+					promptMsg: RESULT_MESSAGES[RESULTS.DELETE_ACCOUNT_SUCCESS] + tempMsg,
+				});
 			})
 			.catch(catchErrorDuringUserAction)
 			.finally(() => {
@@ -80,14 +92,7 @@ const SettingsAccounts = () => {
 						<h3 className="settings__type-title">{type}</h3>
 						{accounts[type].map((el) => {
 							return (
-								<div
-									className={`settings__card ${
-										defaultAccount.accountType === type && defaultAccount.account === el
-											? 'default'
-											: ''
-									}`}
-									key={type + el}
-								>
+								<div className="settings__card" key={type + el}>
 									<div>
 										<p>
 											{defaultAccount.accountType === type && defaultAccount.account === el

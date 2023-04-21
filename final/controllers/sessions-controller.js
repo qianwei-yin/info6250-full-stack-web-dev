@@ -22,6 +22,10 @@ function getSession(req, res) {
 function createSession(req, res) {
 	const { username } = req.body;
 
+	if (!userData.limitStringLength(username)) {
+		res.status(400).json({ error: 'too-long-username' });
+		return;
+	}
 	if (!userData.checkUsername(username)) {
 		res.status(400).json({ error: 'invalid-username' });
 		return;

@@ -3,6 +3,8 @@ import { useUserContext } from '../context/userContext';
 import { SettingsAddCard, Modal } from '../components';
 import { fetchUpdateCategories } from '../services/categoryServices';
 import { useAppContext } from '../context/appContext';
+import { ERRORS, ERROR_MESSAGES } from '../scripts/constants/errorConstants';
+import { RESULTS, RESULT_MESSAGES } from '../scripts/constants/resultConstants';
 
 const SettingsCategories = () => {
 	const { categories, setCategories } = useUserContext();
@@ -12,7 +14,7 @@ const SettingsCategories = () => {
 	function handleClickDelete(e) {
 		const { type, categoryName } = e.target.dataset;
 		if (categoryName === 'uncategorized') {
-			openPrompt({ promptType: 'warning', promptMsg: 'Actions on "uncategorized" are forbidden.' });
+			openPrompt({ promptType: 'warning', promptMsg: ERROR_MESSAGES[ERRORS.NOT_ALLOWED_CATEGORY_NAME] });
 			return;
 		}
 		setClickedItem({ type, categoryName });
@@ -23,6 +25,7 @@ const SettingsCategories = () => {
 		fetchUpdateCategories({ ...clickedItem, action: 'delete' })
 			.then((data) => {
 				setCategories(data.categories);
+				openPrompt({ promptType: 'success', promptMsg: RESULT_MESSAGES[RESULTS.DELETE_CATEGORY_SUCCESS] });
 			})
 			.catch(catchErrorDuringUserAction)
 			.finally(() => closeModal());

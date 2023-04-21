@@ -12,6 +12,14 @@ function checkAccountParams(req, res, next) {
 	const { accountType } = req.body;
 	const account = req.body.account?.toLowerCase();
 
+	if (!userData.limitStringLength(account)) {
+		res.status(400).json({ error: 'too-long-account-name' });
+		return;
+	}
+	if (!userData.checkAccountName(account)) {
+		res.status(400).json({ error: 'invalid-account-name' });
+		return;
+	}
 	const accountStatus = userData.checkAccountTypeAndName({ username, accountType, account });
 	if (accountStatus === 'invalid-account-type') {
 		res.status(400).json({ error: 'invalid-account-type' });

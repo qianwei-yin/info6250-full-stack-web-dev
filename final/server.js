@@ -27,7 +27,9 @@ app.use(express.static('./build'));
 app.use(express.json());
 
 app.route('/api/v1/sessions').get(checkSession, getSession).post(createSession).delete(deleteSession);
+
 app.route('/api/v1/categories').get(checkSession, getCategories).patch(checkSession, updateCategories);
+
 app.route('/api/v1/transactions/bill').get(checkSession, getBill);
 app.route('/api/v1/transactions')
 	.get(checkSession, getTransactions)
@@ -35,9 +37,8 @@ app.route('/api/v1/transactions')
 app.route('/api/v1/transactions/:transactionId')
 	.patch(checkSession, checkTransactionParams, updateTransaction)
 	.delete(checkSession, deleteTransaction);
+
 app.route('/api/v1/accounts').get(checkSession, getAccounts).patch(checkSession, checkAccountParams, updateAccount);
-app.route('/api/v1/accounts/default')
-	.get(checkSession, getDefaultAccount)
-	.patch(checkSession, checkAccountParams, updateDefaultAccount);
+app.route('/api/v1/accounts/default').get(checkSession, getDefaultAccount).patch(checkSession, updateDefaultAccount);
 
 app.listen(PORT, () => console.log(`http://localhost:${PORT}`));

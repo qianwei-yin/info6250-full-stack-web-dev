@@ -11,6 +11,7 @@ import {
 	fetchDeleteTransaction,
 } from '../services/transactionServices';
 import { formatTimeForServer } from '../scripts/utils/time';
+import { RESULTS, RESULT_MESSAGES } from '../scripts/constants/resultConstants';
 
 const initialInputState = {
 	id: '',
@@ -24,7 +25,16 @@ const initialInputState = {
 };
 
 const EditForm = ({ chosenTransactionId, setChosenTransactionId }) => {
-	const { openPrompt, closePrompt, catchErrorDuringUserAction, showModal, openModal, closeModal } = useAppContext();
+	const {
+		openPrompt,
+		closePrompt,
+		catchErrorDuringUserAction,
+		showModal,
+		openModal,
+		closeModal,
+		setPage,
+		setSettingsSection,
+	} = useAppContext();
 	const { transactions, setTransactions, refreshTransactions } = useTransactionContext();
 	const { categories, accounts, defaultAccount } = useUserContext();
 	const [inputs, setInputs] = useState({ ...initialInputState, time: formatTimeForServer() });
@@ -68,10 +78,11 @@ const EditForm = ({ chosenTransactionId, setChosenTransactionId }) => {
 
 		fetchCreateTransaction(inputs)
 			.then((data) => {
-				// makes the inputs stay the same as user input
-				setChosenTransactionId(data.transaction.id);
 				// refresh the transaction items on the left
 				refreshTransactions();
+				// open success propmt
+				openPrompt({ promptType: 'success', promptMsg: RESULT_MESSAGES[RESULTS.ADD_TRANSACTION_SUCCESS] });
+				setToInitialInputs();
 			})
 			.catch(catchErrorDuringUserAction);
 	}
@@ -87,7 +98,9 @@ const EditForm = ({ chosenTransactionId, setChosenTransactionId }) => {
 			.then((data) => {
 				// only refresh the transaction items on the left
 				refreshTransactions();
-				// not
+				// open success propmt
+				openPrompt({ promptType: 'success', promptMsg: RESULT_MESSAGES[RESULTS.UPDATE_TRANSACTION_SUCCESS] });
+				setToInitialInputs();
 			})
 			.catch(catchErrorDuringUserAction);
 	}
@@ -98,11 +111,18 @@ const EditForm = ({ chosenTransactionId, setChosenTransactionId }) => {
 				setToInitialInputs();
 				setChosenTransactionId('');
 				refreshTransactions();
+				// success prompt
+				openPrompt({ promptType: 'success', promptMsg: RESULT_MESSAGES[RESULTS.DELETE_TRANSACTION_SUCCESS] });
 			})
 			.catch(catchErrorDuringUserAction)
 			.finally(() => {
 				closeModal();
 			});
+	}
+
+	function goSettings(section) {
+		setSettingsSection(section);
+		setPage('settings');
 	}
 
 	return (
@@ -140,7 +160,8 @@ const EditForm = ({ chosenTransactionId, setChosenTransactionId }) => {
 					}}
 				/>
 				<p className="go-to-settings">
-					Didn't found your expected category? Go to <button>Settings</button>!
+					Didn't found your expected category? Go to{' '}
+					<button onClick={() => goSettings('categories')}>Settings</button>!
 				</p>
 				<FormRowInput
 					props={{ name: 'amount', label: 'amount', type: 'number', value: inputs.amount, handleInput }}
@@ -166,7 +187,7 @@ const EditForm = ({ chosenTransactionId, setChosenTransactionId }) => {
 					}}
 				/>
 				<p className="go-to-settings">
-					Want another account? Go to <button>Settings</button>!
+					Want another account? Go to <button onClick={() => goSettings('accounts')}>Settings</button>!
 				</p>
 				<FormRowInput
 					props={{

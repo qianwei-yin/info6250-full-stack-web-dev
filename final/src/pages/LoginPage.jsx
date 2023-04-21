@@ -72,7 +72,7 @@ const LoginPage = () => {
 					}}
 				/>
 
-				<button className="btn--with-border" type="submit">
+				<button className="btn--with-border" type="submit" disabled={!usernameInput}>
 					{loadingLogin ? <Loading /> : 'Log In'}
 				</button>
 

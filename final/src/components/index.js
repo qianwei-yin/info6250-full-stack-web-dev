@@ -13,7 +13,6 @@ import Prompt from './Prompt';
 import SettingsAccounts from './SettingsAccounts';
 import SettingsAddCard from './SettingsAddCard';
 import SettingsCategories from './SettingsCategories';
-import SettingsOthers from './SettingsOthers';
 import ThemeToggler from './ThemeToggler';
 import TimePicker from './TimePicker';
 import TransactionItem from './TransactionItem';
@@ -35,7 +34,6 @@ export {
 	SettingsAccounts,
 	SettingsAddCard,
 	SettingsCategories,
-	SettingsOthers,
 	ThemeToggler,
 	TimePicker,
 	TransactionItem,

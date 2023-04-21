@@ -1,5 +1,6 @@
 import { version as uuidVersion } from 'uuid';
 import { validate as uuidValidate } from 'uuid';
+import { ERRORS, ERROR_MESSAGES } from '../constants/errorConstants';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
@@ -13,37 +14,35 @@ export default function validateTransaction(trans) {
 
 	// id exists and id isn't valid
 	if (id !== '' && !uuidValidateV4(id)) {
-		result.msg = 'The id is invalid, please refresh the page and try again.';
+		result.msg = ERROR_MESSAGES[ERRORS.INVALID_TRANSACTION_ID];
 		return result;
 	}
-
-	if (amount <= 0) {
-		result.msg = 'The amount should be larger than 0.';
+	if (Number(amount) <= 0) {
+		result.msg = ERROR_MESSAGES[ERRORS.INVALID_TRANSACTION_AMOUNT];
 		return result;
 	}
-
+	if (Number(amount) > 100000000) {
+		result.msg = ERROR_MESSAGES[ERRORS.TOO_LONG_TRANSACTION_AMOUNT];
+		return result;
+	}
 	if (!type) {
-		result.msg = "The type hasn't been chosen.";
+		result.msg = ERROR_MESSAGES[ERRORS.INVALID_TRANSACTION_TYPE];
 		return result;
 	}
-
 	if (!category) {
-		result.msg = "The category hasn't been chosen.";
+		result.msg = ERROR_MESSAGES[ERRORS.INVALID_TRANSACTION_CATEGORY];
 		return result;
 	}
-
 	if (!validateTime(time)) {
-		result.msg = 'The time you chosen is invalid.';
+		result.msg = ERROR_MESSAGES[ERRORS.INVALID_TRANSACTION_TIME];
 		return result;
 	}
-
 	if (!accountType) {
-		result.msg = "The account type hasn't been chosen.";
+		result.msg = ERROR_MESSAGES[ERRORS.INVALID_TRANSACTION_ACCOUNT_TYPE];
 		return result;
 	}
-
 	if (!account) {
-		result.msg = "The account hasn't been chosen.";
+		result.msg = ERROR_MESSAGES[ERRORS.INVALID_TRANSACTION_ACCOUNT];
 		return result;
 	}
 

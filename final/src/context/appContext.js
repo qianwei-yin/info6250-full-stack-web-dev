@@ -10,6 +10,7 @@ import {
 	RESET_APP_STATE,
 	OPEN_MODAL,
 	CLOSE_MODAL,
+	SET_SETTINGS_SECTION,
 } from '../scripts/actions/appActions';
 import { ERRORS, ERROR_MESSAGES } from '../scripts/constants/errorConstants';
 
@@ -33,6 +34,7 @@ const initialState = {
 		promptMsg: '',
 	},
 	showModal: false,
+	settingsSection: 'categories',
 };
 
 const AppContext = React.createContext();
@@ -86,6 +88,10 @@ export const AppProvider = ({ children }) => {
 		dispatch({ type: CLOSE_MODAL });
 	}
 
+	function setSettingsSection(section) {
+		dispatch({ type: SET_SETTINGS_SECTION, payload: section });
+	}
+
 	return (
 		<AppContext.Provider
 			value={{
@@ -100,6 +106,7 @@ export const AppProvider = ({ children }) => {
 				closePrompt,
 				openModal,
 				closeModal,
+				setSettingsSection,
 			}}
 		>
 			{children}

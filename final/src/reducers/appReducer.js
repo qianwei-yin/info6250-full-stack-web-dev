@@ -8,6 +8,7 @@ import {
 	RESET_APP_STATE,
 	OPEN_MODAL,
 	CLOSE_MODAL,
+	SET_SETTINGS_SECTION,
 } from '../scripts/actions/appActions';
 
 const reducer = (state, action) => {
@@ -47,6 +48,8 @@ const reducer = (state, action) => {
 			return { ...state, showModal: true };
 		case CLOSE_MODAL:
 			return { ...state, showModal: false };
+		case SET_SETTINGS_SECTION:
+			return { ...state, settingsSection: action.payload };
 		default:
 			throw new Error(`No matching "${action.type}" - action type.`);
 	}

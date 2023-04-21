@@ -12,6 +12,10 @@ function updateCategories(req, res) {
 	const { type, action } = req.body;
 	const categoryName = req.body.categoryName?.toLowerCase();
 
+	if (!userData.limitStringLength(categoryName)) {
+		res.status(400).json({ error: 'too-long-category-name' });
+		return;
+	}
 	if (categoryName === 'uncategorized') {
 		res.status(400).json({ error: 'not-allowed-category-name' });
 		return;

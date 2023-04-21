@@ -1,24 +1,74 @@
 const sessions = require('../server-data/sessions.js');
 const userData = require('../server-data/userData.js');
 
+function getBill(req, res) {
+	const { username } = res.locals;
+	const { startDate, endDate } = req.query;
+
+	if (!userData.checkBillDate(startDate) || !userData.checkBillDate(endDate)) {
+		res.status(400).json({ error: 'invalid-bill-date' });
+		return;
+	}
+
+	const bill = userData.getBill({ username, startTime: startDate + 'T00:00', endTime: endDate + 'T23:59' });
+	res.json({ bill });
+}
+
+function getTransactions(req, res) {
+	const { username } = res.locals;
+	const { startDate, endDate, sortMethod, page } = req.query;
+
+	const { paginatedSortedFilteredTransactions, transactionsCount } = userData.getTransactions({
+		username,
+		startDate,
+		endDate,
+		sortMethod,
+		page,
+	});
+
+	res.json({ transactions: paginatedSortedFilteredTransactions, totals: transactionsCount });
+}
+
 function checkTransactionParams(req, res, next) {
 	const { username } = res.locals;
-	const { amount, category, time, type, description, accountType, account } = req.body;
+	const { amount, category, time, type, accountType, account } = req.body;
+	const { transactionId: id } = req.params;
 
-	if (!amount || Number(amount) <= 0) {
-		res.status(400).json({ error: 'required-amount' });
+	// id exists and id isn't valid
+	if (id && !userData.uuidValidateV4(id)) {
+		res.status(400).json({ error: 'invalid-transaction-id' });
+		return;
+	}
+	if (id && !userData.checkExistTransactionId({ username, id })) {
+		res.status(404).json({ error: 'not-found-transaction' });
+		return;
+	}
+	if (Number(amount) <= 0) {
+		res.status(400).json({ error: 'invalid-transaction-amount' });
+		return;
+	}
+	if (Number(amount) > 100000000) {
+		res.status(400).json({ error: 'too-long-transaction-amount' });
 		return;
 	}
 	if (type !== 'income' && type !== 'expenses') {
-		res.status(400).json({ error: 'invalid-category-type' });
+		res.status(400).json({ error: 'invalid-transaction-type' });
 		return;
 	}
 	if (!userData.checkExistCategory({ username, type, category })) {
-		res.status(404).json({ error: 'not-found-category-name' });
+		res.status(400).json({ error: 'invalid-transaction-category' });
 		return;
 	}
-	if (userData.checkAccountTypeAndName({ username, accountType, account }) !== 'account-exists') {
-		res.status(404).json({ error: 'not-found-account' });
+	if (!userData.validateTime(time)) {
+		res.status(400).json({ error: 'invalid-transaction-time' });
+		return;
+	}
+	// checkAccount includes 2 errors: 'account-not-exists', 'invalid-account-type'
+	const checkAccount = userData.checkAccountTypeAndName({ username, accountType, account });
+	if (checkAccount !== 'account-exists') {
+		const errorType =
+			checkAccount === 'account-not-exists' ? 'invalid-transaction-account' : 'invalid-transaction-account-type';
+		res.status(400).json({ error: errorType });
 		return;
 	}
 
@@ -43,43 +93,10 @@ function createTransaction(req, res) {
 	res.status(201).json({ transaction: newTransaction });
 }
 
-function getTransactions(req, res) {
-	const { username } = res.locals;
-	const { startDate, endDate, sortMethod, page } = req.query;
-
-	const { paginatedSortedFilteredTransactions, transactionsCount } = userData.getTransactions({
-		username,
-		startDate,
-		endDate,
-		sortMethod,
-		page,
-	});
-
-	res.json({ transactions: paginatedSortedFilteredTransactions, totals: transactionsCount });
-}
-
-function getBill(req, res) {
-	const { username } = res.locals;
-	const { startDate, endDate } = req.query;
-
-	if (!userData.checkBillDate(startDate) || !userData.checkBillDate(endDate)) {
-		res.status(400).json({ error: 'invalid-bill-date' });
-		return;
-	}
-
-	const bill = userData.getBill({ username, startTime: startDate + 'T00:00', endTime: endDate + 'T23:59' });
-	res.json({ bill });
-}
-
 function updateTransaction(req, res) {
 	const { username } = res.locals;
 	const { transactionId: id } = req.params;
 	const { amount, category, time, type, description, accountType, account } = req.body;
-
-	if (!userData.checkExistTransactionId({ username, id })) {
-		res.status(404).json({ error: 'not-found-transaction' });
-		return;
-	}
 
 	const updatedTransaction = userData.updateTransaction({
 		username,
@@ -99,11 +116,6 @@ function updateTransaction(req, res) {
 function deleteTransaction(req, res) {
 	const { username } = res.locals;
 	const { transactionId: id } = req.params;
-
-	if (!userData.checkExistTransactionId({ username, id })) {
-		res.status(404).json({ error: 'not-found-transaction' });
-		return;
-	}
 
 	const newTransactions = userData.deleteTransaction({ username, id });
 	res.json({ transactions: newTransactions });

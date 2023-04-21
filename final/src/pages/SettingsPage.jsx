@@ -1,21 +1,21 @@
 import { useState } from 'react';
 import { useUserContext } from '../context/userContext';
-import { AddCategory, SettingsAccounts, SettingsCategories, SettingsOthers } from '../components';
+import { useAppContext } from '../context/appContext';
+import { AddCategory, SettingsAccounts, SettingsCategories } from '../components';
 
-const settingsSection = ['categories', 'accounts', 'others'];
+const settingsSections = ['categories', 'accounts'];
 
 const SettingsPage = () => {
 	const { categories } = useUserContext();
-
-	const [settingsSectionName, setSettingsSectionName] = useState('categories');
+	const { settingsSection, setSettingsSection } = useAppContext();
 
 	return (
 		<div className="settings-page">
 			<div className="sidebar">
-				{settingsSection.map((el) => {
+				{settingsSections.map((el) => {
 					return (
-						<div className={`sidebar__item ${settingsSectionName === el ? 'active' : ''}`} key={el}>
-							<button key={el} className="sidebar__btn" onClick={() => setSettingsSectionName(el)}>
+						<div className={`sidebar__item ${settingsSection === el ? 'active' : ''}`} key={el}>
+							<button key={el} className="sidebar__btn" onClick={() => setSettingsSection(el)}>
 								{el}
 							</button>
 						</div>
@@ -23,12 +23,14 @@ const SettingsPage = () => {
 				})}
 			</div>
 
-			{/* IFFE, if use ternary operator to do the conditional rendering, the syntax can be complex and confusing  */}
-			{(() => {
-				if (settingsSectionName === 'categories') return <SettingsCategories />;
-				else if (settingsSectionName === 'accounts') return <SettingsAccounts />;
-				else return <div className="settings-section"></div>;
+			{/* If there are multiple consitional rendering, IFFE is the best. If use ternary operator to do the conditional rendering, the syntax can be complex and confusing */}
+			{/* {(() => {
+				if (settingsSection === 'categories') return <SettingsCategories />;
+				else if (settingsSection === 'accounts') return <SettingsAccounts />;
 			})()}
+			 */}
+
+			{settingsSection === 'categories' ? <SettingsCategories /> : <SettingsAccounts />}
 		</div>
 	);
 };

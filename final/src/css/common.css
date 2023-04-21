@@ -4,7 +4,7 @@
 	align-items: last baseline;
 }
 .logo__img {
-	fill: var(--clr-text-amber-1);
+	fill: var(--clr-text-amber-2);
 	height: 3rem;
 	margin-right: -0.3rem;
 }
@@ -98,6 +98,13 @@ button:active {
 .btn--without-border:hover {
 	color: var(--clr-text-amber-2);
 	text-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+button:disabled,
+button:disabled:hover {
+	transform: none;
+	cursor: default;
+	box-shadow: none;
 }
 
 /* -----------Form Row---------------- */

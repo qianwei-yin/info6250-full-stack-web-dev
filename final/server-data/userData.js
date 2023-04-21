@@ -1,6 +1,10 @@
 const uuid = require('uuid').v4;
+const { version: uuidVersion } = require('uuid');
+const { validate: uuidValidate } = require('uuid');
 const dayjs = require('dayjs');
+const customParseFormat = require('dayjs/plugin/customParseFormat');
 const testData = require('../testData.json');
+dayjs.extend(customParseFormat);
 
 const initialCategories = {
 	// clothes,restaurant,entertainment,gas,gift,travel,kids,shopping,sports,transportation
@@ -34,6 +38,10 @@ const userData = {
 	},
 };
 
+function limitStringLength(str) {
+	return str.trim().length <= 20;
+}
+
 function checkUsername(username) {
 	if (username === '') return false;
 	return username.trim().match(/^[A-Za-z0-9_]+$/);
@@ -54,13 +62,19 @@ function initiateUserData(username) {
 	};
 }
 
+// --------------CATEGORIES--------------
 function getCategories(username) {
 	return userData[username].categories;
 }
 
 function checkCategoryName(categoryName) {
 	if (categoryName === '') return false;
-	return categoryName.trim().match(/^[A-Za-z0-9 _]+$/);
+	return categoryName.trim().match(/^[A-Za-z0-9 -_]+$/);
+}
+
+function checkExistCategory({ username, type, category }) {
+	const categoriesArray = userData[username].categories[type];
+	return categoriesArray.includes(category);
 }
 
 function checkDuplicateOrNoSuchCategoryName({ username, type, action, categoryName }) {
@@ -92,8 +106,12 @@ function updateCategories({ username, type, action, categoryName }) {
 	return userData[username].categories;
 }
 
-function checkExistCategory({ username, type, category }) {
-	return userData[username].categories[type].includes(category);
+// --------------TRANSACTIONS--------------
+function uuidValidateV4(uuid) {
+	return uuidValidate(uuid) && uuidVersion(uuid) === 4;
+}
+function validateTime(time) {
+	return dayjs(time, 'YYYY-MM-DD[T]HH:mm', true).isValid();
 }
 
 function addTransaction({ username, amount, category, time, type, description, accountType, account }) {
@@ -182,6 +200,11 @@ function getAccounts(username) {
 	return userData[username].accounts;
 }
 
+function checkAccountName(account) {
+	if (account === '') return false;
+	return account.trim().match(/^[A-Za-z0-9_ -]+$/);
+}
+
 function checkAccountTypeAndName({ username, accountType, account }) {
 	const { accounts } = userData[username];
 	if (Object.keys(accounts).includes(accountType)) {
@@ -231,18 +254,19 @@ function updateDefaultAccount({ username, accountType, account }) {
 }
 
 module.exports = {
+	limitStringLength,
 	checkUsername,
 	checkCategoryName,
 	initiateUserData,
 	getCategories,
 	checkDuplicateOrNoSuchCategoryName,
 	updateCategories,
-	checkExistCategory,
 	addTransaction,
 	getTransactions,
 	checkBillDate,
 	getBill,
 	checkExistTransactionId,
+	checkExistCategory,
 	updateTransaction,
 	deleteTransaction,
 	getAccounts,
@@ -250,4 +274,7 @@ module.exports = {
 	updateAccount,
 	getDefaultAccount,
 	updateDefaultAccount,
+	uuidValidateV4,
+	validateTime,
+	checkAccountName,
 };
