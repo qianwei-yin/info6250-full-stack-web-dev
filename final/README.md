@@ -2,6 +2,9 @@
 
 A web app that can be used to record user's income and expenses, with desired categories and self-defined accounts.
 
+Check the [live site](https://expense-ygef.onrender.com).
+⬆️ It might take 30s to launch, because I use the free-tier of deployment at [render](https://dashboard.render.com). This is their policy.
+
 ### Features
 
 1. Dark mode. Needless to say, it will remember your preference even if you change user.
@@ -13,6 +16,7 @@ A web app that can be used to record user's income and expenses, with desired ca
 7. Set your default account, the default account will automatically appear when you are trying to create a new transaction record.
 8. Add/Delete a category/account.
 9. Responsive styles on desktop sizes (>= 800 px).
+10. Multiple loading effects. You can set Network to "Slow 3G" to test it out.
 
 ### How to use
 

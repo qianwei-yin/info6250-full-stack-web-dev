@@ -71,7 +71,7 @@ const SettingsAccounts = ({ clickedItemType, setClickedItemType }) => {
 				if (JSON.stringify(data.defaultAccount) !== JSON.stringify(defaultAccount)) {
 					setDefaultAccount(data.defaultAccount);
 					tempMsg =
-						`"${data.defaultAccount.accountType} - ${data.defaultAccount.account}"` +
+						`\n"${data.defaultAccount.accountType} - ${data.defaultAccount.account}"` +
 						RESULT_MESSAGES[RESULTS.SET_DEFAULT_ACCOUNT_AUTOMATICALLY];
 				}
 				openPrompt({

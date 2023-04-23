@@ -16,6 +16,8 @@ import {
 	SET_LOADING_SETTINGS_ADD,
 	SET_LOADING_SETTINGS_DELETE,
 	SET_LOADING_TRANSACTIONS_DELETE,
+	SET_LOADING_TRANSACTION_ADD,
+	SET_LOADING_TRANSACTION_UPDATE,
 } from '../scripts/actions/appActions';
 
 const reducer = (state, action) => {
@@ -36,6 +38,10 @@ const reducer = (state, action) => {
 			return { ...state, loadingSettingsDelete: action.payload };
 		case SET_LOADING_TRANSACTIONS_DELETE:
 			return { ...state, loadingTransactionsDelete: action.payload };
+		case SET_LOADING_TRANSACTION_ADD:
+			return { ...state, loadingTransactionAdd: action.payload };
+		case SET_LOADING_TRANSACTION_UPDATE:
+			return { ...state, loadingTransactionUpdate: action.payload };
 		case TOGGLE_THEME:
 			const newTheme = state.theme === 'light' ? 'dark' : 'light';
 			localStorage.setItem('theme', newTheme);

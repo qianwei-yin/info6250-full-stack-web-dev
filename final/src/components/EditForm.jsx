@@ -2,17 +2,20 @@ import { useState, useEffect } from 'react';
 import { useAppContext } from '../context/appContext';
 import { useUserContext } from '../context/userContext';
 import { useTransactionContext } from '../context/transactionContext';
-import { FormRowSelect, FormRowInput, FormRowCalendar, Modal } from '../components';
+import { FormRowSelect, FormRowInput, FormRowCalendar, Modal, Loading } from '../components';
 import validateTransaction from '../scripts/utils/validateTransaction';
 import {
 	fetchCreateTransaction,
 	fetchUpdateTransaction,
 	fetchDeleteTransaction,
-	fetchTargetedTransactionPage,
 } from '../services/transactionServices';
 import { formatTimeForServer } from '../scripts/utils/time';
 import { RESULTS, RESULT_MESSAGES } from '../scripts/constants/resultConstants';
-import { SET_LOADING_TRANSACTIONS_DELETE } from '../scripts/actions/appActions';
+import {
+	SET_LOADING_TRANSACTIONS_DELETE,
+	SET_LOADING_TRANSACTION_ADD,
+	SET_LOADING_TRANSACTION_UPDATE,
+} from '../scripts/actions/appActions';
 
 const initialInputState = {
 	id: '',
@@ -35,6 +38,8 @@ const EditForm = () => {
 		setPage,
 		setSettingsSection,
 		loadingTransactionsDelete,
+		loadingTransactionAdd,
+		loadingTransactionUpdate,
 		setLoading,
 	} = useAppContext();
 	const { transactions, refreshTransactions, chosenTransactionId } = useTransactionContext();
@@ -65,6 +70,16 @@ const EditForm = () => {
 		setInputs((oldInputs) => {
 			return { ...oldInputs, [name]: value };
 		});
+		if (name === 'type') {
+			setInputs((oldInputs) => {
+				return { ...oldInputs, category: '' };
+			});
+		}
+		if (name === 'accountType') {
+			setInputs((oldInputs) => {
+				return { ...oldInputs, account: '' };
+			});
+		}
 	}
 
 	function handleCancel() {
@@ -78,6 +93,7 @@ const EditForm = () => {
 			return;
 		}
 
+		setLoading({ type: SET_LOADING_TRANSACTION_ADD, value: true });
 		fetchCreateTransaction(inputs)
 			.then((data) => {
 				// refresh the transaction items on the left
@@ -86,7 +102,8 @@ const EditForm = () => {
 				// open success propmt
 				openPrompt({ promptType: 'success', promptMsg: RESULT_MESSAGES[RESULTS.ADD_TRANSACTION_SUCCESS] });
 			})
-			.catch(catchErrorDuringUserAction);
+			.catch(catchErrorDuringUserAction)
+			.finally(() => setLoading({ type: SET_LOADING_TRANSACTION_ADD, value: false }));
 	}
 
 	function handleSubmitUpdate() {
@@ -96,6 +113,7 @@ const EditForm = () => {
 			return;
 		}
 
+		setLoading({ type: SET_LOADING_TRANSACTION_UPDATE, value: true });
 		fetchUpdateTransaction(inputs)
 			.then((data) => {
 				// refresh the transaction items on the left
@@ -103,7 +121,8 @@ const EditForm = () => {
 				// open success propmt
 				openPrompt({ promptType: 'success', promptMsg: RESULT_MESSAGES[RESULTS.UPDATE_TRANSACTION_SUCCESS] });
 			})
-			.catch(catchErrorDuringUserAction);
+			.catch(catchErrorDuringUserAction)
+			.finally(() => setLoading({ type: SET_LOADING_TRANSACTION_UPDATE, value: false }));
 	}
 
 	function handleDelete() {
@@ -184,7 +203,7 @@ const EditForm = () => {
 					props={{
 						name: 'account',
 						label: 'account',
-						options: inputs.accountType ? accounts[inputs.accountType] : [],
+						options: accounts[inputs.accountType] || [],
 						value: inputs.account,
 						handleInput,
 					}}
@@ -209,7 +228,7 @@ const EditForm = () => {
 						Cancel
 					</button>
 					<button className="btn--with-border edit-area__actions__submit" onClick={handleSubmitNew}>
-						Submit
+						{loadingTransactionAdd ? <Loading size="1" color="indigo" /> : 'Submit'}
 					</button>
 				</div>
 			) : (
@@ -218,7 +237,7 @@ const EditForm = () => {
 						Delete
 					</button>
 					<button className="btn--with-border edit-area__actions__update" onClick={handleSubmitUpdate}>
-						Update
+						{loadingTransactionUpdate ? <Loading size="1" color="indigo" /> : 'Update'}
 					</button>
 				</div>
 			)}

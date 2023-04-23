@@ -42,6 +42,8 @@ const initialState = {
 	loadingSettingsAdd: false, // effect on the settings page when adding an item
 	loadingSettingsDelete: false, // effect on Modal when deleting an item on settings page
 	loadingTransactionsDelete: false, // effect on Modal when deleting a transaction
+	loadingTransactionAdd: false, // effect on Submit button in edit form
+	loadingTransactionUpdate: false, // effect on Update button in edit form
 };
 
 const AppContext = React.createContext();
