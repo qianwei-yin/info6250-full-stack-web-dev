@@ -9,9 +9,12 @@ import {
 	fetchCreateTransaction,
 	fetchUpdateTransaction,
 	fetchDeleteTransaction,
+	fetchTargetedTransactionPage,
 } from '../services/transactionServices';
 import { formatTimeForServer } from '../scripts/utils/time';
 import { RESULTS, RESULT_MESSAGES } from '../scripts/constants/resultConstants';
+import { SET_LOADING_TRANSACTIONS_DELETE } from '../scripts/actions/appActions';
+import { SET_PAGE } from '../scripts/actions/transactionActions';
 
 const initialInputState = {
 	id: '',
@@ -24,7 +27,7 @@ const initialInputState = {
 	account: '',
 };
 
-const EditForm = ({ chosenTransactionId, setChosenTransactionId }) => {
+const EditForm = () => {
 	const {
 		openPrompt,
 		closePrompt,
@@ -34,8 +37,21 @@ const EditForm = ({ chosenTransactionId, setChosenTransactionId }) => {
 		closeModal,
 		setPage,
 		setSettingsSection,
+		loadingTransactionsDelete,
+		setLoading,
 	} = useAppContext();
-	const { transactions, setTransactions, refreshTransactions } = useTransactionContext();
+	const {
+		sortMethod,
+		transactions,
+		setTransactions,
+		refreshTransactions,
+		chosenTransactionId,
+		setChosenTransactionId,
+		page,
+		setPage: setTransactionsPage,
+		dispatch,
+		setTotals,
+	} = useTransactionContext();
 	const { categories, accounts, defaultAccount } = useUserContext();
 	const [inputs, setInputs] = useState({ ...initialInputState, time: formatTimeForServer() });
 
@@ -69,6 +85,24 @@ const EditForm = ({ chosenTransactionId, setChosenTransactionId }) => {
 		setToInitialInputs();
 	}
 
+	// Aims at getting the page of the new/updated transaction under current sort method
+	// Only submitNew and update will use this function
+	// Why not delete? Because after deleting a transaction, the edit form will turn to "create new one", so the page can be set to 1
+	function setPageToTargetedTransaction(id) {
+		fetchTargetedTransactionPage({ sortMethod, id })
+			.then((data) => {
+				// if (page === data.page) {
+				// 	refreshTransactions(id); // if page number doesn't change, which means it will not trigger useEffect, then refresh manually
+				// } else {
+				// 	setTransactionsPage(data.page);
+				// }
+				if (page !== data.page) setTransactionsPage(data.page);
+				else refreshTransactions(id);
+				// DO NOT setChosenTransactionId(), because I wanna the edit form not to change
+			})
+			.catch(catchErrorDuringUserAction);
+	}
+
 	function handleSubmitNew() {
 		const result = validateTransaction(inputs);
 		if (!result.ok) {
@@ -78,11 +112,11 @@ const EditForm = ({ chosenTransactionId, setChosenTransactionId }) => {
 
 		fetchCreateTransaction(inputs)
 			.then((data) => {
-				// refresh the transaction items on the left
+				// refresh the transaction items on the left, as well as go to the new transaction's page
 				refreshTransactions();
+				setToInitialInputs();
 				// open success propmt
 				openPrompt({ promptType: 'success', promptMsg: RESULT_MESSAGES[RESULTS.ADD_TRANSACTION_SUCCESS] });
-				setToInitialInputs();
 			})
 			.catch(catchErrorDuringUserAction);
 	}
@@ -96,26 +130,26 @@ const EditForm = ({ chosenTransactionId, setChosenTransactionId }) => {
 
 		fetchUpdateTransaction(inputs)
 			.then((data) => {
-				// only refresh the transaction items on the left
+				// refresh the transaction items on the left, as well as go to the new transaction's page
 				refreshTransactions();
 				// open success propmt
 				openPrompt({ promptType: 'success', promptMsg: RESULT_MESSAGES[RESULTS.UPDATE_TRANSACTION_SUCCESS] });
-				setToInitialInputs();
 			})
 			.catch(catchErrorDuringUserAction);
 	}
 
 	function handleDelete() {
+		setLoading({ type: SET_LOADING_TRANSACTIONS_DELETE, value: true });
 		fetchDeleteTransaction(chosenTransactionId)
 			.then((data) => {
 				setToInitialInputs();
-				setChosenTransactionId('');
 				refreshTransactions();
 				// success prompt
 				openPrompt({ promptType: 'success', promptMsg: RESULT_MESSAGES[RESULTS.DELETE_TRANSACTION_SUCCESS] });
 			})
 			.catch(catchErrorDuringUserAction)
 			.finally(() => {
+				setLoading({ type: SET_LOADING_TRANSACTIONS_DELETE, value: false });
 				closeModal();
 			});
 	}
@@ -130,6 +164,7 @@ const EditForm = ({ chosenTransactionId, setChosenTransactionId }) => {
 			{showModal ? (
 				<Modal
 					props={{
+						loading: loadingTransactionsDelete,
 						defaultActionName: 'cancel',
 						secondaryActionName: 'delete',
 						defaultAction: closeModal,

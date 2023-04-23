@@ -16,6 +16,9 @@ import SettingsCategories from './SettingsCategories';
 import ThemeToggler from './ThemeToggler';
 import TimePicker from './TimePicker';
 import TransactionItem from './TransactionItem';
+import Transactions from './Transactions';
+import TransactionsActions from './TransactionsActions';
+import TransactionsPagination from './TransactionsPagination';
 import TransactionsSection from './TransactionsSection';
 
 export {
@@ -37,5 +40,8 @@ export {
 	ThemeToggler,
 	TimePicker,
 	TransactionItem,
+	Transactions,
+	TransactionsActions,
+	TransactionsPagination,
 	TransactionsSection,
 };

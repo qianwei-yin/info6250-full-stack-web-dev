@@ -5,10 +5,19 @@ import { fetchUpdateCategories } from '../services/categoryServices';
 import { useAppContext } from '../context/appContext';
 import { ERRORS, ERROR_MESSAGES } from '../scripts/constants/errorConstants';
 import { RESULTS, RESULT_MESSAGES } from '../scripts/constants/resultConstants';
+import { SET_LOADING_SETTINGS_DELETE } from '../scripts/actions/appActions';
 
-const SettingsCategories = () => {
+const SettingsCategories = ({ clickedItemType, setClickedItemType }) => {
 	const { categories, setCategories } = useUserContext();
-	const { catchErrorDuringUserAction, showModal, openModal, closeModal, openPrompt } = useAppContext();
+	const {
+		catchErrorDuringUserAction,
+		showModal,
+		openModal,
+		closeModal,
+		openPrompt,
+		loadingSettingsDelete,
+		setLoading,
+	} = useAppContext();
 	const [clickedItem, setClickedItem] = useState({});
 
 	function handleClickDelete(e) {
@@ -22,13 +31,17 @@ const SettingsCategories = () => {
 	}
 
 	function handleDelete() {
+		setLoading({ type: SET_LOADING_SETTINGS_DELETE, value: true });
 		fetchUpdateCategories({ ...clickedItem, action: 'delete' })
 			.then((data) => {
 				setCategories(data.categories);
 				openPrompt({ promptType: 'success', promptMsg: RESULT_MESSAGES[RESULTS.DELETE_CATEGORY_SUCCESS] });
 			})
 			.catch(catchErrorDuringUserAction)
-			.finally(() => closeModal());
+			.finally(() => {
+				setLoading({ type: SET_LOADING_SETTINGS_DELETE, value: false });
+				closeModal();
+			});
 	}
 
 	return (
@@ -36,6 +49,7 @@ const SettingsCategories = () => {
 			{showModal ? (
 				<Modal
 					props={{
+						loading: loadingSettingsDelete,
 						defaultActionName: 'cancel',
 						secondaryActionName: 'delete',
 						defaultAction: closeModal,
@@ -64,7 +78,11 @@ const SettingsCategories = () => {
 								</div>
 							);
 						})}
-						<SettingsAddCard type={type} />
+						<SettingsAddCard
+							type={type}
+							clickedItemType={clickedItemType}
+							setClickedItemType={setClickedItemType}
+						/>
 					</div>
 				);
 			})}

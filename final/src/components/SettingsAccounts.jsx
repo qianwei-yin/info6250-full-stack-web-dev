@@ -6,10 +6,19 @@ import { useState } from 'react';
 import { fetchUpdateDefaultAccount, fetchUpdateAccounts, fetchDefaultAccount } from '../services/accountServices';
 import { ERRORS, ERROR_MESSAGES } from '../scripts/constants/errorConstants';
 import { RESULTS, RESULT_MESSAGES } from '../scripts/constants/resultConstants';
+import { SET_LOADING_SETTINGS_DELETE } from '../scripts/actions/appActions';
 
-const SettingsAccounts = () => {
+const SettingsAccounts = ({ clickedItemType, setClickedItemType }) => {
 	const { accounts, setAccounts, defaultAccount, setDefaultAccount } = useUserContext();
-	const { showModal, openModal, closeModal, openPrompt, catchErrorDuringUserAction } = useAppContext();
+	const {
+		showModal,
+		openModal,
+		closeModal,
+		openPrompt,
+		catchErrorDuringUserAction,
+		loadingSettingsDelete,
+		setLoading,
+	} = useAppContext();
 	const [clickedItem, setClickedItem] = useState({});
 
 	function handleClickDelete(e) {
@@ -45,6 +54,8 @@ const SettingsAccounts = () => {
 
 	function handleDelete() {
 		const { accountType, account } = clickedItem;
+
+		setLoading({ type: SET_LOADING_SETTINGS_DELETE, value: true });
 		fetchUpdateAccounts({ accountType, account, action: 'delete' })
 			.then((data) => {
 				setAccounts(data.accounts);
@@ -57,7 +68,7 @@ const SettingsAccounts = () => {
 				if (JSON.stringify(data.defaultAccount) !== JSON.stringify(defaultAccount)) {
 					setDefaultAccount(data.defaultAccount);
 					tempMsg =
-						` 😆 "${data.defaultAccount.accountType} - ${data.defaultAccount.account}"` +
+						`"${data.defaultAccount.accountType} - ${data.defaultAccount.account}"` +
 						RESULT_MESSAGES[RESULTS.SET_DEFAULT_ACCOUNT_AUTOMATICALLY];
 				}
 				openPrompt({
@@ -67,6 +78,7 @@ const SettingsAccounts = () => {
 			})
 			.catch(catchErrorDuringUserAction)
 			.finally(() => {
+				setLoading({ type: SET_LOADING_SETTINGS_DELETE, value: false });
 				closeModal();
 			});
 	}
@@ -76,6 +88,7 @@ const SettingsAccounts = () => {
 			{showModal ? (
 				<Modal
 					props={{
+						loading: loadingSettingsDelete,
 						defaultActionName: 'cancel',
 						secondaryActionName: 'delete',
 						defaultAction: closeModal,
@@ -115,7 +128,11 @@ const SettingsAccounts = () => {
 								</div>
 							);
 						})}
-						<SettingsAddCard type={type} />
+						<SettingsAddCard
+							type={type}
+							clickedItemType={clickedItemType}
+							setClickedItemType={setClickedItemType}
+						/>
 					</div>
 				);
 			})}

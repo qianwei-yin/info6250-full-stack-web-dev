@@ -162,6 +162,7 @@
 .settings__add-card {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 	gap: 0.3rem;
 }
 .settings__add-card__input {

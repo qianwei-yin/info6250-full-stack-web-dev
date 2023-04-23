@@ -1,10 +1,19 @@
+import Loading from './Loading';
+
 const Modal = ({
-	props: { defaultActionName, secondaryActionName, defaultAction, secondaryAction, messageTitle, message },
+	props: { loading, defaultActionName, secondaryActionName, defaultAction, secondaryAction, messageTitle, message },
 }) => {
 	return (
 		<>
 			<div className="modal">
-				<h2 className="modal__title">{messageTitle}</h2>
+				{loading ? (
+					<div className="modal__title modal__title--loading">
+						<Loading size="2" color="amber" />
+					</div>
+				) : (
+					<h2 className="modal__title">{messageTitle}</h2>
+				)}
+
 				<p className="modal__message">{message}</p>
 				<div className="modal__actions">
 					<button onClick={secondaryAction} className="modal__actions--secondary">

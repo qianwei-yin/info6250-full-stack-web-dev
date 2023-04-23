@@ -8,6 +8,7 @@ const settingsSections = ['categories', 'accounts'];
 const SettingsPage = () => {
 	const { categories } = useUserContext();
 	const { settingsSection, setSettingsSection } = useAppContext();
+	const [clickedItemType, setClickedItemType] = useState('');
 
 	return (
 		<div className="settings-page">
@@ -23,14 +24,18 @@ const SettingsPage = () => {
 				})}
 			</div>
 
-			{/* If there are multiple consitional rendering, IFFE is the best. If use ternary operator to do the conditional rendering, the syntax can be complex and confusing */}
+			{/* For future coding: If there are multiple consitional rendering, IFFE is the best. If use ternary operator to do the conditional rendering, the syntax can be complex and confusing, e.g.⬇️ */}
 			{/* {(() => {
 				if (settingsSection === 'categories') return <SettingsCategories />;
 				else if (settingsSection === 'accounts') return <SettingsAccounts />;
 			})()}
 			 */}
 
-			{settingsSection === 'categories' ? <SettingsCategories /> : <SettingsAccounts />}
+			{settingsSection === 'categories' ? (
+				<SettingsCategories clickedItemType={clickedItemType} setClickedItemType={setClickedItemType} />
+			) : (
+				<SettingsAccounts clickedItemType={clickedItemType} setClickedItemType={setClickedItemType} />
+			)}
 		</div>
 	);
 };

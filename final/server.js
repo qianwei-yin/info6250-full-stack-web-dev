@@ -10,6 +10,7 @@ const {
 	getBill,
 	updateTransaction,
 	deleteTransaction,
+	getTargetedTransactionPage,
 } = require('./controllers/transactions-controller.js');
 const {
 	checkAccountParams,
@@ -35,6 +36,7 @@ app.route('/api/v1/transactions')
 	.get(checkSession, getTransactions)
 	.post(checkSession, checkTransactionParams, createTransaction);
 app.route('/api/v1/transactions/:transactionId')
+	.get(checkSession, getTargetedTransactionPage)
 	.patch(checkSession, checkTransactionParams, updateTransaction)
 	.delete(checkSession, deleteTransaction);
 

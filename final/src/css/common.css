@@ -146,8 +146,28 @@ form {
 }
 
 /* -----------Loading---------------- */
-.loading {
+.loading.loading--size-1 {
 	--loading-size: 2rem;
+}
+.loading.loading--size-2 {
+	--loading-size: 4rem;
+}
+.loading.loading--size-3 {
+	--loading-size: 5rem;
+}
+.loading.loading--size-4 {
+	--loading-size: 7rem;
+}
+.loading.loading--color-grey {
+	--loading-color: var(--clr-bg-1);
+}
+.loading.loading--color-amber {
+	--loading-color: var(--clr-text-amber-1);
+}
+.loading.loading--color-indigo {
+	--loading-color: var(--clr-text-indigo-1);
+}
+.loading {
 	--loading-speed: 1.2s;
 	position: relative;
 	display: flex;
@@ -172,7 +192,7 @@ form {
 	width: 100%;
 	height: 25%;
 	border-radius: 50%;
-	background-color: var(--clr-bg-1);
+	background-color: var(--loading-color);
 }
 
 .loading__circle:first-child {
@@ -275,10 +295,10 @@ form {
 		transform: translateX(100%);
 	}
 	5% {
-		transform: translateX(-10%);
+		transform: translateX(-5%);
 	}
 	95% {
-		transform: translateX(-10%);
+		transform: translateX(-5%);
 	}
 	100% {
 		transform: translateX(100%);
@@ -329,11 +349,13 @@ form {
 	text-transform: uppercase;
 	font-family: var(--font-text);
 }
+.modal__title--loading {
+	margin-left: 1.5rem;
+}
 
 .modal__message {
 	font-size: 1.5rem;
-	margin-top: 1rem;
-	margin-bottom: 3rem;
+	margin: 1rem 0 3rem;
 	color: var(--clr-text-neutral-2);
 	font-weight: var(--weight-text-3);
 }

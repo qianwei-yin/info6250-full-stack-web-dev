@@ -2,9 +2,11 @@ import { useEffect } from 'react';
 import { useAppContext } from '../context/appContext';
 import { useTransactionContext } from '../context/transactionContext';
 import { fetchBill } from '../services/transactionServices';
+import { Loading } from '../components';
+import { SET_LOADING_DASHBOARD } from '../scripts/actions/appActions';
 
 const Bill = () => {
-	const { catchErrorDuringUserAction, loggedIn, setPage } = useAppContext();
+	const { catchErrorDuringUserAction, loggedIn, setPage, loadingDashboard, setLoading } = useAppContext();
 	const {
 		bill,
 		setBill,
@@ -16,13 +18,25 @@ const Bill = () => {
 
 	useEffect(() => {
 		if (loggedIn) {
+			setLoading({ type: SET_LOADING_DASHBOARD, value: true });
 			fetchBill({ startDate, endDate })
 				.then((data) => {
 					setBill(data.bill);
 				})
-				.catch(catchErrorDuringUserAction);
+				.catch(catchErrorDuringUserAction)
+				.finally(() => {
+					setLoading({ type: SET_LOADING_DASHBOARD, value: false });
+				});
 		}
 	}, [loggedIn, pickedTimeOption, pickedTimeIndex]);
+
+	if (loadingDashboard) {
+		return (
+			<div className="center-child">
+				<Loading size="3" color="indigo" />
+			</div>
+		);
+	}
 
 	if (Object.keys(bill.income).length === 0 && Object.keys(bill.expenses).length === 0) {
 		return (

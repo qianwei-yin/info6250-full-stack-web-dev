@@ -12,9 +12,11 @@ import {
 	SET_SORT_METHOD,
 	SET_PAGE,
 	SET_TOTALS,
+	SET_CHOSEN_TRANSACTION_ID,
 } from '../scripts/actions/transactionActions';
 import { fetchTransactions } from '../services/transactionServices';
 import { useAppContext } from './appContext';
+import { SET_LOADING_TRANSACTIONS } from '../scripts/actions/appActions';
 
 const initialState = {
 	bill: { income: {}, expenses: {} },
@@ -27,13 +29,14 @@ const initialState = {
 	sortMethod: 'newer',
 	page: 1,
 	totals: 0,
+	chosenTransactionId: '',
 };
 
 const TransactionContext = React.createContext();
 
 export const TransactionProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
-	const { catchErrorDuringUserAction } = useAppContext();
+	const { catchErrorDuringUserAction, setLoading, loadingTransactions } = useAppContext();
 
 	function resetTransactionState() {
 		dispatch({ type: RESET_TRANSACTION_STATE, payload: initialState });
@@ -58,12 +61,16 @@ export const TransactionProvider = ({ children }) => {
 	function refreshTransactions() {
 		const { pickedTimeStartDate: startDate, pickedTimeEndDate: endDate, sortMethod, page } = state;
 
+		setLoading({ type: SET_LOADING_TRANSACTIONS, value: true });
 		fetchTransactions({ startDate, endDate, sortMethod, page })
 			.then((data) => {
+				console.log('trans');
 				setTotals(data.totals);
 				setTransactions(data.transactions);
+				setChosenTransactionId('');
 			})
-			.catch(catchErrorDuringUserAction);
+			.catch(catchErrorDuringUserAction)
+			.finally(() => setLoading({ type: SET_LOADING_TRANSACTIONS, value: false }));
 	}
 
 	function setPickedTimeOption(option) {
@@ -81,10 +88,15 @@ export const TransactionProvider = ({ children }) => {
 		dispatch({ type: SET_SORT_METHOD, payload: method });
 	}
 
+	function setChosenTransactionId(id) {
+		dispatch({ type: SET_CHOSEN_TRANSACTION_ID, payload: id });
+	}
+
 	return (
 		<TransactionContext.Provider
 			value={{
 				...state,
+				dispatch,
 				resetTransactionState,
 				setBill,
 				setTransactions,
@@ -94,6 +106,7 @@ export const TransactionProvider = ({ children }) => {
 				refreshTransactions,
 				setPage,
 				setTotals,
+				setChosenTransactionId,
 			}}
 		>
 			{children}

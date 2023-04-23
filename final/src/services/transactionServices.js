@@ -7,6 +7,12 @@ function fetchTransactions({ startDate, endDate, sortMethod, page }) {
 	);
 }
 
+function fetchTargetedTransactionPage({ sortMethod, id, startDate, endDate }) {
+	return resolveFetchPromise(
+		fetch(`/api/v1/transactions/${id}?sortMethod=${sortMethod}&startDate=${startDate}&endDate=${endDate}`)
+	);
+}
+
 function fetchBill({ startDate, endDate }) {
 	return resolveFetchPromise(fetch(`/api/v1/transactions/bill?startDate=${startDate}&endDate=${endDate}`));
 }
@@ -39,4 +45,11 @@ function fetchDeleteTransaction(id) {
 	return resolveFetchPromise(fetch(`/api/v1/transactions/${id}`, { method: 'DELETE' }));
 }
 
-export { fetchTransactions, fetchBill, fetchCreateTransaction, fetchUpdateTransaction, fetchDeleteTransaction };
+export {
+	fetchTransactions,
+	fetchTargetedTransactionPage,
+	fetchBill,
+	fetchCreateTransaction,
+	fetchUpdateTransaction,
+	fetchDeleteTransaction,
+};

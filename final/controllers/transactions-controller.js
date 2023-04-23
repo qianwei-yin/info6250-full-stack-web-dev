@@ -29,6 +29,32 @@ function getTransactions(req, res) {
 	res.json({ transactions: paginatedSortedFilteredTransactions, totals: transactionsCount });
 }
 
+function getTargetedTransactionPage(req, res) {
+	const { username } = res.locals;
+	const { sortMethod, startDate, endDate } = req.query;
+	const { transactionId: id } = req.params;
+
+	// id exists and id isn't valid
+	if (id && !userData.uuidValidateV4(id)) {
+		res.status(400).json({ error: 'invalid-transaction-id' });
+		return;
+	}
+	if (id && !userData.checkExistTransactionId({ username, id })) {
+		res.status(404).json({ error: 'not-found-transaction' });
+		return;
+	}
+
+	const targetedPage = userData.getTargetedTransactionPage({
+		username,
+		sortMethod,
+		id,
+		startDate,
+		endDate,
+	});
+
+	res.json({ page: targetedPage });
+}
+
 function checkTransactionParams(req, res, next) {
 	const { username } = res.locals;
 	const { amount, category, time, type, accountType, account } = req.body;
@@ -110,7 +136,7 @@ function updateTransaction(req, res) {
 		account,
 	});
 	// returns the new updated transaction
-	res.json({ transactions: updatedTransaction });
+	res.json({ transaction: updatedTransaction });
 }
 
 function deleteTransaction(req, res) {
@@ -128,4 +154,5 @@ module.exports = {
 	getBill,
 	updateTransaction,
 	deleteTransaction,
+	getTargetedTransactionPage,
 };

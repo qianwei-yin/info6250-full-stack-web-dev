@@ -2,24 +2,27 @@ import { useAppContext } from '../context/appContext';
 import { useUserContext } from '../context/userContext';
 import { useTransactionContext } from '../context/transactionContext';
 import { fetchLogout } from '../services/sessionServices';
-import Logo from './Logo';
-import ThemeToggler from './ThemeToggler';
+import { Logo, ThemeToggler, Loading } from '../components';
+import { SET_LOADING_LOGOUT } from '../scripts/actions/appActions';
 
 const Navbar = () => {
-	const { setPage, catchErrorDuringUserAction, setLoggedIn, closePrompt, resetAppState } = useAppContext();
+	const { setPage, catchErrorDuringUserAction, setLoggedIn, closePrompt, resetAppState, setLoading, loadingLogout } =
+		useAppContext();
 	const { username, setUsername, resetUserState } = useUserContext();
 	const { resetTransactionState } = useTransactionContext();
 
 	function handleLogout() {
 		closePrompt();
 
+		setLoading({ type: SET_LOADING_LOGOUT, value: true });
 		fetchLogout()
 			.then(() => {
 				resetAppState();
 				resetUserState();
 				resetTransactionState();
 			})
-			.catch(catchErrorDuringUserAction);
+			.catch(catchErrorDuringUserAction)
+			.finally(() => setLoading({ type: SET_LOADING_LOGOUT, value: false }));
 	}
 
 	return (
@@ -45,9 +48,13 @@ const Navbar = () => {
 				<span className="user-info__username">{username}</span>
 			</div>
 
-			<button className="btn--without-border" onClick={handleLogout}>
-				Log Out
-			</button>
+			{loadingLogout ? (
+				<Loading size="2" color="amber" />
+			) : (
+				<button className="btn--without-border" onClick={handleLogout}>
+					Log Out
+				</button>
+			)}
 		</header>
 	);
 };

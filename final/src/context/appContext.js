@@ -5,7 +5,6 @@ import {
 	CHANGE_PAGE,
 	OPEN_PROMPT,
 	CLOSE_PROMPT,
-	LOADING_LOGIN,
 	SET_LOGGED_IN,
 	RESET_APP_STATE,
 	OPEN_MODAL,
@@ -27,7 +26,6 @@ const initialState = {
 	theme: getStorageTheme(),
 	page: 'dashboard',
 	loggedIn: false,
-	loadingLogin: false,
 	prompt: {
 		showPrompt: false,
 		promptType: '',
@@ -35,6 +33,15 @@ const initialState = {
 	},
 	showModal: false,
 	settingsSection: 'categories',
+
+	loadingLogin: false, // effect on login button
+	loadingLogout: false, // effect on logout button
+	loadingPage: false, // effect on the whole screen
+	loadingDashboard: false, // effect on the dashboard page
+	loadingTransactions: false, // effect on the left side of add page
+	loadingSettingsAdd: false, // effect on the settings page when adding an item
+	loadingSettingsDelete: false, // effect on Modal when deleting an item on settings page
+	loadingTransactionsDelete: false, // effect on Modal when deleting a transaction
 };
 
 const AppContext = React.createContext();
@@ -66,8 +73,8 @@ export const AppProvider = ({ children }) => {
 		dispatch({ type: SET_LOGGED_IN, payload: loggedIn });
 	}
 
-	function setLoadingLogin(loading) {
-		dispatch({ type: LOADING_LOGIN, payload: loading });
+	function setLoading({ type, value }) {
+		dispatch({ type, payload: value });
 	}
 
 	// Because a prompt will stay on the page for around 5 sec, if during this period, user submit multiple false request, setTimeout makes sure that the prompt can appear multiple times.
@@ -101,12 +108,13 @@ export const AppProvider = ({ children }) => {
 				toggleTheme,
 				setPage,
 				setLoggedIn,
-				setLoadingLogin,
+				setLoading,
 				openPrompt,
 				closePrompt,
 				openModal,
 				closeModal,
 				setSettingsSection,
+				dispatch,
 			}}
 		>
 			{children}

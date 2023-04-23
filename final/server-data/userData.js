@@ -127,30 +127,43 @@ function getTransactions({ username, startDate, endDate, sortMethod, page }) {
 	});
 	const transactionsCount = filteredTransactions.length;
 
+	if (sortMethod === 'newer') {
+		filteredTransactions.sort((a, b) => dayjs(b.time) - dayjs(a.time));
+	} else if (sortMethod === 'older') {
+		filteredTransactions.sort((a, b) => dayjs(a.time) - dayjs(b.time));
+	} else if (sortMethod === 'larger') {
+		filteredTransactions.sort((a, b) => b.amount - a.amount);
+	} else if (sortMethod === 'smaller') {
+		filteredTransactions.sort((a, b) => a.amount - b.amount);
+	}
+
 	// pagination, page starts at 1
 	const startIndex = 10 * (page - 1);
 	const endIndex = startIndex + 10;
-	let paginatedSortedFilteredTransactions = [];
-
-	if (sortMethod === 'newer') {
-		paginatedSortedFilteredTransactions = filteredTransactions
-			.sort((a, b) => dayjs(b.time) - dayjs(a.time))
-			.slice(startIndex, endIndex);
-	} else if (sortMethod === 'older') {
-		paginatedSortedFilteredTransactions = filteredTransactions
-			.sort((a, b) => dayjs(a.time) - dayjs(b.time))
-			.slice(startIndex, endIndex);
-	} else if (sortMethod === 'larger') {
-		paginatedSortedFilteredTransactions = filteredTransactions
-			.sort((a, b) => b.amount - a.amount)
-			.slice(startIndex, endIndex);
-	} else if (sortMethod === 'smaller') {
-		paginatedSortedFilteredTransactions = filteredTransactions
-			.sort((a, b) => a.amount - b.amount)
-			.slice(startIndex, endIndex);
-	}
+	const paginatedSortedFilteredTransactions = filteredTransactions.slice(startIndex, endIndex);
 
 	return { paginatedSortedFilteredTransactions, transactionsCount };
+}
+
+function getTargetedTransactionPage({ username, sortMethod, id, startDate, endDate }) {
+	const filteredTransactions = userData[username].transactions.filter((trans) => {
+		return trans.time >= `${startDate}T00:00` && trans.time <= `${endDate}T23:59`;
+	});
+
+	if (sortMethod === 'newer') {
+		filteredTransactions.sort((a, b) => dayjs(b.time) - dayjs(a.time));
+	} else if (sortMethod === 'older') {
+		filteredTransactions.sort((a, b) => dayjs(a.time) - dayjs(b.time));
+	} else if (sortMethod === 'larger') {
+		filteredTransactions.sort((a, b) => b.amount - a.amount);
+	} else if (sortMethod === 'smaller') {
+		filteredTransactions.sort((a, b) => a.amount - b.amount);
+	}
+
+	const targetedTransactionIndex = filteredTransactions.findIndex((el) => el.id === id);
+	const targetedPage = Math.floor(targetedTransactionIndex / 10) + 1;
+
+	return targetedPage;
 }
 
 function checkBillDate(date) {
@@ -263,6 +276,7 @@ module.exports = {
 	updateCategories,
 	addTransaction,
 	getTransactions,
+	getTargetedTransactionPage,
 	checkBillDate,
 	getBill,
 	checkExistTransactionId,

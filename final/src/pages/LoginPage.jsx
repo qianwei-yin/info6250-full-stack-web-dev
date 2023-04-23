@@ -5,9 +5,10 @@ import { fetchLogin } from '../services/sessionServices';
 import { fetchCategories } from '../services/categoryServices';
 import { fetchAccounts, fetchDefaultAccount } from '../services/accountServices';
 import { FormRowInput, ThemeToggler, Loading, Logo } from '../components';
+import { SET_LOADING_LOGIN } from '../scripts/actions/appActions';
 
 const LoginPage = () => {
-	const { catchErrorDuringUserAction, setLoggedIn, setLoadingLogin, closePrompt, loggedIn, loadingLogin } =
+	const { catchErrorDuringUserAction, setLoggedIn, setLoading, closePrompt, loggedIn, loadingLogin } =
 		useAppContext();
 	const { setUsername, setCategories, setAccounts, setDefaultAccount } = useUserContext();
 
@@ -24,7 +25,7 @@ const LoginPage = () => {
 	}
 
 	function login(username) {
-		setLoadingLogin(true);
+		setLoading({ type: SET_LOADING_LOGIN, value: true });
 
 		fetchLogin(username)
 			.then((data) => {
@@ -49,7 +50,7 @@ const LoginPage = () => {
 			})
 			.catch(catchErrorDuringUserAction)
 			.finally(() => {
-				setLoadingLogin(false);
+				setLoading({ type: SET_LOADING_LOGIN, value: false });
 			});
 	}
 
@@ -73,11 +74,11 @@ const LoginPage = () => {
 				/>
 
 				<button className="btn--with-border" type="submit" disabled={!usernameInput}>
-					{loadingLogin ? <Loading /> : 'Log In'}
+					{loadingLogin ? <Loading size="1" color="grey" /> : 'Log In'}
 				</button>
 
 				<button className="btn--with-border" onClick={() => login('conway')} type="button">
-					{loadingLogin ? <Loading /> : 'Log In As Test User'}
+					{loadingLogin ? <Loading size="1" color="grey" /> : 'Log In As Test User'}
 				</button>
 			</form>
 		</>

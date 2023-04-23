@@ -10,6 +10,7 @@ import {
 	SET_SORT_METHOD,
 	SET_PAGE,
 	SET_TOTALS,
+	SET_CHOSEN_TRANSACTION_ID,
 } from '../scripts/actions/transactionActions';
 
 const reducer = (state, action) => {
@@ -75,6 +76,8 @@ const reducer = (state, action) => {
 		return { ...state, page: action.payload };
 	} else if (action.type === SET_TOTALS) {
 		return { ...state, totals: action.payload };
+	} else if (action.type === SET_CHOSEN_TRANSACTION_ID) {
+		return { ...state, chosenTransactionId: action.payload };
 	} else {
 		throw new Error(`No matching "${action.type}" - action type.`);
 	}
