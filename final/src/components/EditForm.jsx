@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
 import { useAppContext } from '../context/appContext';
 import { useUserContext } from '../context/userContext';
@@ -14,7 +13,6 @@ import {
 import { formatTimeForServer } from '../scripts/utils/time';
 import { RESULTS, RESULT_MESSAGES } from '../scripts/constants/resultConstants';
 import { SET_LOADING_TRANSACTIONS_DELETE } from '../scripts/actions/appActions';
-import { SET_PAGE } from '../scripts/actions/transactionActions';
 
 const initialInputState = {
 	id: '',
@@ -30,7 +28,6 @@ const initialInputState = {
 const EditForm = () => {
 	const {
 		openPrompt,
-		closePrompt,
 		catchErrorDuringUserAction,
 		showModal,
 		openModal,
@@ -40,18 +37,7 @@ const EditForm = () => {
 		loadingTransactionsDelete,
 		setLoading,
 	} = useAppContext();
-	const {
-		sortMethod,
-		transactions,
-		setTransactions,
-		refreshTransactions,
-		chosenTransactionId,
-		setChosenTransactionId,
-		page,
-		setPage: setTransactionsPage,
-		dispatch,
-		setTotals,
-	} = useTransactionContext();
+	const { transactions, refreshTransactions, chosenTransactionId } = useTransactionContext();
 	const { categories, accounts, defaultAccount } = useUserContext();
 	const [inputs, setInputs] = useState({ ...initialInputState, time: formatTimeForServer() });
 
@@ -85,24 +71,6 @@ const EditForm = () => {
 		setToInitialInputs();
 	}
 
-	// Aims at getting the page of the new/updated transaction under current sort method
-	// Only submitNew and update will use this function
-	// Why not delete? Because after deleting a transaction, the edit form will turn to "create new one", so the page can be set to 1
-	function setPageToTargetedTransaction(id) {
-		fetchTargetedTransactionPage({ sortMethod, id })
-			.then((data) => {
-				// if (page === data.page) {
-				// 	refreshTransactions(id); // if page number doesn't change, which means it will not trigger useEffect, then refresh manually
-				// } else {
-				// 	setTransactionsPage(data.page);
-				// }
-				if (page !== data.page) setTransactionsPage(data.page);
-				else refreshTransactions(id);
-				// DO NOT setChosenTransactionId(), because I wanna the edit form not to change
-			})
-			.catch(catchErrorDuringUserAction);
-	}
-
 	function handleSubmitNew() {
 		const result = validateTransaction(inputs);
 		if (!result.ok) {
@@ -112,7 +80,7 @@ const EditForm = () => {
 
 		fetchCreateTransaction(inputs)
 			.then((data) => {
-				// refresh the transaction items on the left, as well as go to the new transaction's page
+				// refresh the transaction items on the left
 				refreshTransactions();
 				setToInitialInputs();
 				// open success propmt
@@ -130,7 +98,7 @@ const EditForm = () => {
 
 		fetchUpdateTransaction(inputs)
 			.then((data) => {
-				// refresh the transaction items on the left, as well as go to the new transaction's page
+				// refresh the transaction items on the left
 				refreshTransactions();
 				// open success propmt
 				openPrompt({ promptType: 'success', promptMsg: RESULT_MESSAGES[RESULTS.UPDATE_TRANSACTION_SUCCESS] });

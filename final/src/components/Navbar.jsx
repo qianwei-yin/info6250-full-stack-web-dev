@@ -6,9 +6,9 @@ import { Logo, ThemeToggler, Loading } from '../components';
 import { SET_LOADING_LOGOUT } from '../scripts/actions/appActions';
 
 const Navbar = () => {
-	const { setPage, catchErrorDuringUserAction, setLoggedIn, closePrompt, resetAppState, setLoading, loadingLogout } =
+	const { setPage, catchErrorDuringUserAction, closePrompt, resetAppState, setLoading, loadingLogout } =
 		useAppContext();
-	const { username, setUsername, resetUserState } = useUserContext();
+	const { username, resetUserState } = useUserContext();
 	const { resetTransactionState } = useTransactionContext();
 
 	function handleLogout() {

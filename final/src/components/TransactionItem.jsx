@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import categories from '../scripts/constants/categories';
 
 const TransactionItem = ({ transaction, chosenTransactionId, setChosenTransaction }) => {
-	const { id, amount, category, time, type, description, accountType, account } = transaction;
+	const { id, amount, category, time, type } = transaction;
 
 	return (
 		<div

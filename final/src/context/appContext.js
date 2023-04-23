@@ -50,7 +50,6 @@ export const AppProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
 
 	function catchErrorDuringUserAction(err) {
-		console.log(err);
 		if (err.error === ERRORS.AUTH_MISSING) {
 			setLoggedIn(false);
 		}

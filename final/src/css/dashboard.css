@@ -24,20 +24,10 @@
 	line-height: 1.7;
 }
 
-.bill__details__categories {
-}
-
 .type-row {
 	display: flex;
 	justify-content: space-between;
 	font-weight: var(--weight-heading-3);
-}
-.type-row.income {
-}
-.type-row.expenses {
-}
-
-.type-row__title {
 }
 
 .type-row__sum.income {
@@ -52,18 +42,10 @@
 	display: flex;
 	justify-content: space-between;
 }
-.category-row__title {
-}
-.category-row__sum {
-}
 
 .bill__details__balance {
 	display: flex;
 	justify-content: space-between;
 	font-weight: var(--weight-heading-3);
 	color: var(--clr-text-indigo-2);
-}
-.balance-row__title {
-}
-.balance-row__sum {
 }

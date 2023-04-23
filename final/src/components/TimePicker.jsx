@@ -1,11 +1,9 @@
-import dayjs from 'dayjs';
-import { useState, useEffect } from 'react';
 import { useTransactionContext } from '../context/transactionContext';
 import { ReactComponent as Left } from '../icons/angle-left-solid.svg';
 import { ReactComponent as Right } from '../icons/angle-right-solid.svg';
 
 const TimePicker = () => {
-	const { pickedTimeOption, pickedTimeIndex, pickedCurrentTime, setPickedTimeIndex } = useTransactionContext();
+	const { pickedCurrentTime, setPickedTimeIndex } = useTransactionContext();
 
 	return (
 		<div className="time-picker">

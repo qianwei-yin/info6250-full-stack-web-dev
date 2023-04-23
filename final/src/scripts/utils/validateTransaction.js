@@ -57,5 +57,3 @@ function uuidValidateV4(uuid) {
 function validateTime(time) {
 	return dayjs(time, 'YYYY-MM-DD[T]HH:mm', true).isValid();
 }
-
-uuidValidateV4('c57aadc4-9af1-4bb2-acf1-abeeb1556231');

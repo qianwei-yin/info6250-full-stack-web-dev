@@ -21,7 +21,7 @@
 
 .sidebar__btn {
 	/* ::before will cover the button, so */
-	/* METHOD 1: because only blocks with relative, absolute or fixed can have z-index, so make it can have index and then set the index */
+	/* METHOD 1: because only blocks with relative, absolute or fixed can have z-index, so make it can have index and then set the index, e.g.⬇️*/
 	/* display: block;
 	position: relative;
 	z-index: 10; */

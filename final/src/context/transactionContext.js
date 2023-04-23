@@ -36,7 +36,7 @@ const TransactionContext = React.createContext();
 
 export const TransactionProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialState);
-	const { catchErrorDuringUserAction, setLoading, loadingTransactions } = useAppContext();
+	const { catchErrorDuringUserAction, setLoading } = useAppContext();
 
 	function resetTransactionState() {
 		dispatch({ type: RESET_TRANSACTION_STATE, payload: initialState });
@@ -64,7 +64,6 @@ export const TransactionProvider = ({ children }) => {
 		setLoading({ type: SET_LOADING_TRANSACTIONS, value: true });
 		fetchTransactions({ startDate, endDate, sortMethod, page })
 			.then((data) => {
-				console.log('trans');
 				setTotals(data.totals);
 				setTransactions(data.transactions);
 				setChosenTransactionId('');
@@ -96,7 +95,6 @@ export const TransactionProvider = ({ children }) => {
 		<TransactionContext.Provider
 			value={{
 				...state,
-				dispatch,
 				resetTransactionState,
 				setBill,
 				setTransactions,

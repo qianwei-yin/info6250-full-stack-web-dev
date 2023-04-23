@@ -1,4 +1,3 @@
-const sessions = require('../server-data/sessions.js');
 const userData = require('../server-data/userData.js');
 
 function getCategories(req, res) {

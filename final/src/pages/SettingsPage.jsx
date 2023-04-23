@@ -1,12 +1,10 @@
 import { useState } from 'react';
-import { useUserContext } from '../context/userContext';
 import { useAppContext } from '../context/appContext';
-import { AddCategory, SettingsAccounts, SettingsCategories } from '../components';
+import { SettingsAccounts, SettingsCategories } from '../components';
 
 const settingsSections = ['categories', 'accounts'];
 
 const SettingsPage = () => {
-	const { categories } = useUserContext();
 	const { settingsSection, setSettingsSection } = useAppContext();
 	const [clickedItemType, setClickedItemType] = useState('');
 

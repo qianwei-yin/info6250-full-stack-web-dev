@@ -24,7 +24,10 @@ const SettingsAccounts = ({ clickedItemType, setClickedItemType }) => {
 	function handleClickDelete(e) {
 		const { accountType, account } = e.target.dataset;
 		if (account === 'uncategorized') {
-			openPrompt({ promptType: 'warning', promptMsg: [ERROR_MESSAGES[ERRORS.NOT_ALLOWED_ACCOUNT]] });
+			openPrompt({
+				promptType: 'warning',
+				promptMsg: ERROR_MESSAGES[ERRORS.NOT_ALLOWED_ACCOUNT] || ERROR_MESSAGES.default,
+			});
 			return;
 		}
 		setClickedItem({ accountType, account });

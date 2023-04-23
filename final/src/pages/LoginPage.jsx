@@ -8,8 +8,7 @@ import { FormRowInput, ThemeToggler, Loading, Logo } from '../components';
 import { SET_LOADING_LOGIN } from '../scripts/actions/appActions';
 
 const LoginPage = () => {
-	const { catchErrorDuringUserAction, setLoggedIn, setLoading, closePrompt, loggedIn, loadingLogin } =
-		useAppContext();
+	const { catchErrorDuringUserAction, setLoggedIn, setLoading, closePrompt, loadingLogin } = useAppContext();
 	const { setUsername, setCategories, setAccounts, setDefaultAccount } = useUserContext();
 
 	const [usernameInput, setUsernameInput] = useState('');
