@@ -1,0 +1,17 @@
+.login-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	padding: 1rem 0;
+}
+
+.login-form {
+	width: 30%;
+	margin: 5rem auto;
+	border-radius: 1rem;
+	box-shadow: 9px 9px 25px var(--clr-bg-2), -9px -9px 25px var(--clr-bg-2);
+}
+.login-form__text {
+	margin-left: 0.3rem;
+	margin-bottom: 0.4rem;
+}
